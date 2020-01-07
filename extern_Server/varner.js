@@ -9,7 +9,6 @@ app.get('/data', function(req, res){
     res.sendFile(path.join(__dirname , 'order1.xml'));
 });
 
-var server = app.listen(port, () => {
+app.listen(port, () => {
 	console.log('Started listening on 8080');
 });
-
