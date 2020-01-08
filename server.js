@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT
 const bodyParser = require("body-parser");
 const cors = require("cors");
 // const { Pool } = require("pg");
@@ -9,45 +9,22 @@ const cors = require("cors");
 // const pool = new Pool({
 //   connectionString: process.env.DATABASE_URL
 // });
-const { createOrder, getAllOrders, getOrder } = require("./postgresAPI");
 
+const { createOrder, getAllOrders, getOrder } = require("./postgresAPI");
+const getDataFromApi = require('./services/convert_xml')
+const orderData = getDataFromApi() 
+
+
+//  ------------
 app.use(cors());
 app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static("build"));
+app.use(cors())
 
 const api = express();
 
-//  example object
-// const orderObject = {
-//   ordernumber: "BSJ-1234-5678",
-//   referenceorderno: "4324424224",
-//   ordertype: "pick-up",
-//   orderdate: "12-12-2022",
-//   deliverydate: "20-12-2022",
-//   partdeliveryflag: "1", //enum type in postgres
-//   priority: "2",
-//   status: "pending" //  we need to add this column to our object
-// };
-// console.log(orderObject);
-
-// const customerJSON = {
-//   name: "eivind blund",
-//   code: "eivind@blund.no"
-// };
-
-// const orderObject = JSON.stringify(orderJSON);
-// const customerObject = JSON.stringify(customerJSON);
-
-// api.post("/customer", async (req, res) => {
-//   console.log(customerObject);
-//   // "incoming" json object
-//   const { code, name } = customerObject;
-
-//   const newCustomer = await createCustomer(code, name);
-//   res.send(newCustomer);
-// });
 api.post("/orders", async (req, res) => {
   // "incoming" json object
   const orderObject = req.body;
@@ -96,6 +73,10 @@ app.use((err, req, res, next) => {
     return res.status(500).json(err);
   }
 });
+
+
+
+// This returns the object that contains the orderdata we want to put into the db.
 
 app.listen(port, () => {
   console.log(`running on port: ${port}`);
