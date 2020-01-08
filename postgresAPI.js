@@ -17,15 +17,16 @@ async function createOrder(orderObject) {
     deliverydate,
     partdeliveryflag,
     priority,
-    orderstatus
+    orderstatus,
+    name
   } = orderObject;
 
   const result = await pool.query(
     `
     insert into orders
-      (ordernumber, referenceorderno, ordertype, orderdate, deliverydate, partdeliveryflag, priority, orderstatus)
+      (ordernumber, referenceorderno, ordertype, orderdate, deliverydate, partdeliveryflag, priority, orderstatus, name)
     values
-	    ($1, $2, $3, $4, $5, $6, $7, $8)
+	    ($1, $2, $3, $4, $5, $6, $7, $8, $9)
     returning
     *
     `,
@@ -37,7 +38,8 @@ async function createOrder(orderObject) {
       deliverydate,
       partdeliveryflag,
       priority,
-      orderstatus
+      orderstatus,
+      name
     ]
   );
   return result.rows[0];
@@ -78,16 +80,19 @@ async function getAllOrders() {
   }
 }
 async function getOrder(ordernumber) {
+  console.log(typeof ordernumber);
   try {
     const data = await pool.query(
       `
-    select 
-      *
-    from
-      orders
-    where 
-      ordernumber = $1
-`,
+      select 
+        *
+      from
+        orders
+      where 
+        ordernumber = $1
+      returning
+        *
+      `,
       [ordernumber]
     );
 
@@ -127,18 +132,23 @@ async function getFinishedOrders() {
 
 // }
 
-async function updateOrderStatus(status) {
-  return pool.query(`
+async function updateOrderStatus(orderstatus) {
+  return pool.query(
+    `
     insert into orders
       (status)
     values
       ($1)
-  `);
+  `,
+    [orderstatus]
+  );
 }
 
 module.exports = {
   createOrder,
   createCustomer,
   getAllOrders,
-  getFinishedOrders
+  getOrder,
+  getFinishedOrders,
+  updateOrderStatus
 };

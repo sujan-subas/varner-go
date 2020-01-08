@@ -60,17 +60,34 @@ api.post("/orders", async (req, res) => {
 // From frontend
 api.get("/orders", async (req, res, next) => {
   try {
-    const data = await getAllOrders();
-    res.status(200).send(data);
+    const allOrders = await getAllOrders();
+    res.status(200).send(allOrders);
   } catch (error) {
     next(error.message);
   }
 });
 
-api.get("/orders/:ordernumber", (req, res) => {
-  console.log(getOrder);
+// get specific order
+api.get("/orders/:ordernumber", async (req, res, next) => {
+  const { ordernumber } = req.params;
+  try {
+    const order = await getOrder(ordernumber);
+    res.status(200).send(order);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
+// api.get('/orders/:finished')
+// api.get('/orders/:declined')
+
+// update orderstatus and processfinished
+// api.patch('/orders/:ordernumber', async(req, res, next) => {
+//   try {
+//     const data = await
+
+//   }
+// } )
 app.use("/api", api);
 
 app.use((err, req, res, next) => {
