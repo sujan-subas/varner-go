@@ -6,16 +6,11 @@ const base64 = require('base-64');
 global.Headers = fetch.Headers;
 
 
-//GET XML FILE from Varner
-const xmlUrl = 'https://secure-taiga-49335.herokuapp.com/data'
-async function getDataFromAPI() {
-  let res = await fetch(xmlUrl)
-  let data = await res.text()
-  // Convert xml to json.
-  let xml = data
+// Basic auth to express.
 
-  // Parse from XML TO JSON
-  let orderJson;
+
+//GET XML FILE from Varner
+async function getJSONfromXML(xml) {
   parseString(xml, function (err, result) {
     // console.log(result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0].orderLines[0].orderLine[1]);
     //Shortcuts
@@ -40,7 +35,6 @@ async function getDataFromAPI() {
       })
     })
 
-
     // GET ORDER API DETAILS (SKU API)
     const login = 'varnergofetch@protonmail.com';
     const password = 'varnergofetch';
@@ -55,11 +49,9 @@ async function getDataFromAPI() {
       return response.json();
 
     }).then(function (res) {
-      // console.log(res[0].Skus)
+      
     })
-
-    // console.log('----', orderDetails)
-
+    // Ge
     orderJson =
     {
       ordreNumber: order.orderNumber[0],
@@ -81,4 +73,4 @@ async function getDataFromAPI() {
   return orderJson;
 }
 
-module.exports = getDataFromAPI;
+module.exports = getJSONfromXML

@@ -11,8 +11,7 @@ const cors = require("cors");
 // });
 
 const { createOrder, getAllOrders, getOrder } = require("./postgresAPI");
-const getDataFromApi = require('./services/convert_xml')
-const orderData = getDataFromApi() 
+const getJsonFromXml = require('./services/convert_xml')
 
 
 //  ------------
@@ -20,14 +19,17 @@ app.use(cors());
 app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
 
+// Build react app
 app.use(express.static("build"));
 app.use(cors())
 
 const api = express();
 
+// Order post from Varner
 api.post("/orders", async (req, res) => {
   // "incoming" json object
-  const orderObject = req.body;
+  const orderXml = req.body;
+  const orderObject = getJsonFromXml(orderXml)
   console.log(req.body);
 
   const newOrder = await createOrder(orderObject);
