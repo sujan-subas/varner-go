@@ -38,21 +38,31 @@ class Product extends React.Component {
         super(props);
 
         this.state = {
-            order: order
+            order: order,
+            productCount: 0,
+            orderCount: 0
         }
+    }
+
+    componentDidMount() {
+        let count = this.state.order.orderLines.length;
+        this.setState({
+            orderCount: count
+        })
     }
 
     render() {
         const orderElements = this.state.order.orderLines
         .map(({ description, size, color, orderedQuantity, image, sku }) => {
             return (
-                <div key={sku}>
+                <div key={sku} >
                     <img src={image} alt='' width='123' height='164' />
                     <h2>{description}</h2>
                     <p>Str: {size}</p>
                     <p>Farge: {color}</p>
                     <p>Antall: {orderedQuantity}</p>
                     <p>SKU: {sku}</p>
+                    <button>Varen er plukket</button>
                 </div>
             )
         });
@@ -62,7 +72,10 @@ class Product extends React.Component {
         return (
             <React.Fragment>
                 <div>
-                    <header>header</header>
+                    <header>
+                        <h3>Antall varer: {this.state.orderCount}</h3>
+                        <h3>Varer plukket: {this.state.productCount}</h3>
+                    </header>
                     <div>
                         <h1>Sammendrag av bestilling</h1>
                         <p>{this.state.order.orderDate}</p>
