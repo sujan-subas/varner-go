@@ -1,9 +1,9 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import Orders from '../../components/OrderView';
+import React from "react";
 
-const OrdersContainer = (props) => {
-    return (<Orders {...props}/>)
-}
+import Orders from "../../components/OrderView";
 
-export default connect(OrdersContainer);
+const OrdersContainer = props => {
+  return <Orders {...props} />;
+};
+
+export default OrdersContainer;
