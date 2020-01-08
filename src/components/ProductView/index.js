@@ -1,10 +1,10 @@
 import React from 'react';
-import { formatDistance } from 'date-fns';
+import { formatDistance, addHours, formatDistanceToNow, formatDistanceStrict } from 'date-fns';
 
 const order = {
     orderNumber: 'BB-6WN-119682',
     referenceOrderNo: '100119682',
-    orderDate: '2019-12-16T11:26:41',
+    orderDate: '2020-01-08T16:20:41',
     customer: 'Jon Selenium',
     phoneNumber: '+4746823125',
     addressLine1: 'Sjøskogvn. 7',
@@ -89,13 +89,16 @@ class Product extends React.Component {
         });
 
         const fullAdress = this.state.order.fullAdress();
-        const timer = formatDistance(new Date(this.state.order.orderDate), new Date(), { addSuffix: true })
+        const deadLine = addHours(new Date(this.state.order.orderDate), 2);
+        const now = new Date();
+        const timeLeft = formatDistanceStrict(deadLine, now, {unit: 'minute'})
+        
 
         return (
             <React.Fragment>
                 <div>
                     <header>
-                        <h3>Utløper om: {timer}</h3>
+                        <h3>Utløper om: {timeLeft}</h3>
                         <h3>Antall varer: {this.state.orderCount}</h3>
                         <h3>Varer plukket: {this.state.pickedSkus.length}</h3>
                     </header>
