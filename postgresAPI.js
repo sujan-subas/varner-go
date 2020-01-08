@@ -17,48 +17,49 @@ async function createOrder(orderObject) {
     deliverydate,
     partdeliveryflag,
     priority,
-    orderstatus,
-    name
+    name,
+    createdinapp_at
   } = orderObject;
 
-  const result = await pool.query(
-    `
+  const queryText = `
     insert into orders
-      (ordernumber, referenceorderno, ordertype, orderdate, deliverydate, partdeliveryflag, priority, orderstatus, name)
+      ("order-number", "reference-order-no", "order-type", "order-date", "delivery-date", "part-delivery-flag", priority, name, "created-in-app_at")
     values
 	    ($1, $2, $3, $4, $5, $6, $7, $8, $9)
     returning
     *
-    `,
-    [
-      ordernumber,
-      referenceorderno,
-      ordertype,
-      orderdate,
-      deliverydate,
-      partdeliveryflag,
-      priority,
-      orderstatus,
-      name
-    ]
-  );
-  return result.rows[0];
-}
-// post data in customer table in postgres
-async function createCustomer(code, name) {
-  const { rows } = await pool.query(
-    `
-    insert into customer
-      (code, name)
-    values
-      ($1, $2)
-    returning
-      *
-      `,
-    [code, name]
-  );
+    `;
+  const queryValues = [
+    ordernumber,
+    referenceorderno,
+    ordertype,
+    orderdate,
+    deliverydate,
+    partdeliveryflag,
+    priority,
+    name,
+    createdinapp_at
+  ];
+
+  const { rows } = await pool.query(queryText, queryValues);
+
   return rows[0];
 }
+// post data in customer table in postgres
+// async function createCustomer(code, name) {
+//   const { rows } = await pool.query(
+//     `
+//     insert into customer
+//       (code, name)
+//     values
+//       ($1, $2)
+//     returning
+//       *
+//       `,
+//     [code, name]
+//   );
+//   return rows[0];
+// }
 // get data from postgres
 async function getAllOrders() {
   try {
@@ -67,7 +68,7 @@ async function getAllOrders() {
         *
       from
         orders
-      order by orders.orderdate desc
+      order by orders."order-date" desc
     `);
     if (data.length === "") {
       console.log(`No pick-up orders in database`);
@@ -80,7 +81,6 @@ async function getAllOrders() {
   }
 }
 async function getOrder(ordernumber) {
-  console.log(typeof ordernumber);
   try {
     const data = await pool.query(
       `
@@ -89,14 +89,14 @@ async function getOrder(ordernumber) {
       from
         orders
       where 
-        ordernumber = $1
+        "order-number" = $1
             `,
       [ordernumber]
     );
 
     if (data.length === ``) {
-      console.log(`No order with that ordernumber`);
-      return `No order with that ordernumber`;
+      console.log(`No order with that order number`);
+      return `No order with that order number`;
     } else {
       return data.rows[0];
     }
@@ -104,16 +104,18 @@ async function getOrder(ordernumber) {
     console.log(`Error: ${error.message}`);
   }
 }
-async function getFinishedOrders() {
+async function getOrdersByStatus(orderstatus) {
   try {
-    const data = await pool.query(`
+    const data = await pool.query(
+      `
       select
         *
       from 
         orders
-      where orderstatus === 'finished'
-      
-    `);
+      where 
+        "order-status" = $1`,
+      [orderstatus]
+    );
     if (data.length === "") {
       console.log(`No orders finished`);
       return `No orders finished`;
@@ -125,30 +127,35 @@ async function getFinishedOrders() {
     console.log(`Error: ${error.message}`);
   }
 }
-// async function getPendingOrders(){
+async function updateOrderStatus(ordernumber, orderstatus) {
+  const queryText = `
+    update 
+      orders
+    set
+      "order-status" = $2,
+      "process-finished_at" = $3
+    where
+      "order-number" = $1
+    returning
+      *
+  `;
+  const queryValues = [ordernumber, orderstatus, "now()"];
 
-// }
-// async function getDeclinedOrders(){
+  const { rows } = await pool.query(queryText, queryValues);
+  // const orders = rows.map(order => {
+  //   return {
+  //     ordernumber: ordernumber,
+  //     orderstatus: orderstatus
+  //   };
+  // });
 
-// }
-
-async function updateOrderStatus(orderstatus) {
-  return pool.query(
-    `
-    insert into orders
-      (status)
-    values
-      ($1)
-  `,
-    [orderstatus]
-  );
+  return rows[0];
 }
 
 module.exports = {
-  createOrder,
-  createCustomer,
-  getAllOrders,
-  getOrder,
-  getFinishedOrders,
+  createOrder, //check,
+  getAllOrders, //check
+  getOrder, //check
+  getOrdersByStatus, //check
   updateOrderStatus
 };
