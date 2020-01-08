@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatDistance } from 'date-fns';
 
 const order = {
     orderNumber: 'BB-6WN-119682',
@@ -39,7 +40,7 @@ class Product extends React.Component {
 
         this.state = {
             order: order,
-            productCount: 0,
+            pickedSkus: [],
             orderCount: 0
         }
     }
@@ -51,9 +52,27 @@ class Product extends React.Component {
         })
     }
 
+    handleClick(sku) {
+        if (this.state.pickedSkus.includes(sku)) {
+            let i = this.state.pickedSkus.indexOf(sku);
+            let pickedSkusCopy = [...this.state.pickedSkus];
+            pickedSkusCopy.splice(i, 1);
+            this.setState({
+                pickedSkus: pickedSkusCopy
+            })
+        } else {
+            this.setState({
+                pickedSkus: [...this.state.pickedSkus, sku],
+            })
+        }
+
+    }
+
     render() {
+        
         const orderElements = this.state.order.orderLines
-        .map(({ description, size, color, orderedQuantity, image, sku }) => {
+        .map(({ description, size, color, orderedQuantity, image, sku, orderDate }) => {
+            
             return (
                 <div key={sku} >
                     <img src={image} alt='' width='123' height='164' />
@@ -62,19 +81,23 @@ class Product extends React.Component {
                     <p>Farge: {color}</p>
                     <p>Antall: {orderedQuantity}</p>
                     <p>SKU: {sku}</p>
-                    <button>Varen er plukket</button>
+                    <button onClick={this.handleClick.bind(this, sku)}>
+                        { this.state.pickedSkus.includes(sku) ? 'Plukket' : 'Ikke plukket' }
+                    </button>
                 </div>
             )
         });
 
         const fullAdress = this.state.order.fullAdress();
+        const timer = formatDistance(new Date(this.state.order.orderDate), new Date(), { addSuffix: true })
 
         return (
             <React.Fragment>
                 <div>
                     <header>
+                        <h3>Utløper om: {timer}</h3>
                         <h3>Antall varer: {this.state.orderCount}</h3>
-                        <h3>Varer plukket: {this.state.productCount}</h3>
+                        <h3>Varer plukket: {this.state.pickedSkus.length}</h3>
                     </header>
                     <div>
                         <h1>Sammendrag av bestilling</h1>
