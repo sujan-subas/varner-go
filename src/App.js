@@ -1,24 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
+import HeaderContainer from './container/HeaderContainer';
+import InfoContanier from './container/InfoContainer';
+import OrderView from './container/OrderView';
+import ProductView from './container/ProductView';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <React.Fragment>
+
+      </React.Fragment>
     </div>
   );
 }
