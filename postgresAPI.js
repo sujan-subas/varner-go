@@ -90,15 +90,15 @@ async function getOrder(ordernumber) {
         orders
       where 
         ordernumber = $1
-      returning
-        *
-      `,
+            `,
       [ordernumber]
     );
 
     if (data.length === ``) {
       console.log(`No order with that ordernumber`);
       return `No order with that ordernumber`;
+    } else {
+      return data.rows[0];
     }
   } catch (error) {
     console.log(`Error: ${error.message}`);
