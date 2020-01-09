@@ -278,5 +278,13 @@ export default class AcceptedOrder extends React.Component {
         {/* END - background */}
       </div>
     );
+=======
+      ready: false
+    };
+  }
+
+  render() {
+    return <>'hei'</>;
+>>>>>>> Develop
   }
 }
