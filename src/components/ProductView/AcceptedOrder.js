@@ -1,18 +1,13 @@
 import React from "react";
-<<<<<<< HEAD
 //lag som functional component som tar inn props istendfor å ha egen state,
 //todo: legg til {history, når man går tilbake }
 // React router?
-export default class AcceptOrder extends React.Component {
-=======
 
 export default class AcceptedOrder extends React.Component {
->>>>>>> Develop
   constructor(props) {
     super(props);
 
     this.state = {
-<<<<<<< HEAD
       declinedComfirmed: false,
       comfirmed: false,
       declined: false,
@@ -283,13 +278,5 @@ export default class AcceptedOrder extends React.Component {
         {/* END - background */}
       </div>
     );
-=======
-      ready: false
-    };
-  }
-
-  render() {
-    return <>'hei'</>;
->>>>>>> Develop
   }
 }
