@@ -1,45 +1,56 @@
 const Pool = require("pg").Pool;
 const pool = new Pool({
-  user: "qlique",
+  user: "sagerup",
   host: "localhost",
-  database: "qlique-varner-go",
-  password: "qlique",
-  port: 5050
+  database: "qlique",
+  password: "sagerup81",
+  port: 5432
 });
 
 // post data in orders table in postgres
 async function createOrder(orderObject) {
   const {
-    ordernumber,
-    referenceorderno,
-    ordertype,
-    orderdate,
-    deliverydate,
-    partdeliveryflag,
-    priority,
+    orderNumber,
+    refrenceOrderNumber,
+    orderDate,
+    deliveryDate,
+    partDeliveryFlag,
     name,
-    createdinapp_at
+    email,
+    phoneNumber,
+    addressLine1,
+    addressLine4,
+    zipCode,
+    city,
+    orderList,
   } = orderObject;
 
   const queryText = `
-    insert into orders
-      ("order-number", "reference-order-no", "order-type", "order-date", "delivery-date", "part-delivery-flag", priority, name, "created-in-app_at")
+  insert into orders
+  (order_number, reference_order_no, order_date, delivery_date, part_delivery_flag, customer_name, customer_email, customer_phonenumber, customer_addressline1, customer_addressline4, customer_zipcode, customer_city, order_list, created_in_app_at)
     values
-	    ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+	    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
     returning
     *
     `;
   const queryValues = [
-    ordernumber,
-    referenceorderno,
-    ordertype,
-    orderdate,
-    deliverydate,
-    partdeliveryflag,
-    priority,
+    orderNumber,
+    refrenceOrderNumber,
+    orderDate,
+    deliveryDate,
+    partDeliveryFlag,
     name,
-    createdinapp_at
+    email,
+    phoneNumber,
+    addressLine1,
+    addressLine4,
+    zipCode,
+    city,
+    JSON.stringify(orderList),
+    "now()"
   ];
+
+  console.log({queryValues})
 
   const { rows } = await pool.query(queryText, queryValues);
 
@@ -68,7 +79,7 @@ async function getAllOrders() {
         *
       from
         orders
-      order by orders."order-date" desc
+      order by orders.order_date desc
     `);
     if (data.length === "") {
       console.log(`No pick-up orders in database`);
@@ -89,7 +100,7 @@ async function getOrder(ordernumber) {
       from
         orders
       where 
-        "order-number" = $1
+        "order_number" = $1
             `,
       [ordernumber]
     );
@@ -113,7 +124,7 @@ async function getOrdersByStatus(orderstatus) {
       from 
         orders
       where 
-        "order-status" = $1`,
+        order_status = $1`,
       [orderstatus]
     );
     if (data.length === "") {
@@ -132,10 +143,10 @@ async function updateOrderStatus(ordernumber, orderstatus) {
     update 
       orders
     set
-      "order-status" = $2,
-      "process-finished_at" = $3
+      order_status = $2,
+      process_finished_at = $3
     where
-      "order-number" = $1
+      "order_number" = $1
     returning
       *
   `;
