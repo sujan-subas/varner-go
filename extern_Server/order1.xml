@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ecomOrderMessageRequest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://types.host.api.varner.wm6.swisslog.com/">
+	<messageHeader xmlns="">
+		<msgId>1612201912264120189</msgId>
+		<msgType>ecomOrder</msgType>
+		<transCode>NEW</transCode>
+		<sender>ECOM</sender>
+		<receiver>WM6</receiver>
+		<version>1.0</version>
+	</messageHeader>
+	<orderMessage xmlns="">
+		<orderMessageHeader>
+			<msgID>1612201912264120189</msgID>
+			<msgDate>2019-12-16T12:26:41</msgDate>
+			<webStoreWhs>6WN</webStoreWhs>
+			<salesCountry>NO</salesCountry>
+			<chainId>10</chainId>
+		</orderMessageHeader>
+		<orders>
+			<order>
+				<orderNumber>BB-6WN-119682</orderNumber>
+				<referenceOrderNo>100119682</referenceOrderNo>
+				<orderType>NOR</orderType>
+				<orderDate>2019-12-16T11:26:41</orderDate>
+				<deliveryDate>2019-12-16T12:26:41</deliveryDate>
+				<currencyCode>NOK</currencyCode>
+				<languageCode>NOR</languageCode>
+				<partDeliveryFlag>1</partDeliveryFlag>
+				<instruction />
+				<priority>4</priority>
+				<delivery>
+					<deliveryMethodId>C</deliveryMethodId>
+					<wayOfDeliveryDescription>Pick up in store</wayOfDeliveryDescription>
+					<placeOfDeliveryCode>625</placeOfDeliveryCode>
+				</delivery>
+				<invoiceCustomer>
+					<code>Jon.Skranes@varner.com</code>
+					<name>Jon Selenium</name>
+					<addressLine1>Seleniumsveien 50</addressLine1>
+					<addressLine4>Norge</addressLine4>
+					<zipCode>3475</zipCode>
+					<city>SÆTRE</city>
+					<phoneNumber>+4746823125</phoneNumber>
+					<email>Jon.Skranes@varner.com</email>
+					<countryCode>NO</countryCode>
+				</invoiceCustomer>
+				<deliveryCustomer>
+					<code>Jon.Skranes@varner.com</code>
+					<name>Vinterbro</name>
+					<attention>Jon Selenium</attention>
+					<addressLine1>Sjøskogvn. 7</addressLine1>
+					<addressLine4>Norge</addressLine4>
+					<zipCode>1407</zipCode>
+					<city>Vinterbro</city>
+					<phoneNumber>+4746823125</phoneNumber>
+					<email>Jon.Skranes@varner.com</email>
+					<countryCode>NO</countryCode>
+				</deliveryCustomer>
+				<orderCustomer>
+					<code>Jon.Skranes@varner.com</code>
+					<name>Jon Selenium</name>
+					<addressLine1>Seleniumsveien 50</addressLine1>
+					<addressLine4>Norge</addressLine4>
+					<zipCode>3475</zipCode>
+					<city>SÆTRE</city>
+					<phoneNumber>+4746823125</phoneNumber>
+					<email>Jon.Skranes@varner.com</email>
+					<countryCode>NO</countryCode>
+				</orderCustomer>
+				<orderLines>
+					<orderLine>
+						<position>1</position>
+						<productId>71944370010</productId>
+						<description>IW ABAD Tyra Bottom - 380/Red - L</description>
+						<orderedQuantity>1</orderedQuantity>
+						<price>49.5</price>
+						<discountAmount>49.5</discountAmount>
+						<priceConsumer>49.5</priceConsumer>
+						<packageCode />
+					</orderLine>
+					<orderLine>
+						<position>2</position>
+						<productId>71937770004</productId>
+						<description>DK NDC Tote - 990/Black - L</description>
+						<orderedQuantity>1</orderedQuantity>
+						<price>419.3</price>
+						<discountAmount>179.7</discountAmount>
+						<priceConsumer>419.3</priceConsumer>
+						<packageCode />
+					</orderLine>
+				</orderLines>
+			</order>
+		</orders>
+	</orderMessage>
+</ecomOrderMessageRequest>
