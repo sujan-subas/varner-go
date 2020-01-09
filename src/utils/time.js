@@ -1,17 +1,8 @@
 import { differenceInMinutes } from 'date-fns';
 
-/*
-export function getRemainingMinutes(timestamp) {
-    const deadLine = new Date(timestamp);
-    const now = new Date();
-    const minutesLeft = differenceInMinutes(now, deadLine);
 
-    return parseInt(minutesLeft);
-}
-*/
-
-export function getFormattedDeadLine(timestamp) {
-    const minutesLeft = differenceInMinutes(new Date(timestamp), new Date());
+export function getFormattedDeadLine(timestamp, now) {
+    const minutesLeft = differenceInMinutes(new Date(timestamp), now);
     const hours = Math.floor(minutesLeft / 60);
     const minutes = minutesLeft % 60;
     if (hours < 1 && minutes < 1) {

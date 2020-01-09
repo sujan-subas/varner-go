@@ -1,5 +1,5 @@
 import React from 'react';
-import { getFormattedDeadLine, getRemainingMinutes } from '../../utils/time';
+import { getFormattedDeadLine } from '../../utils/time';
 
 const order = {
     status: 'new',
@@ -41,27 +41,18 @@ class Product extends React.Component {
         super(props);
 
         this.state = {
+            rand: 0,
             order: order,
             pickedSkus: [],
-            orderCount: 0,
-            timer: '',
-            status: ''
+            orderCount: 0
         }
     }
 
     componentDidMount() {
         let count = this.state.order.orderLines.length;
-        let timeLeft = getFormattedDeadLine(this.state.order.deadLine);
-        if (timeLeft === '0') {
-            this.setState({
-                status: 'declined'
-            })
-        } else {
-            this.setState({
-                orderCount: count,
-                timer: timeLeft
-            })
-        }
+        this.setState({
+            orderCount: count
+        })
     }
 
     handleClick(sku) {
@@ -105,7 +96,7 @@ render() {
         <React.Fragment>
             <div>
                 <header>
-                    <h3>Utløper om: {this.state.timer}</h3>
+                    <h3>Utløper om: {getFormattedDeadLine(this.state.order.deadLine, new Date())}</h3>
                     <h3>Antall varer: {this.state.orderCount}</h3>
                     <h3>Varer plukket: {this.state.pickedSkus.length}</h3>
                 </header>
