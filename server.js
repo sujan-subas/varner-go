@@ -5,6 +5,7 @@ const port = process.env.PORT
 const bodyParser = require("body-parser");
 require('body-parser-xml')(bodyParser);
 const cors = require("cors");
+const util = require('util');
 // const { Pool } = require("pg");
 // const secret = process.env.SECRET;
 // const pool = new Pool({
@@ -32,7 +33,7 @@ api.post("/orders", async (req, res) => {
   // "incoming" json object
   const orderXml = req.body;
   const orderObject = getJsonFromXml(orderXml)
-  console.log(req.body);
+  console.log(util.inspect(orderObject, { depth: Infinity, colors: true }));
 
   // const newOrder = await createOrder(orderObject);
   res.send({hello: 'heisann'});
