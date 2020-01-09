@@ -27,7 +27,7 @@ async function createOrder(orderObject) {
   } = orderObject;
 
   const queryText = `
-  order_number, reference_order-no, order_date, delivery_date, part_delivery_flag, customer_name, customer_email, customer_phonenumber, customer_addressline1, customer_addressline4, customer_zipcode, customer_city, order_list, order_status, created_in_app_at")
+  "order_number", reference_order_no, order_date, delivery_date, part_delivery_flag, customer_name, customer_email, customer_phonenumber, customer_addressline1, customer_addressline4, customer_zipcode, customer_city, order_list, order_status, created_in_app_at")
     values
 	    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
     returning
