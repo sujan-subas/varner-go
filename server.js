@@ -41,7 +41,7 @@ api.post("/orders", async (req, res) => {
     console.log(orderXml);
     const orderObject = await getJsonFromXml(orderXml);
     // console.log(util.inspect(orderXml, false, null, true /* enable colors */))
-    console.log( '****************', orderObject)
+    // console.log( '****************', orderObject)
     const newOrder = await createOrder(orderObject);
     res.send(newOrder);
   } catch (error) {
@@ -93,7 +93,7 @@ app.use((err, req, res, next) => {
   }
 });
 
-// This returns the object that contains the orderdata we want to put into the db.
+
 
 app.listen(port, () => {
   console.log(`running on port: ${port}`);

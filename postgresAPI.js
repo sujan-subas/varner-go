@@ -1,10 +1,8 @@
+require("dotenv").config();
+
 const Pool = require("pg").Pool;
 const pool = new Pool({
-  user: "sagerup",
-  host: "localhost",
-  database: "qlique",
-  password: "sagerup81",
-  port: 5432
+  connectionString: process.env.DATABASE_URL
 });
 
 // post data in orders table in postgres
