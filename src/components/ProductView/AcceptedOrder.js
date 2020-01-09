@@ -33,6 +33,8 @@ export default class AcceptedOrder extends React.Component {
         });
       }
     } else {
+      // sender til pos
+      this.comfirmDelete(this.state.reason);
       alert("tilbake til oversikt");
     }
   }
@@ -45,7 +47,6 @@ export default class AcceptedOrder extends React.Component {
           "other was the reason for declining the order, send to textfield to fill inn?"
         );
       } else {
-        this.comfirmDelete(reason);
         this.setState({
           comfirmed: !this.state.comfirmed,
           reason
@@ -59,200 +60,206 @@ export default class AcceptedOrder extends React.Component {
 
   // function to post delete request in data base and send order to sweed and api back to varner
   comfirmDelete(reason) {
-    console.log(`comfirmDelete Pressed! Reason: ${reason}`);
+    console.log(`comfirmDelete Pressed! send to database! Reason: ${reason}`);
   }
 
   render() {
     const { comfirmed, declined } = this.state;
     return (
       // {/* background */}
-      <div className="bg-dark" style={{ width: "100%", height: "100vh" }}>
+      <div className="bg-dark " style={{ width: "100%", height: "100vh" }}>
         {/* Header */}
-        <div className="d-flex align-items-center p-3">
+        <header className="p-3">
           <button
             className="btn"
             onClick={() => this.handleButtonClick("back")}
           >
             <i
-              className="fa fa-arrow-left text-light ml-4"
+              className="fa fa-arrow-left text-success ml-4"
               style={{ transform: "scale(1.5, 1)" }}
             />
           </button>
-        </div>
+        </header>
         {/* GREY CONTAINER */}
-        <div
-          className="bg-secondary container-fluid"
-          style={{ height: "70vh" }}
-        >
-          {declined ? (
-            <div className="row">
-              {!comfirmed ? (
-                <div className="container">
-                  <h2 className="text-white p-3">
-                    Hvorfor vil du avvise ordren?
-                  </h2>
+        <main className="text-center">
+          <div
+            className="bg-secondary container-fluid py-4"
+            style={{ height: "70vh" }}
+          >
+            {declined ? (
+              <div className="row">
+                {!comfirmed ? (
                   <div className="container">
-                    <button
-                      className="btn w-75 m-2 bg-light rounded-0"
-                      onClick={() => this.handleDeclinedReason("notAvailable")}
-                    >
-                      Varen er ikke tillgjengelig
-                    </button>
-                    <button
-                      className="btn w-75 m-2 bg-light rounded-0"
-                      onClick={() => this.handleDeclinedReason("damadge")}
-                    >
-                      Varen er skadet
-                    </button>
-                    <button
-                      className="btn w-75 m-2 bg-light rounded-0"
-                      onClick={() => this.handleDeclinedReason("noTime")}
-                    >
-                      Har ikke tid
-                    </button>
-                    <button
-                      className="btn w-75 m-2 bg-light rounded-0"
-                      onClick={() => this.handleDeclinedReason("other")}
-                    >
-                      Annet
-                    </button>
+                    <h2 className="text-white p-3">
+                      Hvorfor vil du avvise ordren?
+                    </h2>
+                    <div className="container">
+                      <button
+                        className="btn w-75 m-3 p-3 bg-light rounded-0"
+                        onClick={() =>
+                          this.handleDeclinedReason("notAvailable")
+                        }
+                      >
+                        Varen er ikke tillgjengelig
+                      </button>
+                      <button
+                        className="btn w-75 m-3 p-3 bg-light rounded-0"
+                        onClick={() => this.handleDeclinedReason("damadge")}
+                      >
+                        Varen er skadet
+                      </button>
+                      <button
+                        className="btn w-75 m-3 p-3 bg-light rounded-0"
+                        onClick={() => this.handleDeclinedReason("noTime")}
+                      >
+                        Har ikke tid
+                      </button>
+                      <button
+                        className="btn w-75 m-3 p-3 bg-light rounded-0"
+                        onClick={() => this.handleDeclinedReason("other")}
+                      >
+                        Annet
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <div className="container p-4">
-                  <i
-                    className="fa fa-times fa-10x text-success m-4"
-                    style={{ fontSize: "8rem" }}
-                  />
-                  <div className="text-white m-3">
-                    <strong className="w-50 display-4">Ordren er avvis!</strong>
-                    <hr />
-                    <h5>
-                      Fordi: {this.state.reason}! <br /> Du finner den under
-                      "avviste ordre"!
-                    </h5>
+                ) : (
+                  <div className="container p-4">
+                    <i
+                      className="fa fa-times fa-10x text-success m-4"
+                      style={{ fontSize: "8rem" }}
+                    />
+                    <div className="text-white m-3">
+                      <strong className="w-50 display-4">
+                        Ordren er avvis!
+                      </strong>
+                      <hr />
+                      <h5>
+                        Fordi: {this.state.reason}! <br /> Du finner den under
+                        "avviste ordre"!
+                      </h5>
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-          ) : (
-            //   ACCEPTED VIEWS -----------------
-            <div className="row mb-4">
-              {!comfirmed ? (
-                <div className="container">
-                  <i
-                    className="fa fa-check fa-10x text-success text-center m-4"
-                    style={{ fontSize: "8rem" }}
-                  />
-                  <div className="text-white container">
-                    <p className="display-4">Orderen er akseptert!</p>
-                    <strong className="w-50">
-                      Obs!Notere at orderen ikke er ferdig behandlet før varene
-                      er plukket og bekreftelse er sendt til kunde. Du har
-                      fortsatt mulighet å avvise orderen.
-                    </strong>
+                )}
+              </div>
+            ) : (
+              //   ACCEPTED VIEWS -----------------
+              <div className="row mb-4">
+                {!comfirmed ? (
+                  <div className="container">
+                    <i
+                      className="fa fa-check fa-10x text-success text-center m-4"
+                      style={{ fontSize: "8rem" }}
+                    />
+                    <div className="text-white container">
+                      <p className="display-4">Orderen er akseptert!</p>
+                      <strong className="w-50">
+                        Obs!Notere at orderen ikke er ferdig behandlet før
+                        varene er plukket og bekreftelse er sendt til kunde. Du
+                        har fortsatt mulighet å avvise orderen.
+                      </strong>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <div className="container">
-                  <i
-                    className="fa fa-exclamation fa-10x text-success text-center m-4"
-                    style={{ fontSize: "8rem" }}
-                  ></i>
-                  <div className="text-white container">
-                    <p className="display-4"></p>
-                    <strong className="w-50">
-                      HUSK ALLE varer må plukkes før bekreftelse kan sendes til
-                      kunde
-                    </strong>
+                ) : (
+                  <div className="container">
+                    <i
+                      className="fa fa-exclamation fa-10x text-success text-center m-4"
+                      style={{ fontSize: "8rem" }}
+                    ></i>
+                    <div className="text-white container">
+                      <p className="display-4"></p>
+                      <strong className="w-50">
+                        HUSK ALLE varer må plukkes før bekreftelse kan sendes
+                        til kunde
+                      </strong>
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-          )}
-          {/* END - grey container */}
-        </div>
+                )}
+              </div>
+            )}
+            {/* END - grey container */}
+          </div>
 
-        {/* BUTTONS */}
-        <div className="my-5">
-          {!declined ? (
-            // ACCEPTED BUTTONS ----------------
-            <>
-              {!comfirmed ? (
-                <>
+          {/* BUTTONS */}
+          <div className="my-5">
+            {!declined ? (
+              // ACCEPTED BUTTONS ----------------
+              <>
+                {!comfirmed ? (
+                  <>
+                    <button
+                      className="btn btn-lg text-white p-3 mx-2 rounded-0 w-25 "
+                      style={{
+                        backgroundColor: "#000"
+                      }}
+                      onClick={() => this.handleButtonClick()}
+                    >
+                      Tilbake
+                    </button>
+                    <button
+                      className="btn btn-lg text-white p-3 mx-2 rounded-0 w-25"
+                      style={{
+                        backgroundColor: "#000"
+                      }}
+                      onClick={() => this.handleButtonClick("ok")}
+                    >
+                      OK
+                    </button>
+                  </>
+                ) : (
                   <button
-                    className="btn btn-lg text-white p-3 mx-2 rounded-0 w-25 "
+                    className="btn btn-lg text-white rounded-0 w-75"
                     style={{
                       backgroundColor: "#000"
                     }}
                     onClick={() => this.handleButtonClick()}
-                  >
-                    Tilbake
-                  </button>
-                  <button
-                    className="btn btn-lg text-white p-3 mx-2 rounded-0 w-25"
-                    style={{
-                      backgroundColor: "#000"
-                    }}
-                    onClick={() => this.handleButtonClick("ok")}
                   >
                     OK
                   </button>
-                </>
-              ) : (
-                <button
-                  className="btn btn-lg text-white rounded-0 w-75"
-                  style={{
-                    backgroundColor: "#000"
-                  }}
-                  onClick={() => this.handleButtonClick()}
-                >
-                  OK
-                </button>
-              )}
-            </>
-          ) : (
-            // END - Accepted buttons
-            // DECLINED BUTTONS ------------------------------
-            <>
-              {!comfirmed ? (
-                <button
-                  className="btn btn-lg text-white p-3"
-                  style={{
-                    backgroundColor: "#000",
-                    width: "80%",
-                    borderRadius: "0"
-                  }}
-                  onClick={() => this.handleButtonClick("back")}
-                >
-                  Tilbake
-                </button>
-              ) : (
-                <>
+                )}
+              </>
+            ) : (
+              // END - Accepted buttons
+              // DECLINED BUTTONS ------------------------------
+              <>
+                {!comfirmed ? (
                   <button
-                    className="btn btn-lg text-white p-3 mx-2 rounded-0"
+                    className="btn btn-lg text-white p-3"
                     style={{
-                      backgroundColor: "#000"
+                      backgroundColor: "#000",
+                      width: "80%",
+                      borderRadius: "0"
                     }}
                     onClick={() => this.handleButtonClick("back")}
                   >
-                    Feil grunn?!
+                    Tilbake
                   </button>
-                  <button
-                    className="btn btn-lg text-white p-3 mx-2 rounded-0"
-                    style={{
-                      backgroundColor: "#000"
-                    }}
-                    onClick={() => this.handleButtonClick()}
-                  >
-                    Til oversikt!
-                  </button>
-                </>
-              )}
-            </>
-            // END - Declined buttons
-          )}
-        </div>
+                ) : (
+                  <>
+                    <button
+                      className="btn btn-lg text-white p-3 mx-2 rounded-0"
+                      style={{
+                        backgroundColor: "#000"
+                      }}
+                      onClick={() => this.handleButtonClick("back")}
+                    >
+                      Feil grunn?!
+                    </button>
+                    <button
+                      className="btn btn-lg text-white p-3 mx-2 rounded-0"
+                      style={{
+                        backgroundColor: "#000"
+                      }}
+                      onClick={() => this.handleButtonClick()}
+                    >
+                      Til oversikt!
+                    </button>
+                  </>
+                )}
+              </>
+              // END - Declined buttons
+            )}
+          </div>
+        </main>
         {/* END - background */}
       </div>
     );
