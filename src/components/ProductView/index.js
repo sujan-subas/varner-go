@@ -1,10 +1,11 @@
 import React from 'react';
-import { formatDistance, addHours, formatDistanceToNow, formatDistanceStrict } from 'date-fns';
+import { getFormattedDeadLine } from '../../utils/time';
 
 const order = {
+    status: 'new',
     orderNumber: 'BB-6WN-119682',
     referenceOrderNo: '100119682',
-    orderDate: '2020-01-08T16:20:41',
+    deadLine: '2020-01-09T18:44:41',
     customer: 'Jon Selenium',
     phoneNumber: '+4746823125',
     addressLine1: 'Sjøskogvn. 7',
@@ -34,11 +35,13 @@ const order = {
 }
 
 
+
 class Product extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            rand: 0,
             order: order,
             pickedSkus: [],
             orderCount: 0
@@ -68,11 +71,10 @@ class Product extends React.Component {
 
     }
 
-    render() {
-        
-        const orderElements = this.state.order.orderLines
-        .map(({ description, size, color, orderedQuantity, image, sku, orderDate }) => {
-            
+render() {
+    const orderElements = this.state.order.orderLines
+        .map(({ description, size, color, orderedQuantity, image, sku }) => {
+
             return (
                 <div key={sku} >
                     <img src={image} alt='' width='123' height='164' />
@@ -82,44 +84,44 @@ class Product extends React.Component {
                     <p>Antall: {orderedQuantity}</p>
                     <p>SKU: {sku}</p>
                     <button onClick={this.handleClick.bind(this, sku)}>
-                        { this.state.pickedSkus.includes(sku) ? 'Plukket' : 'Ikke plukket' }
+                        {this.state.pickedSkus.includes(sku) ? 'Plukket' : 'Ikke plukket'}
                     </button>
                 </div>
             )
         });
 
-        const fullAdress = this.state.order.fullAdress();
-        const deadLine = addHours(new Date(this.state.order.orderDate), 2);
-        const now = new Date();
-        const timeLeft = formatDistanceStrict(deadLine, now, {unit: 'minute'})
-        
+    const fullAdress = this.state.order.fullAdress();
 
-        return (
-            <React.Fragment>
+    return (
+        <React.Fragment>
+            <div>
+                <header>
+                    <h3>Utløper om: {getFormattedDeadLine(this.state.order.deadLine, new Date())}</h3>
+                    <h3>Antall varer: {this.state.orderCount}</h3>
+                    <h3>Varer plukket: {this.state.pickedSkus.length}</h3>
+                </header>
                 <div>
-                    <header>
-                        <h3>Utløper om: {timeLeft}</h3>
-                        <h3>Antall varer: {this.state.orderCount}</h3>
-                        <h3>Varer plukket: {this.state.pickedSkus.length}</h3>
-                    </header>
-                    <div>
-                        <h1>Sammendrag av bestilling</h1>
-                        <p>{this.state.order.orderDate}</p>
-                        <p>{this.state.order.referenceOrderNo}</p>
-                        <p>{this.state.order.customer}</p>
-                        <p>{this.state.order.phoneNumber}</p>
-                        <p>Leveringsadresse:
+                    <h1>Sammendrag av bestilling</h1>
+                    <p>{this.state.order.orderDate}</p>
+                    <p>{this.state.order.referenceOrderNo}</p>
+                    <p>{this.state.order.customer}</p>
+                    <p>{this.state.order.phoneNumber}</p>
+                    <p>Leveringsadresse:
                             {fullAdress}
-                        </p>
-                    </div>
-                    <div>
-                        <h1>Produktinformasjon</h1>
-                        {orderElements}
-                    </div>
+                    </p>
                 </div>
-            </React.Fragment>
-        )
-    }
+                <div>
+                    <h1>Produktinformasjon</h1>
+                    {orderElements}
+                </div>
+                <div>
+                    <button>Avvis ordre</button>
+                    <button>Aksepter ordre</button>
+                </div>
+            </div>
+        </React.Fragment>
+    )
+}
 }
 
 export default Product;
