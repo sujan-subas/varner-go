@@ -1,11 +1,11 @@
 import React from 'react';
-import { getFormattedDeadLine } from '../../utils/time';
+import { getFormattedDeadLine, getRemainingMinutes } from '../../utils/time';
 
 const order = {
     status: 'new',
     orderNumber: 'BB-6WN-119682',
     referenceOrderNo: '100119682',
-    deadLine: '2020-01-09T15:44:41',
+    deadLine: '2020-01-09T18:44:41',
     customer: 'Jon Selenium',
     phoneNumber: '+4746823125',
     addressLine1: 'Sjøskogvn. 7',
@@ -43,15 +43,25 @@ class Product extends React.Component {
         this.state = {
             order: order,
             pickedSkus: [],
-            orderCount: 0
+            orderCount: 0,
+            timer: '',
+            status: ''
         }
     }
 
     componentDidMount() {
         let count = this.state.order.orderLines.length;
-        this.setState({
-            orderCount: count
-        })
+        let timeLeft = getFormattedDeadLine(this.state.order.deadLine);
+        if (timeLeft === '0') {
+            this.setState({
+                status: 'declined'
+            })
+        } else {
+            this.setState({
+                orderCount: count,
+                timer: timeLeft
+            })
+        }
     }
 
     handleClick(sku) {
@@ -72,7 +82,7 @@ class Product extends React.Component {
 
 render() {
     const orderElements = this.state.order.orderLines
-        .map(({ description, size, color, orderedQuantity, image, sku, orderDate }) => {
+        .map(({ description, size, color, orderedQuantity, image, sku }) => {
 
             return (
                 <div key={sku} >
@@ -90,14 +100,12 @@ render() {
         });
 
     const fullAdress = this.state.order.fullAdress();
-    const timestamp = this.state.order.deadLine;
-    const formattedDeadLine = getFormattedDeadLine(timestamp);
 
     return (
         <React.Fragment>
             <div>
                 <header>
-                    <h3>Utløper om: {formattedDeadLine}</h3>
+                    <h3>Utløper om: {this.state.timer}</h3>
                     <h3>Antall varer: {this.state.orderCount}</h3>
                     <h3>Varer plukket: {this.state.pickedSkus.length}</h3>
                 </header>
@@ -114,6 +122,10 @@ render() {
                 <div>
                     <h1>Produktinformasjon</h1>
                     {orderElements}
+                </div>
+                <div>
+                    <button>Avvis ordre</button>
+                    <button>Aksepter ordre</button>
                 </div>
             </div>
         </React.Fragment>
