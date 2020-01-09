@@ -1,5 +1,4 @@
 import React from "react";
-
 import Orders from "../../components/OrderView";
 
 const OrdersContainer = props => {
