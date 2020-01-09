@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT
 const bodyParser = require("body-parser");
+require('body-parser-xml')(bodyParser);
 const cors = require("cors");
 // const { Pool } = require("pg");
 // const secret = process.env.SECRET;
@@ -17,6 +18,7 @@ const getJsonFromXml = require('./services/convert_xml')
 //  ------------
 app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.xml());
 // app.use(bodyParser.urlencoded({ extended: true }));
 
 // Build react app
@@ -32,8 +34,8 @@ api.post("/orders", async (req, res) => {
   const orderObject = getJsonFromXml(orderXml)
   console.log(req.body);
 
-  const newOrder = await createOrder(orderObject);
-  res.send(newOrder);
+  // const newOrder = await createOrder(orderObject);
+  res.send({hello: 'heisann'});
 });
 
 // From frontend
