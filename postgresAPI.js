@@ -23,13 +23,13 @@ async function createOrder(orderObject) {
     zipCode,
     city,
     orderList,
-    createdinapp_at
   } = orderObject;
 
   const queryText = `
-  "order_number", reference_order_no, order_date, delivery_date, part_delivery_flag, customer_name, customer_email, customer_phonenumber, customer_addressline1, customer_addressline4, customer_zipcode, customer_city, order_list, order_status, created_in_app_at")
+  insert into orders
+  (order_number, reference_order_no, order_date, delivery_date, part_delivery_flag, customer_name, customer_email, customer_phonenumber, customer_addressline1, customer_addressline4, customer_zipcode, customer_city, order_list, created_in_app_at)
     values
-	    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+	    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
     returning
     *
     `;
@@ -46,9 +46,11 @@ async function createOrder(orderObject) {
     addressLine4,
     zipCode,
     city,
-    orderList,
-    createdinapp_at
+    JSON.stringify(orderList),
+    "now()"
   ];
+
+  console.log({queryValues})
 
   const { rows } = await pool.query(queryText, queryValues);
 
@@ -122,7 +124,7 @@ async function getOrdersByStatus(orderstatus) {
       from 
         orders
       where 
-        "order_status" = $1`,
+        order_status = $1`,
       [orderstatus]
     );
     if (data.length === "") {
@@ -141,8 +143,8 @@ async function updateOrderStatus(ordernumber, orderstatus) {
     update 
       orders
     set
-      " order_number" = $2,
-      "process_finished_at" = $3
+      order_status = $2,
+      process_finished_at = $3
     where
       "order_number" = $1
     returning
