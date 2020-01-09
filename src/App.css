@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,49 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+.color-nav{
+  background-color:#5A5A5A;
+  margin-bottom:  10px;
+  color: black;
+}
+
+.color-card{
+  background-color: #414141;
+  margin-bottom:  15px;
+}
+
+.App{
+  background-color: #2B2B2B;
+  min-height: 100vh;
+}
+
+.nav-tabs {
+  border-bottom: #5A5A5A;
+}
+
+
+a.active {
+  background-color: #2B2B2B !important;
+  color: white !important;
+  border: none
+}
+.nav-link:hover,
+.nav-tabs:hover {
+  border: none !important;
+}
+
+.nav-link:focus,
+.nav-tabs:focus {
+  border: none !important;
+  box-shadow: none !important;
+}
+.nav-link:focus-within,
+.nav-tabs:focus-within {
+  border: none !important;
+}
+.nav-link::after,
+.nav-tabs::after {
+  border: none !important;
 }

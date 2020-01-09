@@ -3,7 +3,9 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT;
 const bodyParser = require("body-parser");
+require('body-parser-xml')(bodyParser);
 const cors = require("cors");
+const util = require('util');
 // const { Pool } = require("pg");
 // const secret = process.env.SECRET;
 // const pool = new Pool({
@@ -22,6 +24,7 @@ const getJsonFromXml = require("./services/convert_xml");
 //  ------------
 app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.xml());
 // app.use(bodyParser.urlencoded({ extended: true }));
 
 // Build react app
@@ -32,10 +35,13 @@ const api = express();
 
 // Order post from Varner
 api.post("/orders", async (req, res) => {
+
   try {
     const orderXml = req.body;
-    const orderObject = getJsonFromXml(orderXml);
-
+    console.log(orderXml);
+    const orderObject = await getJsonFromXml(orderXml);
+    // console.log(util.inspect(orderXml, false, null, true /* enable colors */))
+    console.log( '****************', orderObject)
     const newOrder = await createOrder(orderObject);
     res.send(newOrder);
   } catch (error) {
