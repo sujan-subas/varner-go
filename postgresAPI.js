@@ -1,10 +1,10 @@
 const Pool = require("pg").Pool;
 const pool = new Pool({
-  user: "qlique",
+  user: "sagerup",
   host: "localhost",
-  database: "qlique-varner-go",
-  password: "qlique",
-  port: 5050
+  database: "qlique",
+  password: "sagerup81",
+  port: 5432
 });
 
 // post data in orders table in postgres

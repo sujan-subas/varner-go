@@ -50,25 +50,27 @@ async function getJSONfromXML(result) {
   }).then(function (res) {
     
   })
-  // Ge
+  // Make new Object
   const orderJson =
   {
     ordreNumber: order.orderNumber[0],
     refrenceOrderNumber: order.referenceOrderNo[0],
     orderDate: order.orderDate[0], // year/month/day
-    deliveryDate: order.orderDate[0], // year/month/day
+    deliveryDate: order.deliveryDate[0], // year/month/day
     storeCode: delivery.placeOfDeliveryCode[0],
+    partDeliveryFlag: order.partDeliveryFlag[0],
     name: costumer.name[0],
     email: costumer.code[0],
     phoneNumber: costumer.phoneNumber[0],
-    addressLine: costumer.addressLine1[0],
+    addressLine1: costumer.addressLine1[0],
+    addressLine4: costumer.addressLine4[0],
     zipCode: costumer.zipCode[0],
     city: costumer.city[0],
     orderList: orderDetails
   }
-  // Restructure obj
-  // console.log('****', orderJson)
   return orderJson;
 }
+
+
 
 module.exports = getJSONfromXML
