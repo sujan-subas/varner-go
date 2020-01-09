@@ -1,57 +1,170 @@
 import React from "react";
-
+//lag som functional component som tar inn props istendfor å ha egen state,
+//todo: legg til {history, når man går tilbake }
+// React router?
 export default class AcceptOrder extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      readyForDelivery: false,
-      accepted: false
+      declinedComfirmed: false,
+      comfirmed: false,
+      declined: false,
+      reason: ""
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleDeclinedReason = this.handleDeclinedReason.bind(this);
   }
-  handleButtonClick() {
-    console.log("cicked");
-    this.setState({
-      accepted: !this.state.accepted
-    });
+  //functions button container
+  handleButtonClick(string) {
+    if (string === "ok") {
+      this.setState({
+        comfirmed: !this.state.comfirmed
+      });
+    } else if (string === "declineOrder") {
+      this.setState({
+        comfirmed: !this.state.comfirmed
+      });
+    } else if (string === "back") {
+      // legg til {histrpy}
+      if (this.state.comfirmed === true) {
+        this.setState({
+          comfirmed: !this.state.comfirmed
+        });
+      }
+    } else {
+      alert("tilbake til oversikt");
+    }
+  }
+
+  // functions button for decline reason
+  handleDeclinedReason(reason) {
+    try {
+      if (reason === "other") {
+        console.log(
+          "other was the reason for declining the order, send to textfield to fill inn?"
+        );
+      } else {
+        this.comfirmDelete(reason);
+        this.setState({
+          comfirmed: !this.state.comfirmed,
+          reason
+        });
+      }
+    } catch (error) {
+      console.log(`Was not able to delete order! Error: ${error.message}`);
+      alert(`Was not able to delete order!`);
+    }
+    // switch (string) {
+    //   case "notAvailable":
+    //     console.log(string);
+    //     // this.comfirmDelete();
+    //     return string;
+    //   case "damadge":
+    //     console.log(string);
+    //     // this.comfirmDelete();
+    //     return string;
+    //   case "noTime":
+    //     console.log(string);
+    //     // this.comfirmDelete();
+    //     return string;
+    //   case "other":
+    //     console.log(string);
+    //     // this.comfirmDelete();
+    //     return string;
+    //   default:
+    //     console.log("Kunne ikke delete ordre");
+    //     return "";
+    // }
+  }
+
+  // function to post delete request in data base and send order to sweed and api back to varner
+  comfirmDelete(reason) {
+    console.log(`comfirmDelete Pressed! Reason: ${reason}`);
   }
 
   render() {
-    const { readyForDelivery, accepted } = this.state;
+    const { comfirmed, declined } = this.state;
     return (
-      <>
+      // {/* background */}
+      <div className="bg-dark" style={{ width: "100%", height: "100vh" }}>
+        {/* Header */}
+        <div className="d-flex align-items-center p-3">
+          <button
+            className="btn"
+            onClick={() => this.handleButtonClick("back")}
+          >
+            <i
+              className="fa fa-arrow-left text-light ml-4"
+              style={{ transform: "scale(1.5, 1)" }}
+            />
+          </button>
+        </div>
+        {/* GREY CONTAINER */}
         <div
-          className="container-fluid bg-dark"
-          style={{ width: "100%", height: "100vh" }}
+          className="bg-secondary container-fluid"
+          style={{ height: "70vh" }}
         >
-          <div className="row p-4">
-            <i className="fa fa-arrow-left text-light mx-2"></i>
-          </div>
-          <div className="row mb-4">
-            <div
-              className="bg-secondary container-fluid"
-              style={{ height: "70vh" }}
-            >
-              {accepted ? (
-                <>
-                  <i
-                    className="fa fa-exclamation fa-10x text-success text-center m-4"
-                    style={{ fontSize: "8rem" }}
-                  ></i>
-                  <div className="text-white container">
-                    <p className="display-4"></p>
-                    <strong className="w-50">
-                      Alle varer må plukkes før bekreftelse kan sendes til kunde
-                    </strong>
+          {declined ? (
+            <div className="row">
+              {!comfirmed ? (
+                <div className="container">
+                  <h3 className="text-white p-3">
+                    Hvorfor vil du avvise ordren
+                  </h3>
+                  <div className="container">
+                    <button
+                      className="btn w-75 m-2 bg-light rounded-0"
+                      onClick={() => this.handleDeclinedReason("notAvailable")}
+                    >
+                      Varen er ikke tillgjengelig
+                    </button>
+                    <button
+                      className="btn w-75 m-2 bg-light rounded-0"
+                      onClick={() => this.handleDeclinedReason("damadge")}
+                    >
+                      Varen er skadet
+                    </button>
+                    <button
+                      className="btn w-75 m-2 bg-light rounded-0"
+                      onClick={() => this.handleDeclinedReason("noTime")}
+                    >
+                      Har ikke tid
+                    </button>
+                    <button
+                      className="btn w-75 m-2 bg-light rounded-0"
+                      onClick={() => this.handleDeclinedReason("other")}
+                    >
+                      Annet
+                    </button>
                   </div>
-                </>
+                </div>
               ) : (
-                <>
+                <div className="container p-4">
+                  <i
+                    className="fa fa-times fa-10x text-success m-4"
+                    style={{ fontSize: "8rem" }}
+                  />
+                  <div className="text-white m-3">
+                    <strong className="w-50 display-4">Ordren er avvis!</strong>
+                    <hr />
+                    <h5>
+                      Fordi: {this.state.reason}! <br /> Du finner den under
+                      "avviste ordre"!
+                    </h5>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            //   ACCEPTED VIEWS -----------------
+            <div className="row mb-4">
+              {!comfirmed ? (
+                <div className="container">
                   <i
                     className="fa fa-check fa-10x text-success text-center m-4"
                     style={{ fontSize: "8rem" }}
-                  ></i>
+                  />
                   <div className="text-white container">
                     <p className="display-4">Orderen er akseptert!</p>
                     <strong className="w-50">
@@ -60,41 +173,109 @@ export default class AcceptOrder extends React.Component {
                       fortsatt mulighet å avvise orderen.
                     </strong>
                   </div>
-                </>
+                </div>
+              ) : (
+                <div className="container">
+                  <i
+                    className="fa fa-exclamation fa-10x text-success text-center m-4"
+                    style={{ fontSize: "8rem" }}
+                  ></i>
+                  <div className="text-white container">
+                    <p className="display-4"></p>
+                    <strong className="w-50">
+                      HUSK ALLE varer må plukkes før bekreftelse kan sendes til
+                      kunde
+                    </strong>
+                  </div>
+                </div>
               )}
             </div>
-          </div>
-          <div className="row">
-            <div className="container">
-              {accepted ? (
+          )}
+          {/* END - grey container */}
+        </div>
+
+        {/* BUTTONS */}
+        <div className="my-5">
+          {!declined ? (
+            // ACCEPTED BUTTONS ----------------
+            <>
+              {!comfirmed ? (
+                <>
+                  <button
+                    className="btn btn-lg text-white p-3 mx-2 rounded-0 w-25 "
+                    style={{
+                      backgroundColor: "#000"
+                    }}
+                    onClick={() => this.handleButtonClick()}
+                  >
+                    Tilbake
+                  </button>
+                  <button
+                    className="btn btn-lg text-white p-3 mx-2 rounded-0 w-25"
+                    style={{
+                      backgroundColor: "#000"
+                    }}
+                    onClick={() => this.handleButtonClick("ok")}
+                  >
+                    OK
+                  </button>
+                </>
+              ) : (
                 <button
-                  className="btn btn-lg text-white m-4"
+                  className="btn btn-lg text-white rounded-0 w-75"
                   style={{
-                    backgroundColor: "#000",
-                    width: "80%",
-                    borderRadius: "0"
+                    backgroundColor: "#000"
                   }}
                   onClick={() => this.handleButtonClick()}
                 >
                   OK
                 </button>
-              ) : (
+              )}
+            </>
+          ) : (
+            // END - Accepted buttons
+            // DECLINED BUTTONS ------------------------------
+            <>
+              {!comfirmed ? (
                 <button
-                  className="btn btn-lg text-white m-4"
+                  className="btn btn-lg text-white p-3"
                   style={{
                     backgroundColor: "#000",
                     width: "80%",
                     borderRadius: "0"
                   }}
-                  onClick={() => this.handleButtonClick()}
+                  onClick={() => this.handleButtonClick("back")}
                 >
                   Tilbake
                 </button>
+              ) : (
+                <>
+                  <button
+                    className="btn btn-lg text-white p-3 mx-2 rounded-0"
+                    style={{
+                      backgroundColor: "#000"
+                    }}
+                    onClick={() => this.handleButtonClick("back")}
+                  >
+                    Feil grunn?!
+                  </button>
+                  <button
+                    className="btn btn-lg text-white p-3 mx-2 rounded-0"
+                    style={{
+                      backgroundColor: "#000"
+                    }}
+                    onClick={() => this.handleButtonClick()}
+                  >
+                    Til oversikt!
+                  </button>
+                </>
               )}
-            </div>
-          </div>
+            </>
+            // END - Declined buttons
+          )}
         </div>
-      </>
+        {/* END - background */}
+      </div>
     );
   }
 }
