@@ -8,9 +8,8 @@ export default class AcceptedOrder extends React.Component {
     super(props);
 
     this.state = {
-      declinedComfirmed: false,
       comfirmed: false,
-      declined: false,
+      declined: true,
       reason: ""
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
@@ -56,27 +55,6 @@ export default class AcceptedOrder extends React.Component {
       console.log(`Was not able to delete order! Error: ${error.message}`);
       alert(`Was not able to delete order!`);
     }
-    // switch (string) {
-    //   case "notAvailable":
-    //     console.log(string);
-    //     // this.comfirmDelete();
-    //     return string;
-    //   case "damadge":
-    //     console.log(string);
-    //     // this.comfirmDelete();
-    //     return string;
-    //   case "noTime":
-    //     console.log(string);
-    //     // this.comfirmDelete();
-    //     return string;
-    //   case "other":
-    //     console.log(string);
-    //     // this.comfirmDelete();
-    //     return string;
-    //   default:
-    //     console.log("Kunne ikke delete ordre");
-    //     return "";
-    // }
   }
 
   // function to post delete request in data base and send order to sweed and api back to varner
@@ -110,9 +88,9 @@ export default class AcceptedOrder extends React.Component {
             <div className="row">
               {!comfirmed ? (
                 <div className="container">
-                  <h3 className="text-white p-3">
-                    Hvorfor vil du avvise ordren
-                  </h3>
+                  <h2 className="text-white p-3">
+                    Hvorfor vil du avvise ordren?
+                  </h2>
                   <div className="container">
                     <button
                       className="btn w-75 m-2 bg-light rounded-0"
