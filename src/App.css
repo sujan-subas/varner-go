@@ -40,7 +40,7 @@
 .color-nav{
   background-color:#5A5A5A;
   margin-bottom:  10px;
-  color: black;
+  color:white;
 }
 
 .color-card{
@@ -80,4 +80,7 @@ a.active {
 .nav-link::after,
 .nav-tabs::after {
   border: none !important;
+}
+.nav-tabs .nav-link.active {
+  border-color: transparent;
 }
