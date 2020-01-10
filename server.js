@@ -8,7 +8,6 @@ const cors = require("cors");
 
 // const secret = process.env.SECRET;
 
-
 const {
   createOrder,
   getAllOrders,
@@ -19,10 +18,9 @@ const {
 const getJsonFromXml = require("./services/convert_xml");
 
 //  ------------
-app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.xml());
-// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Build react app
 app.use(express.static("build"));
@@ -37,11 +35,7 @@ api.post("/orders", async (req, res) => {
     console.log(orderXml);
     const orderObject = await getJsonFromXml(orderXml);
     // console.log(util.inspect(orderXml, false, null, true /* enable colors */))
-<<<<<<< HEAD
-    // console.log( '****************', orderObject)
-=======
     console.log("****************", orderObject);
->>>>>>> bb619b884713edb39d5005892d38623852050748
     const newOrder = await createOrder(orderObject);
     res.send(newOrder);
   } catch (error) {
