@@ -7,14 +7,13 @@ require("body-parser-xml")(bodyParser);
 const cors = require("cors");
 
 // const secret = process.env.SECRET;
-
 const {
   createOrder,
   getAllOrders,
   getOrder,
-  // getOrdersByStatus,
   updateOrderStatus
-} = require("./services/postgresAPI");
+} = require("./postgresAPI");
+
 const getJsonFromXml = require("./services/convert_xml");
 
 //  ------------
@@ -32,7 +31,6 @@ const api = express();
 api.post("/orders", async (req, res) => {
   try {
     const orderXml = req.body;
-    console.log(orderXml);
     const orderObject = await getJsonFromXml(orderXml);
     // console.log(util.inspect(orderXml, false, null, true /* enable colors */))
     console.log("****************", orderObject);
@@ -86,8 +84,6 @@ app.use((err, req, res, next) => {
     return res.status(500).json(err);
   }
 });
-
-
 
 app.listen(port, () => {
   console.log(`running on port: ${port}`);
