@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App">
       <React.Fragment>
-        <AcceptOrder />
+        {/* <ProductView /> */}
         <OrderView />
       </React.Fragment>
     </div>

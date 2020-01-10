@@ -1,5 +1,13 @@
 import React from "react";
-import { Nav, NavDropdown, Navbar, Card, Tab, Tabs } from "react-bootstrap";
+import {
+  Nav,
+  NavDropdown,
+  Navbar,
+  Card,
+  Tab,
+  Tabs,
+  NavbarBrand
+} from "react-bootstrap";
 
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
@@ -77,11 +85,11 @@ class Overview extends React.Component {
       .filter(({ status, orderDate }) => status === tabKey)
       .map(order => {
         const formattedDate = format(new Date(order.orderDate), "MM/dd/yyyy");
-
+        console.log(order);
         return (
           <Card
             className="color-card"
-            style={{borderLeft:"1rem green solid"}}
+            style={{ borderLeft: "1rem green solid" }}
             text="white"
             key={order.referenceOrderNo}
           >
@@ -98,31 +106,56 @@ class Overview extends React.Component {
         );
       });
 
+    let switchName = () => {
+      let newName = "";
+      if (this.state.tabKey === "new") {
+        newName = "Nye ordre";
+      } else if (this.state.tabKey === "in-process") {
+        newName = "Under behandling";
+      } else if (this.state.tabKey === "packed") {
+        newName = "Til henting";
+      } else if (this.state.tabKey === "delivered") {
+        newName = "Levert";
+      } else if (this.state.tabKey === "rejected") {
+        newName = "Avvist";
+      }
+      return newName;
+    };
     return (
       <React.Fragment>
+        <Navbar bg="light" expand="lg">
+          <Navbar.Brand>Varner Go</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav
+              className="mr-auto"
+              activeKey={tabKey}
+              onSelect={tabKey => this.handleChangeTab(tabKey)}
+            >
+              <Nav.Link eventKey="delivered">Utlevert</Nav.Link>
+              <Nav.Link eventKey="rejected">Avvist</Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
         {/* <Navbar bg="light" expand="lg">
+          <NavbarBrand>{switchName()}</NavbarBrand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav"> */}
         <Nav
-          className="justify-content-center color-nav tab"
+          className="justify-content-center color-nav"
           variant="tabs"
           defaultActiveKey="new"
           activeKey={tabKey}
           onSelect={tabKey => this.handleChangeTab(tabKey)}
         >
-          <Nav.Link
-            // className="bg-dark"
-            eventKey="new"
-          >
-            Nye ordre
-          </Nav.Link>
+          <Nav.Link eventKey="new"> Nye ordre </Nav.Link>
           <Nav.Link eventKey="in-process">Under behandling</Nav.Link>
           <Nav.Link eventKey="packed">Til henting</Nav.Link>
-          <NavDropdown title="Fullført" id="nav-dropdown">
+          {/* <NavDropdown title="Fullført" id="nav-dropdown">
             <NavDropdown.Item eventKey="delivered">Levert</NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item eventKey="rejected">Avvist</NavDropdown.Item>
-          </NavDropdown>
+          </NavDropdown> */}
         </Nav>
         {/* </Navbar.Collapse>
         </Navbar> */}
