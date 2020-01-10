@@ -1,14 +1,11 @@
-require("dotenv").config();
-
 const Pool = require("pg").Pool;
 const pool = new Pool({
-
-  connectionString: process.env.DATABASE_URL
-
+  user: "sagerup",
+  host: "localhost",
+  database: "qlique",
+  password: "sagerup81",
+  port: 5432
 });
-// const pool = new Pool({
-//   connectionString: process.env.DATABASE_URL
-// });
 
 // post data in orders table in postgres
 async function createOrder(orderObject) {
@@ -25,7 +22,7 @@ async function createOrder(orderObject) {
     addressLine4,
     zipCode,
     city,
-    orderList
+    orderList,
   } = orderObject;
 
   const queryText = `
@@ -53,7 +50,7 @@ async function createOrder(orderObject) {
     "now()"
   ];
 
-  console.log({ queryValues });
+  console.log({queryValues})
 
   const { rows } = await pool.query(queryText, queryValues);
 

@@ -3,14 +3,11 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT;
 const bodyParser = require("body-parser");
-require('body-parser-xml')(bodyParser);
+require("body-parser-xml")(bodyParser);
 const cors = require("cors");
-const util = require('util');
-// const { Pool } = require("pg");
+
 // const secret = process.env.SECRET;
-// const pool = new Pool({
-//   connectionString: process.env.DATABASE_URL
-// });
+
 
 const {
   createOrder,
@@ -18,7 +15,7 @@ const {
   getOrder,
   // getOrdersByStatus,
   updateOrderStatus
-} = require("./postgresAPI");
+} = require("./services/postgresAPI");
 const getJsonFromXml = require("./services/convert_xml");
 
 //  ------------
@@ -35,13 +32,16 @@ const api = express();
 
 // Order post from Varner
 api.post("/orders", async (req, res) => {
-
   try {
     const orderXml = req.body;
     console.log(orderXml);
     const orderObject = await getJsonFromXml(orderXml);
     // console.log(util.inspect(orderXml, false, null, true /* enable colors */))
+<<<<<<< HEAD
     // console.log( '****************', orderObject)
+=======
+    console.log("****************", orderObject);
+>>>>>>> bb619b884713edb39d5005892d38623852050748
     const newOrder = await createOrder(orderObject);
     res.send(newOrder);
   } catch (error) {
