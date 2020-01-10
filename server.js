@@ -5,11 +5,9 @@ const port = process.env.PORT;
 const bodyParser = require("body-parser");
 require("body-parser-xml")(bodyParser);
 const cors = require("cors");
-// const { Pool } = require("pg");
+
 // const secret = process.env.SECRET;
-// const pool = new Pool({
-//   connectionString: process.env.DATABASE_URL
-// });
+
 
 const {
   createOrder,
