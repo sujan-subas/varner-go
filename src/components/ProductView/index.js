@@ -1,11 +1,11 @@
 import React from 'react';
 import { getFormattedDeadLine } from '../../utils/time';
 
-const order = {
+const fakeorder = {
     status: 'new',
     orderNumber: 'BB-6WN-119682',
     referenceOrderNo: '100119682',
-    deadLine: '2020-01-09T18:44:41',
+    deadLine: '2020-01-09T21:44:41',
     customer: 'Jon Selenium',
     phoneNumber: '+4746823125',
     addressLine1: 'Sjøskogvn. 7',
@@ -35,6 +35,9 @@ const order = {
 }
 
 
+function getOrderById(id) {
+    return fakeorder;
+}
 
 class Product extends React.Component {
     constructor(props) {
@@ -42,18 +45,31 @@ class Product extends React.Component {
 
         this.state = {
             rand: 0,
-            order: order,
+            order: {},
             pickedSkus: [],
-            orderCount: 0
+            isLoading: false,
+            error: null
         }
+
+        this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount() {
-        let count = this.state.order.orderLines.length;
-        this.setState({
-            orderCount: count
-        })
+        try {
+            this.setState({ isLoading: true });
+            //const { id } = this.props.match.params;
+            const order = getOrderById();
+
+            this.setState({ order });
+            
+            //const count = this.state.order.orderLines.length;
+            //this.setState({ orderCount: count, isLoading: false });
+            //console.log(this.state.order);
+        } catch (error) {
+            this.setState({ error });
+        }
     }
+
 
     handleClick(sku) {
         if (this.state.pickedSkus.includes(sku)) {
@@ -71,56 +87,115 @@ class Product extends React.Component {
 
     }
 
+    handleChange(field, event) {
+        this.setState({
+            order: {
+                ...this.state.order,
+                [field]: event.target.value
+            }
+        })
+        //const { order } = this.state;
+        //await editOrder(order);
+        //const { history } = this.props;
+        //const id = this.state.order.orderNumber;
+        //history.replace(`/order/${id}`);
+    }
+
 render() {
-    const orderElements = this.state.order.orderLines
-        .map(({ description, size, color, orderedQuantity, image, sku }) => {
+    const { order, pickedSkus } = this.state;
+    let orderElements;
+    
+    if (order && order.orderLines) {
+        orderElements = order.orderLines
+            .map(({ 
+                description, 
+                size, 
+                color, 
+                orderedQuantity, 
+                image, 
+                sku }) => {
 
-            return (
-                <div key={sku} >
-                    <img src={image} alt='' width='123' height='164' />
-                    <h2>{description}</h2>
-                    <p>Str: {size}</p>
-                    <p>Farge: {color}</p>
-                    <p>Antall: {orderedQuantity}</p>
-                    <p>SKU: {sku}</p>
-                    <button onClick={this.handleClick.bind(this, sku)}>
-                        {this.state.pickedSkus.includes(sku) ? 'Plukket' : 'Ikke plukket'}
-                    </button>
-                </div>
-            )
-        });
+                return (
+                    <div key={sku} >
+                        <img src={image} alt='' width='123' height='164' />
+                        <h2>{description}</h2>
+                        <p>Str: {size}</p>
+                        <p>Farge: {color}</p>
+                        <p>Antall: {orderedQuantity}</p>
+                        <p>SKU: {sku}</p>
+                        <button onClick={this.handleClick.bind(this, sku)}>
+                            {this.state.pickedSkus.includes(sku)
+                             ? 'Plukket' : 'Skal plukke'}
+                        </button>
+                    </div>
+                )
+            });
+    
 
-    const fullAdress = this.state.order.fullAdress();
+        const fullAdress = this.state.order.fullAdress();
 
-    return (
-        <React.Fragment>
-            <div>
-                <header>
-                    <h3>Utløper om: {getFormattedDeadLine(this.state.order.deadLine, new Date())}</h3>
-                    <h3>Antall varer: {this.state.orderCount}</h3>
-                    <h3>Varer plukket: {this.state.pickedSkus.length}</h3>
-                </header>
+        return (
+            <React.Fragment>
                 <div>
-                    <h1>Sammendrag av bestilling</h1>
-                    <p>{this.state.order.orderDate}</p>
-                    <p>{this.state.order.referenceOrderNo}</p>
-                    <p>{this.state.order.customer}</p>
-                    <p>{this.state.order.phoneNumber}</p>
-                    <p>Leveringsadresse:
+                    <header>
+                        <h3>
+                            Utløper om: 
+                            {getFormattedDeadLine(
+                                this.state.order.deadLine, 
+                                new Date()
+                                )}
+                        </h3>
+                        <h3>
+                            Antall varer: 
+                            {order.orderLines.length}
+                        </h3>
+                        <h3>
+                            Varer plukket: 
+                            {pickedSkus.length}
+                        </h3>
+                    </header>
+                    <div>
+                        <h1>Sammendrag av bestilling</h1>
+                        <p>Status: {order.status}</p>
+                        <p>{order.orderDate}</p>
+                        <p>{order.referenceOrderNo}</p>
+                        <p>{order.customer}</p>
+                        <p>{order.phoneNumber}</p>
+                        <p>Leveringsadresse:
                             {fullAdress}
-                    </p>
+                        </p>
+                    </div>
+                    <div>
+                        <h1>Produktinformasjon</h1>
+                        {orderElements}
+                    </div>
+                    <div>
+                        <button 
+                            value={'rejected'}
+                            onClick={this.handleChange.bind(this, 'status' )}>
+                                Avvis ordre
+                        </button>
+                        {pickedSkus.length === order.orderLines.length ? (
+                            <button 
+                                value={'packed'} 
+                                onClick={this.handleChange.bind(this, 'status')}>
+                                    Klar til opphenting
+                            </button>
+                        ) : (
+                            <button 
+                                value={'in-process'} 
+                                onClick={this.handleChange.bind(this, 'status')}>
+                                    Ja, dette fikser vi
+                            </button>
+                        )}
+                        
+                        
+                    </div>
                 </div>
-                <div>
-                    <h1>Produktinformasjon</h1>
-                    {orderElements}
-                </div>
-                <div>
-                    <button>Avvis ordre</button>
-                    <button>Aksepter ordre</button>
-                </div>
-            </div>
-        </React.Fragment>
-    )
+            </React.Fragment>
+        )
+    }
+    return (<React.Fragment></React.Fragment>)
 }
 }
 
