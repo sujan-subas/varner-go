@@ -12,8 +12,8 @@ function App() {
   return (
     <div className="App">
       <React.Fragment>
-        <AcceptOrder />
-        <OrderView />
+        <ProductView />
+        {/* <OrderView /> */}
       </React.Fragment>
     </div>
   );
