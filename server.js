@@ -6,11 +6,7 @@ const bodyParser = require("body-parser");
 require('body-parser-xml')(bodyParser);
 const cors = require("cors");
 const util = require('util');
-// const { Pool } = require("pg");
-// const secret = process.env.SECRET;
-// const pool = new Pool({
-//   connectionString: process.env.DATABASE_URL
-// });
+
 
 const {
   createOrder,
@@ -44,6 +40,7 @@ api.post("/orders", async (req, res) => {
     // console.log( '****************', orderObject)
     const newOrder = await createOrder(orderObject);
     res.send(newOrder);
+    console.log(orderObject)
   } catch (error) {
     console.log(error.message);
   }

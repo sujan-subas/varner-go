@@ -47,7 +47,7 @@ async function getJSONfromXML(result) {
     return response.json();
 
   }).then(function (res) {
-    
+    console.log('this is res', res)
   })
   // Make new Object
   const orderJson =
