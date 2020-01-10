@@ -10,7 +10,7 @@ function App() {
   return (
     <div className="App">
       <React.Fragment>
-        <OrderView />
+        <ProductView />
       </React.Fragment>
     </div>
   );
