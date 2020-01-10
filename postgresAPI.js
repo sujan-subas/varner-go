@@ -1,15 +1,15 @@
 const Pool = require("pg").Pool;
-// const pool = new Pool({
-//   user: "sagerup",
-//   host: "localhost",
-//   database: "qlique",
-//   password: "qlique",
-//   port: 5050
-// });
-
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
+  user: "qlique",
+  host: "localhost",
+  database: "qlique-varner-go",
+  password: "qlique",
+  port: 5050
 });
+
+// const pool = new Pool({
+//   connectionString: process.env.DATABASE_URL
+// });
 
 // post data in orders table in postgres
 async function createOrder(orderObject) {
