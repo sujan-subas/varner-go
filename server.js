@@ -3,9 +3,11 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT;
 const bodyParser = require("body-parser");
-require('body-parser-xml')(bodyParser);
+require("body-parser-xml")(bodyParser);
 const cors = require("cors");
 const util = require('util');
+
+// const secret = process.env.SECRET;
 
 
 const {
@@ -14,7 +16,7 @@ const {
   getOrder,
   // getOrdersByStatus,
   updateOrderStatus
-} = require("./postgresAPI");
+} = require("./services/postgresAPI");
 const getJsonFromXml = require("./services/convert_xml");
 
 //  ------------
@@ -31,13 +33,12 @@ const api = express();
 
 // Order post from Varner
 api.post("/orders", async (req, res) => {
-
   try {
     const orderXml = req.body;
     console.log(orderXml);
     const orderObject = await getJsonFromXml(orderXml);
     // console.log(util.inspect(orderXml, false, null, true /* enable colors */))
-    // console.log( '****************', orderObject)
+    console.log("****************", orderObject);
     const newOrder = await createOrder(orderObject);
     res.send(newOrder);
     console.log(orderObject)
