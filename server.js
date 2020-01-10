@@ -8,22 +8,19 @@ const cors = require("cors");
 const util = require('util');
 
 // const secret = process.env.SECRET;
-
-
 const {
   createOrder,
   getAllOrders,
   getOrder,
-  // getOrdersByStatus,
   updateOrderStatus
-} = require("./services/postgresAPI");
+} = require("./postgresAPI");
+
 const getJsonFromXml = require("./services/convert_xml");
 
 //  ------------
-app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.xml());
-// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Build react app
 app.use(express.static("build"));
@@ -35,7 +32,6 @@ const api = express();
 api.post("/orders", async (req, res) => {
   try {
     const orderXml = req.body;
-    console.log(orderXml);
     const orderObject = await getJsonFromXml(orderXml);
     // console.log(util.inspect(orderXml, false, null, true /* enable colors */))
     console.log("****************", orderObject);
@@ -90,8 +86,6 @@ app.use((err, req, res, next) => {
     return res.status(500).json(err);
   }
 });
-
-
 
 app.listen(port, () => {
   console.log(`running on port: ${port}`);
