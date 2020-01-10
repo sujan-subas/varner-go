@@ -1,4 +1,6 @@
 import React from "react";
+import "./App.css";
+import AcceptOrder from "./components/ProductView/AcceptedOrder";
 import HeaderContainer from "./container/HeaderContainer";
 import InfoContanier from "./container/InfoContainer";
 import OrderView from "./container/OrderView";
@@ -10,7 +12,8 @@ function App() {
   return (
     <div className="App">
       <React.Fragment>
-        <ProductView />
+        <AcceptOrder />
+        <OrderView />
       </React.Fragment>
     </div>
   );
