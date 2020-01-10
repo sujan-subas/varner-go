@@ -13,6 +13,11 @@
   /* green-color */
   --varner-green: #44a241;
 }
+.product-cards {
+  border-left: var(--varner-green) 1rem solid;
+  background-color: var(--varner-darker);
+  color: var(--varner-text-white);
+}
 .color-nav {
   background-color: var(--varner-dark);
   margin-bottom: 10px;
@@ -66,19 +71,19 @@ a.active {
   border: transparent;
 }
 
-body h2{
-  color:var(--varner-green);
+body h2 {
+  color: var(--varner-green);
   text-align: center;
 }
 
-a{
+a {
   color: var(--varner-text-white);
 }
 .navbar-light .navbar-brand {
   color: var(--varner-text-white);
 }
 .bg-light {
-  background-color: var(--varner-black)!important;
+  background-color: var(--varner-black) !important;
 }
 
 .navbar-light .navbar-nav .nav-link {

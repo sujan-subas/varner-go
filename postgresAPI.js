@@ -77,7 +77,9 @@ async function getAllOrders() {
         *
       from
         orders
-      order by orders.order_date desc
+      order
+        by orders.order_date desc
+
     `);
     if (data.length === "") {
       console.log(`No pick-up orders in database`);
@@ -142,13 +144,12 @@ async function updateOrderStatus(ordernumber, orderstatus) {
       orders
     set
       order_status = $2,
-      process_finished_at = $3
     where
       "order_number" = $1
     returning
       *
   `;
-  const queryValues = [ordernumber, orderstatus, "now()"];
+  const queryValues = [ordernumber, orderstatus];
 
   const { rows } = await pool.query(queryText, queryValues);
   // const orders = rows.map(order => {

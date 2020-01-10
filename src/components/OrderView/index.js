@@ -1,5 +1,5 @@
 import React from "react";
-import { Nav, Navbar, Card } from "react-bootstrap";
+import { Nav, Navbar } from "react-bootstrap";
 import { format } from "date-fns";
 import { getAllOrdersDB } from "../../clientAPI/clientAPI";
 
@@ -60,14 +60,27 @@ class Overview extends React.Component {
     super(props);
 
     this.state = {
-      order: orderLine,
-      tabKey: "new"
+      // order: orderLine,
+      tabKey: "new",
+      error: false,
+      allOrders: [],
+      isLoading: true
     };
   }
 
   async componentDidMount() {
-    const allOrders = getAllOrdersDB();
-    console.log(allOrders);
+    try {
+      const allOrders = await getAllOrdersDB();
+      this.setState({
+        allOrders,
+        isLoading: false
+      });
+    } catch (error) {
+      console.log(`Error: ${error.message}`);
+      this.setState({
+        error
+      });
+    }
   }
 
   handleChangeTab(tabKey) {
@@ -75,41 +88,45 @@ class Overview extends React.Component {
   }
 
   render() {
-    const { tabKey } = this.state;
+    if (!this.state.allOrders.length) return null;
 
-    const orderElements = orderLine
-      .filter(({ status }) => status === tabKey)
-      .map(order => {
-        const formattedDate = format(new Date(order.orderDate), "MM/dd/yyyy");
-        return (
-          <Card
-            className="color-card"
-            style={{ borderLeft: "1rem green solid" }}
-            text="white"
-            key={order.referenceOrderNo}
-          >
-            <Card.Header>Order id: {order.referenceOrderNo}</Card.Header>
-            <Card.Body>
-              <Card.Title>Order quantity: {order.orderedQuantity}</Card.Title>
-              <Card.Text>
-                Kunde: {order.name}
-                <br></br>
-                Bestillingsdato: {formattedDate}
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        );
-      });
+    const { tabKey, allOrders } = this.state;
+    console.log(allOrders);
 
+    //  make sure it dosen't render before allOrders are updated
     let switchName = () => {
       let newName = "";
       if (this.state.tabKey === "delivered") {
-        newName = "Utlevert";
+        newName = "Levert";
       } else if (this.state.tabKey === "rejected") {
         newName = "Avvist";
       }
       return newName;
     };
+
+    const orderElements = orderLine
+      .filter(({ status }) => status === tabKey)
+      .map((order, i) => {
+        const formattedDate = format(new Date(order.orderDate), "MM/dd/yyyy");
+        return (
+          <div className="card product-cards m-4" key={i}>
+            {/* <div className="card product-cards" key={order.referenceOrderNo}> */}
+            <div className="card-header ">Ordre nr : {order.order_number}</div>
+            <div className="card-body ">
+              <ul>
+                <li>Utløper om: {order.expire}min</li>
+                <li>Antall varer:{order.order_list}</li>
+                <li>Bestillingsdato: {order.orderDate} </li>
+                {/* <li>Bestillingsdato: {formattedDate} </li> */}
+                <br />
+                <li>Referanse Nummer: {order.reference_order_no}</li>
+                <li>Name: {order.customer_name}</li>
+              </ul>
+            </div>
+          </div>
+        );
+      });
+
     return (
       <React.Fragment>
         <Navbar bg="light" expand="lg">
@@ -126,7 +143,6 @@ class Overview extends React.Component {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-        {/* Navbar 2 */}
         <Nav
           className="justify-content-center color-nav"
           variant="tabs"
@@ -139,7 +155,7 @@ class Overview extends React.Component {
           <Nav.Link eventKey="packed">Til henting</Nav.Link>
         </Nav>
         <h2>{switchName()}</h2>
-        <div>{orderElements}</div>
+        <div className="container">{orderElements}</div>
       </React.Fragment>
     );
   }
