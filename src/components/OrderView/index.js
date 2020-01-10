@@ -1,16 +1,7 @@
 import React from "react";
-import {
-  Nav,
-  NavDropdown,
-  Navbar,
-  Card,
-  Tab,
-  Tabs,
-  NavbarBrand
-} from "react-bootstrap";
-
-import { Link } from "react-router-dom";
+import { Nav, Navbar, Card } from "react-bootstrap";
 import { format } from "date-fns";
+import { getAllOrdersDB } from "../../clientAPI/clientAPI";
 
 const orderLine = [
   {
@@ -74,6 +65,11 @@ class Overview extends React.Component {
     };
   }
 
+  async componentDidMount() {
+    const allOrders = getAllOrdersDB();
+    console.log(allOrders);
+  }
+
   handleChangeTab(tabKey) {
     this.setState({ tabKey });
   }
@@ -82,10 +78,9 @@ class Overview extends React.Component {
     const { tabKey } = this.state;
 
     const orderElements = orderLine
-      .filter(({ status, orderDate }) => status === tabKey)
+      .filter(({ status }) => status === tabKey)
       .map(order => {
         const formattedDate = format(new Date(order.orderDate), "MM/dd/yyyy");
-        console.log(order);
         return (
           <Card
             className="color-card"
@@ -108,14 +103,8 @@ class Overview extends React.Component {
 
     let switchName = () => {
       let newName = "";
-      if (this.state.tabKey === "new") {
-        newName = "Nye ordre";
-      } else if (this.state.tabKey === "in-process") {
-        newName = "Under behandling";
-      } else if (this.state.tabKey === "packed") {
-        newName = "Til henting";
-      } else if (this.state.tabKey === "delivered") {
-        newName = "Levert";
+      if (this.state.tabKey === "delivered") {
+        newName = "Utlevert";
       } else if (this.state.tabKey === "rejected") {
         newName = "Avvist";
       }
@@ -137,10 +126,7 @@ class Overview extends React.Component {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-        {/* <Navbar bg="light" expand="lg">
-          <NavbarBrand>{switchName()}</NavbarBrand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav"> */}
+        {/* Navbar 2 */}
         <Nav
           className="justify-content-center color-nav"
           variant="tabs"
@@ -151,14 +137,8 @@ class Overview extends React.Component {
           <Nav.Link eventKey="new"> Nye ordre </Nav.Link>
           <Nav.Link eventKey="in-process">Under behandling</Nav.Link>
           <Nav.Link eventKey="packed">Til henting</Nav.Link>
-          {/* <NavDropdown title="Fullført" id="nav-dropdown">
-            <NavDropdown.Item eventKey="delivered">Levert</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item eventKey="rejected">Avvist</NavDropdown.Item>
-          </NavDropdown> */}
         </Nav>
-        {/* </Navbar.Collapse>
-        </Navbar> */}
+        <h2>{switchName()}</h2>
         <div>{orderElements}</div>
       </React.Fragment>
     );
