@@ -9,7 +9,7 @@ export default class AcceptedOrder extends React.Component {
 
     this.state = {
       comfirmed: false,
-      declined: true,
+      declined: false,
       reason: ""
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
