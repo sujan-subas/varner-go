@@ -144,6 +144,7 @@ async function updateOrderStatus(ordernumber, orderstatus) {
       orders
     set
       order_status = $2,
+      last_updated = $3,
     where
       "order_number" = $1
     returning
