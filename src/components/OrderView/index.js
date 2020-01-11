@@ -36,14 +36,21 @@ class Overview extends React.Component {
   }
 
   handleCardClick(ordernumber) {
+    console.log(`hande has been clicked`);
     const { history } = this.props;
     history.push(`/orders/${ordernumber}`);
+    console.log(`handle cards click`);
     console.log(history);
     console.log(ordernumber);
   }
 
   render() {
-    if (!this.state.allOrders.length) return null;
+    if (!this.state.allOrders.length)
+      return (
+        <div className="container texr-white">
+          Ingenting å hente! Sjekk om server er oppe å går ;-)
+        </div>
+      );
 
     const { tabKey, allOrders } = this.state;
 
@@ -66,9 +73,9 @@ class Overview extends React.Component {
         // );
         return (
           <div
-            className="text-white card product-cards m-4"
+            className="text-white card order-cards m-4"
             key={i}
-            onClick={this.handleCardClick.bind(this, order.order_number)}
+            onClick={() => this.handleCardClick.bind(this, order.order_number)}
           >
             <div className="card-header">
               Ordre nummer: {order.order_number} | {order.order_status}
@@ -87,7 +94,6 @@ class Overview extends React.Component {
           </div>
         );
       });
-    console.log(allOrders.length);
 
     //return
     return (
