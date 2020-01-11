@@ -33,6 +33,7 @@
 
 .App {
   background-color: var(--varner-darkest);
+  color: var(--varner-text-white);
   margin-bottom: 10px;
   min-height: 100vh;
 }
@@ -88,4 +89,10 @@ a {
 
 .navbar-light .navbar-nav .nav-link {
   color: var(--varner-text-white);
+}
+.navbar-toggler-icon {
+  border: 2px solid var(--varner-green);
+  border-radius: 10%;
+  padding: 1rem;
+  background-color: green;
 }

@@ -45,7 +45,7 @@ async function createOrder(orderObject) {
     zipCode,
     city,
     JSON.stringify(orderList),
-    "now()"
+    "timestamptz default now()"
   ];
 
   console.log({ queryValues });
@@ -100,7 +100,7 @@ async function getOrder(ordernumber) {
       from
         orders
       where 
-        "order_number" = $1
+        order_number = $1
             `,
       [ordernumber]
     );
@@ -115,38 +115,37 @@ async function getOrder(ordernumber) {
     console.log(`Error: ${error.message}`);
   }
 }
-async function getOrdersByStatus(orderstatus) {
-  try {
-    const data = await pool.query(
-      `
-      select
-        *
-      from 
-        orders
-      where 
-        order_status = $1`,
-      [orderstatus]
-    );
-    if (data.length === "") {
-      console.log(`No orders finished`);
-      return `No orders finished`;
-    } else {
-      console.log(data.rows);
-      return data.rows;
-    }
-  } catch (error) {
-    console.log(`Error: ${error.message}`);
-  }
-}
+// async function getOrdersByStatus(orderstatus) {
+//   try {
+//     const data = await pool.query(
+//       `
+//       select
+//         *
+//       from
+//         orders
+//       where
+//         order_status = $1`,
+//       [orderstatus]
+//     );
+//     if (data.length === "") {
+//       console.log(`No orders finished`);
+//       return `No orders finished`;
+//     } else {
+//       console.log(data.rows);
+//       return data.rows;
+//     }
+//   } catch (error) {
+//     console.log(`Error: ${error.message}`);
+//   }
+// }
 async function updateOrderStatus(ordernumber, orderstatus) {
   const queryText = `
     update 
       orders
     set
-      order_status = $2,
-      last_updated = $3,
+      order_status = $2
     where
-      "order_number" = $1
+      order_number = $1
     returning
       *
   `;
@@ -167,6 +166,6 @@ module.exports = {
   createOrder, //check,
   getAllOrders, //check
   getOrder, //check
-  getOrdersByStatus, //check
+  // getOrdersByStatus, //check
   updateOrderStatus
 };

@@ -1,28 +1,33 @@
-const parseString = require('xml2js').parseString;
+const parseString = require("xml2js").parseString;
 const fetch = require("node-fetch");
-const base64 = require('base-64');
+const base64 = require("base-64");
 
 // Set Header
 global.Headers = fetch.Headers;
 
-
 // Basic auth to express.
-
 
 //GET XML FILE from Varner
 async function getJSONfromXML(result) {
   // console.log(result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0].orderLines[0].orderLine[1]);
   //Shortcuts
-  const order = result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0];
-  const delivery = result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0].delivery[0];
-  const costumer = result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0].invoiceCustomer[0];
-  const orderLines = result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0].orderLines[0];
+  const order =
+    result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0];
+  const delivery =
+    result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0]
+      .delivery[0];
+  const costumer =
+    result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0]
+      .invoiceCustomer[0];
+  const orderLines =
+    result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0]
+      .orderLines[0];
   // ******
   // New Object
   // console.log(orderLines.orderLine.length)
 
   // Handle orderList, will work for multiple orders.
-  let orderDetails = orderLines.orderLine.map(function (order) {
+  let orderDetails = orderLines.orderLine.map(function(order) {
     // console.log(order)
     return {
       position: Number(order.position[0]),
@@ -30,28 +35,27 @@ async function getJSONfromXML(result) {
       description: order.description[0],
       orderQuantity: order.orderedQuantity[0],
       price: order.price[0]
-    }
-  })
+    };
+  });
 
   // GET ORDER API DETAILS (SKU API)
-  const login = 'varnergofetch@protonmail.com';
-  const password = 'varnergofetch';
-  const url = 'https://bikbok.com/no/api/productfeed/v2/get?variant=7244470_F922';
+  const login = "varnergofetch@protonmail.com";
+  const password = "varnergofetch";
+  const url =
+    "https://bikbok.com/no/api/productfeed/v2/get?variant=7244470_F922";
   // Getting json.
   fetch(url, {
     headers: new Headers({
-      "Authorization": `Basic ${base64.encode(`${login}:${password}`)}`
-    }),
-  }).then(response => {
-    if (!response.ok) throw new Error(response.status);
-    return response.json();
-
-  }).then(function (res) {
-    
+      Authorization: `Basic ${base64.encode(`${login}:${password}`)}`
+    })
   })
+    .then(response => {
+      if (!response.ok) throw new Error(response.status);
+      return response.json();
+    })
+    .then(function(res) {});
   // Make new Object
-  const orderJson =
-  {
+  const orderJson = {
     orderNumber: order.orderNumber[0],
     refrenceOrderNumber: order.referenceOrderNo[0],
     orderDate: order.orderDate[0], // year/month/day
@@ -66,10 +70,8 @@ async function getJSONfromXML(result) {
     zipCode: costumer.zipCode[0],
     city: costumer.city[0],
     orderList: orderDetails
-  }
+  };
   return orderJson;
 }
 
-
-
-module.exports = getJSONfromXML
+module.exports = getJSONfromXML;

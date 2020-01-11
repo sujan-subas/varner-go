@@ -1,11 +1,13 @@
-import React from 'react';
-import { getFormattedDeadLine } from '../../utils/time';
+import React from "react";
+import { getFormattedDeadLine } from "../../utils/time";
+import { getOrderByOrderNumber } from "../../clientAPI/clientAPI";
 
 const fakeorder = {
     status: 'new',
     orderNumber: 'BB-6WN-119682',
     referenceOrderNo: '100119682',
-    deadLine: '2020-01-09T21:44:41',
+    deadLine: '2020-01-11T21:44:41',
+    acceptedTime: '2020-01-11T11:40:04',
     customer: 'Jon Selenium',
     phoneNumber: '+4746823125',
     addressLine1: 'Sjøskogvn. 7',
@@ -32,19 +34,14 @@ const fakeorder = {
     fullAdress: function () {
         return ' ' + this.addressLine1 + ', ' + this.zipCode + ' ' + this.city;
     }
-}
-
-
-function getOrderById(id) {
-    return fakeorder;
-}
+};
 
 class Product extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            rand: 0,
+            time: '',
             order: {},
             pickedSkus: [],
             isLoading: false,
@@ -52,16 +49,20 @@ class Product extends React.Component {
         }
 
         this.handleChange = this.handleChange.bind(this);
+        this.timer = null;
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        const { ordernumber } = this.props.match.params;
+
         try {
             this.setState({ isLoading: true });
-            //const { id } = this.props.match.params;
-            const order = getOrderById();
+            
+            const order = await getOrderByOrderNumber(ordernumber);
 
             this.setState({ order });
             
+            this.getTime();
             //const count = this.state.order.orderLines.length;
             //this.setState({ orderCount: count, isLoading: false });
             //console.log(this.state.order);
@@ -69,6 +70,8 @@ class Product extends React.Component {
             this.setState({ error });
         }
     }
+
+
 
 
     handleClick(sku) {
@@ -101,11 +104,37 @@ class Product extends React.Component {
         //history.replace(`/order/${id}`);
     }
 
-render() {
-    const { order, pickedSkus } = this.state;
-    let orderElements;
+   
+    getTime() {
+        let time;
+        const { order } = this.state;
+        if (order.status === 'new') {
+            time = getFormattedDeadLine(
+                new Date(order.deadLine), 
+                new Date()
+            )
+        } else if (order.status === 'in-process') {
+            time = getFormattedDeadLine(
+                new Date(),
+                new Date(order.acceptedTime)
+            )
+        }
+        
+        this.setState({
+            time: time
+        })
+
+        this.timer = setTimeout(() => this.getTime(), 1000)
+    }
+
     
+
+render() {
+    const { order, pickedSkus, time } = this.state;
+    let orderElements;
+
     if (order && order.orderLines) {
+        
         orderElements = order.orderLines
             .map(({ 
                 description, 
@@ -138,13 +167,19 @@ render() {
             <React.Fragment>
                 <div>
                     <header>
-                        <h3>
-                            Utløper om: 
-                            {getFormattedDeadLine(
-                                this.state.order.deadLine, 
-                                new Date()
-                                )}
-                        </h3>
+                        {order.status === 'new' ? (
+                            <h3>
+                                Utløper om: 
+                                {time}
+                            </h3>
+                        ) : (
+                            <h3>
+                                Venter på plukket varer:
+                                {time}
+                            </h3>
+                        )
+                        }
+
                         <h3>
                             Antall varer: 
                             {order.orderLines.length}
@@ -195,8 +230,8 @@ render() {
             </React.Fragment>
         )
     }
-    return (<React.Fragment></React.Fragment>)
-}
+    return <React.Fragment></React.Fragment>;
+  }
 }
 
 export default Product;
