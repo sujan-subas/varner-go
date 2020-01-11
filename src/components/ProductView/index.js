@@ -6,6 +6,7 @@ const fakeorder = {
     orderNumber: 'BB-6WN-119682',
     referenceOrderNo: '100119682',
     deadLine: '2020-01-11T21:44:41',
+    acceptedTime: '2020-01-11T11:40:04',
     customer: 'Jon Selenium',
     phoneNumber: '+4746823125',
     addressLine1: 'Sjøskogvn. 7',
@@ -107,11 +108,20 @@ class Product extends React.Component {
 
    
     getTime() {
-        const time = getFormattedDeadLine(
-            this.state.order.deadLine, 
-            new Date()
-        )
-
+        let time;
+        const { order } = this.state;
+        if (order.status === 'new') {
+            time = getFormattedDeadLine(
+                new Date(order.deadLine), 
+                new Date()
+            )
+        } else if (order.status === 'in-process') {
+            time = getFormattedDeadLine(
+                new Date(),
+                new Date(order.acceptedTime)
+            )
+        }
+        
         this.setState({
             time: time
         })
@@ -159,10 +169,19 @@ render() {
             <React.Fragment>
                 <div>
                     <header>
-                        <h3>
-                            Utløper om: 
-                            {time}
-                        </h3>
+                        {order.status === 'new' ? (
+                            <h3>
+                                Utløper om: 
+                                {time}
+                            </h3>
+                        ) : (
+                            <h3>
+                                Venter på plukket varer:
+                                {time}
+                            </h3>
+                        )
+                        }
+
                         <h3>
                             Antall varer: 
                             {order.orderLines.length}
