@@ -24,3 +24,6 @@ export async function updateOrderStatus(ordernumber, orderstatus) {
   });
   return await res.json();
 }
+
+// function for rejected /  delivered
+//

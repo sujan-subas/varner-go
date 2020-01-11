@@ -38,6 +38,8 @@ class Overview extends React.Component {
   handleCardClick(ordernumber) {
     const { history } = this.props;
     history.push(`/orders/${ordernumber}`);
+    console.log(history);
+    console.log(ordernumber);
   }
 
   render() {
