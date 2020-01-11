@@ -1,5 +1,6 @@
-import React from 'react';
-import { getFormattedDeadLine } from '../../utils/time';
+import React from "react";
+import { getFormattedDeadLine } from "../../utils/time";
+import { getOrderByOrderNumber } from "../../clientAPI/clientAPI";
 
 const fakeorder = {
     status: 'new',
@@ -33,12 +34,7 @@ const fakeorder = {
     fullAdress: function () {
         return ' ' + this.addressLine1 + ', ' + this.zipCode + ' ' + this.city;
     }
-}
-
-
-function getOrderById(id) {
-    return fakeorder;
-}
+};
 
 class Product extends React.Component {
     constructor(props) {
@@ -56,11 +52,13 @@ class Product extends React.Component {
         this.timer = null;
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        const { ordernumber } = this.props.match.params;
+
         try {
             this.setState({ isLoading: true });
-            //const { id } = this.props.match.params;
-            const order = getOrderById();
+            
+            const order = await getOrderByOrderNumber(ordernumber);
 
             this.setState({ order });
             
@@ -134,7 +132,7 @@ class Product extends React.Component {
 render() {
     const { order, pickedSkus, time } = this.state;
     let orderElements;
-    
+
     if (order && order.orderLines) {
         
         orderElements = order.orderLines
@@ -232,8 +230,8 @@ render() {
             </React.Fragment>
         )
     }
-    return (<React.Fragment></React.Fragment>)
-}
+    return <React.Fragment></React.Fragment>;
+  }
 }
 
 export default Product;
