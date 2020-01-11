@@ -1,6 +1,6 @@
-import React from "react";
+import React, { AcceptedOrder } from "react";
 import { getFormattedDeadLine } from "../../utils/time";
-import { getOrderByOrderNumber } from "../../clientAPI/clientAPI";
+//import { getOrderByOrderNumber } from "../../clientAPI/clientAPI";
 
 const fakeorder = {
     status: 'new',
@@ -53,12 +53,13 @@ class Product extends React.Component {
     }
 
     async componentDidMount() {
-        const { ordernumber } = this.props.match.params;
+        //const { ordernumber } = this.props.match.params;
 
         try {
             this.setState({ isLoading: true });
             
-            const order = await getOrderByOrderNumber(ordernumber);
+            //const order = await getOrderByOrderNumber(ordernumber);
+            const order = fakeorder;
 
             this.setState({ order });
             
@@ -70,9 +71,6 @@ class Product extends React.Component {
             this.setState({ error });
         }
     }
-
-
-
 
     handleClick(sku) {
         if (this.state.pickedSkus.includes(sku)) {
@@ -103,7 +101,6 @@ class Product extends React.Component {
         //const id = this.state.order.orderNumber;
         //history.replace(`/order/${id}`);
     }
-
    
     getTime() {
         let time;
@@ -127,7 +124,6 @@ class Product extends React.Component {
         this.timer = setTimeout(() => this.getTime(), 1000)
     }
 
-    
 
 render() {
     const { order, pickedSkus, time } = this.state;
@@ -145,14 +141,23 @@ render() {
                 sku }) => {
 
                 return (
-                    <div key={sku} >
+                    <div 
+                      className="card product-card m-4"
+                      key={sku} 
+                    >
+                      <div>
                         <img src={image} alt='' width='123' height='164' />
+                      </div>
+                      <div>
                         <h2>{description}</h2>
                         <p>Str: {size}</p>
                         <p>Farge: {color}</p>
                         <p>Antall: {orderedQuantity}</p>
                         <p>SKU: {sku}</p>
-                        <button onClick={this.handleClick.bind(this, sku)}>
+                      </div>
+                        <button
+                            className="btn"
+                            onClick={this.handleClick.bind(this, sku)}>
                             {this.state.pickedSkus.includes(sku)
                              ? 'Plukket' : 'Skal plukke'}
                         </button>
@@ -165,8 +170,17 @@ render() {
 
         return (
             <React.Fragment>
-                <div>
+                <div className="bg-dark">
                     <header>
+                        <button
+                            className="btn"
+                            onClick={() => this.handleButtonClick("back")}
+                        >
+                        <i
+                            className="fa fa-arrow-left text-success ml-4"
+                            style={{ transform: "scale(1.5, 1)" }}
+                        />
+                        </button>
                         {order.status === 'new' ? (
                             <h3>
                                 Utløper om: 
@@ -205,19 +219,22 @@ render() {
                         {orderElements}
                     </div>
                     <div>
-                        <button 
+                        <button
+                            className="btn" 
                             value={'rejected'}
                             onClick={this.handleChange.bind(this, 'status' )}>
                                 Avvis ordre
                         </button>
                         {pickedSkus.length === order.orderLines.length ? (
-                            <button 
+                            <button
+                                className="btn"
                                 value={'packed'} 
                                 onClick={this.handleChange.bind(this, 'status')}>
                                     Klar til opphenting
                             </button>
                         ) : (
                             <button 
+                                className="btn"
                                 value={'in-process'} 
                                 onClick={this.handleChange.bind(this, 'status')}>
                                     Ja, dette fikser vi

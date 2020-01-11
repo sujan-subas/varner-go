@@ -13,7 +13,7 @@
   /* green-color */
   --varner-green: #44a241;
 }
-.product-cards {
+.order-card {
   border-left: var(--varner-green) 1rem solid;
   background-color: var(--varner-darker);
   color: var(--varner-text-white);
@@ -95,4 +95,23 @@ a {
   border-radius: 10%;
   padding: 1rem;
   background-color: green;
+}
+
+.product-card {
+  background-color: var(--varner-darker);
+  color: var(--varner-text-white);
+  padding: 2rem;
+}
+.product-card img {
+  margin: 1rem;
+}
+.product-card h2 {
+  color: var(--varner-text-white);
+  font-size: 1.5rem;
+  text-align: right;
+}
+.product-card p {
+  color: var(--varner-text-white);
+  font-size: 1rem;
+  text-align: right;
 }
