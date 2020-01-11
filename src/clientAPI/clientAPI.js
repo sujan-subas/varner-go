@@ -8,7 +8,9 @@ export async function getAllOrdersDB() {
 export async function getOrderByOrderNumber(ordernumber) {
   try {
     const data = await fetch(`${API_URL}/orders/${ordernumber}`);
-    console.log(data);
+    console.log(data.json());
+    return data.json();
+    //fiks denne
   } catch (error) {
     console.log(`Error: ${error.message}`);
   }
