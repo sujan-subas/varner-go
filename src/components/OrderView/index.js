@@ -154,7 +154,7 @@ class Overview extends React.Component {
     });
     console.log(typeof allOrders);
 
-    const orderElements = orderLine
+    const orderElements = allOrders
       .filter(order_status => order_status === tabKey)
       .map((order, i) => {
         return (
