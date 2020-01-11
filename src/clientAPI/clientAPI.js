@@ -4,6 +4,16 @@ export async function getAllOrdersDB() {
   const data = await response.json();
   return data;
 }
+
+export async function getOrderByOrderNumber(ordernumber) {
+  try {
+    const data = await fetch(`${API_URL}/orders/${ordernumber}`);
+    console.log(data);
+  } catch (error) {
+    console.log(`Error: ${error.message}`);
+  }
+}
+
 export async function updateOrderStatus(ordernumber, orderstatus) {
   const res = await fetch(`${API_URL}/orders`, {
     method: "PATCH",
