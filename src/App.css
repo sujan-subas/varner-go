@@ -1,3 +1,4 @@
+
 /* Standard farger for appen */
 :root {
   /* text */
@@ -13,6 +14,7 @@
   /* green-color */
   --varner-green: #44a241;
 }
+
 .color-nav {
   background-color: var(--varner-dark);
   margin-bottom: 10px;

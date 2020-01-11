@@ -5,7 +5,7 @@ const fakeorder = {
     status: 'new',
     orderNumber: 'BB-6WN-119682',
     referenceOrderNo: '100119682',
-    deadLine: '2020-01-09T21:44:41',
+    deadLine: '2020-01-11T21:44:41',
     customer: 'Jon Selenium',
     phoneNumber: '+4746823125',
     addressLine1: 'Sjøskogvn. 7',
@@ -44,7 +44,7 @@ class Product extends React.Component {
         super(props);
 
         this.state = {
-            rand: 0,
+            time: '',
             order: {},
             pickedSkus: [],
             isLoading: false,
@@ -52,6 +52,7 @@ class Product extends React.Component {
         }
 
         this.handleChange = this.handleChange.bind(this);
+        this.timer = null;
     }
 
     componentDidMount() {
@@ -62,6 +63,7 @@ class Product extends React.Component {
 
             this.setState({ order });
             
+            this.getTime();
             //const count = this.state.order.orderLines.length;
             //this.setState({ orderCount: count, isLoading: false });
             //console.log(this.state.order);
@@ -69,6 +71,8 @@ class Product extends React.Component {
             this.setState({ error });
         }
     }
+
+
 
 
     handleClick(sku) {
@@ -101,11 +105,28 @@ class Product extends React.Component {
         //history.replace(`/order/${id}`);
     }
 
+   
+    getTime() {
+        const time = getFormattedDeadLine(
+            this.state.order.deadLine, 
+            new Date()
+        )
+
+        this.setState({
+            time: time
+        })
+
+        this.timer = setTimeout(() => this.getTime(), 1000)
+    }
+
+    
+
 render() {
-    const { order, pickedSkus } = this.state;
+    const { order, pickedSkus, time } = this.state;
     let orderElements;
     
     if (order && order.orderLines) {
+        
         orderElements = order.orderLines
             .map(({ 
                 description, 
@@ -140,10 +161,7 @@ render() {
                     <header>
                         <h3>
                             Utløper om: 
-                            {getFormattedDeadLine(
-                                this.state.order.deadLine, 
-                                new Date()
-                                )}
+                            {time}
                         </h3>
                         <h3>
                             Antall varer: 
