@@ -33,6 +33,7 @@
 
 .App {
   background-color: var(--varner-darkest);
+  color: var(--varner-text-white);
   margin-bottom: 10px;
   min-height: 100vh;
 }

@@ -108,50 +108,36 @@ class Overview extends React.Component {
       return newName;
     };
 
-    const ordersFromDatabase = allOrders.map((order, i) => {
-      const formattedDate = format(
-        new Date(order.created_in_ap_at),
-        "MM/dd/yyyy"
-      );
-
-      return (
-        <div
-          className="text-white card product-cards m-4"
-          key={i}
-          //   onClick={this.handleCardClick.bind(this, order.order_number)}
-        >
-          <div className="card-header">Ordre nummer: {order.order_number}</div>
-          <div className="card-body ">
-            <p>Utløper om: {order.expire}min</p>
-            {/* <p>Antall varer:{order.order_list}</p> */}
-            {/* <p>Bestillingsdato: {order.orderDate} </p> */}
-            {/* <p>Bestillingsdato: {formattedDate} </p> */}
-            <br />
-            <p>Referanse Nummer: {order.reference_order_no}</p>
-            <p>Name: {order.customer_name}</p>
+    const ordersFromDatabase = allOrders
+      .filter(order => order.order_status === tabKey)
+      .map((order, i) => {
+        // const formattedDate = format(
+        //   new Date(order.created_in_ap_at),
+        //   "MM/dd/yyyy"
+        // );
+        return (
+          <div
+            className="text-white card product-cards m-4"
+            key={i}
+            //   onClick={this.handleCardClick.bind(this, order.order_number)}
+          >
+            <div className="card-header">
+              Ordre nummer: {order.order_number} | {order.order_status}
+            </div>
+            <div className="card-body ">
+              <p>
+                Utløper om:{" "}
+                {order.expire !== 0 ? "Unable to state" : order.expire} 88 min
+              </p>
+              <p>Antall varer: {order.order_list.length}</p>
+              {/* <p>Bestillingsdato: {formattedDate} </p> */}
+              <br />
+              <p>Referanse Nummer: {order.reference_order_no}</p>
+              <p>Name: {order.customer_name}</p>
+            </div>
           </div>
-        </div>
-        // <div
-        //   className="card product-cards m-4"
-        //   key={i}
-        //   onClick={this.handleCardClick.bind(this, order.order_number)}
-        // >
-        //   {/* <div className="card product-cards" key={order.referenceOrderNo}> */}
-        //   <div className="card-header ">Ordre nr : {order.order_number}</div>
-        //   <div className="card-body ">
-        //     <ul>
-        //       <li>Utløper om: {order.expire}min</li>
-        //       <li>Antall varer:{order.order_list}</li>
-        //       <li>Bestillingsdato: {order.orderDate} </li>
-        //       {/* <li>Bestillingsdato: {formattedDate} </li> */}
-        //       <br />
-        //       <li>Referanse Nummer: {order.reference_order_no}</li>
-        //       <li>Name: {order.customer_name}</li>
-        //     </ul>
-        //   </div>
-        // </div>
-      );
-    });
+        );
+      });
     console.log(typeof allOrders);
 
     const orderElements = allOrders
@@ -179,11 +165,14 @@ class Overview extends React.Component {
           </div>
         );
       });
-    console.log(ordersFromDatabase.length);
+
+    //return
     return (
       <React.Fragment>
         <Navbar bg="light" expand="lg">
           <Navbar.Brand>Varner Go</Navbar.Brand>
+          <strong> Active Orders {allOrders.length}</strong>
+
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav
@@ -217,7 +206,7 @@ class Overview extends React.Component {
         ) : (
           ordersFromDatabase
         )}
-        <div className="container">{orderElements}</div>
+        {/* <div className="container">{orderElements}</div> */}
       </React.Fragment>
     );
   }

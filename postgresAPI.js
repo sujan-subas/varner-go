@@ -45,7 +45,7 @@ async function createOrder(orderObject) {
     zipCode,
     city,
     JSON.stringify(orderList),
-    "now()"
+    "timestamptz default now()"
   ];
 
   console.log({ queryValues });
