@@ -76,7 +76,7 @@ class Overview extends React.Component {
             <div className="card-body ">
               <p>
                 Utløper om:{" "}
-                {order.expire !== 0 ? "Unable to state" : order.expire} 88 min
+                {order.expire === 0 ? "Unable to state" : order.expire} 88 min
               </p>
               <p>Antall varer: {order.order_list.length}</p>
               {/* <p>Bestillingsdato: {formattedDate} </p> */}
@@ -87,6 +87,7 @@ class Overview extends React.Component {
           </div>
         );
       });
+    console.log(allOrders.length);
 
     //return
     return (
@@ -114,7 +115,7 @@ class Overview extends React.Component {
           activeKey={tabKey}
           onSelect={tabKey => this.handleChangeTab(tabKey)}
         >
-          <Nav.Link eventKey="new"> Nye ordre </Nav.Link>
+          <Nav.Link eventKey="new"> Nye ordre () </Nav.Link>
           <Nav.Link eventKey="in-process">Under behandling</Nav.Link>
           <Nav.Link eventKey="packed">Til henting</Nav.Link>
         </Nav>
