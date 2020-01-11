@@ -26,6 +26,17 @@ export async function updateOrderStatus(ordernumber, orderstatus) {
   });
   return await res.json();
 }
+// Login / auth
+export async function createSession({ handle, password }) {
+  const res = await fetch(`${API_URL}/session`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ handle, password })
+  });
+  return await res.json();
+}
 
 // function for rejected /  delivered
 //

@@ -3,6 +3,7 @@ import "./App.css";
 // import AcceptOrder from "./components/ProductView/AcceptedOrder";
 // import HeaderContainer from "./container/HeaderContainer";
 // import InfoContanier from "./container/InfoContainer";
+import Login from "./components/Login";
 import OrderView from "./container/OrderView";
 import AcceptedOrder from "./container/OrderView";
 import ProductView from "./container/ProductView";
@@ -15,8 +16,8 @@ function App() {
       <div className="App">
         <Switch>
           {/* <Route path="/" exact component={AcceptedOrder} /> */}
-          {/* <Route path="/" exact component={LoginPage} /> */}
-          <Route path="/" component={OrderView} />
+          <Route path="/" exact component={Login} />
+          {/* <Route path="/" component={OrderView} /> */}
           <Route path="/orders/:ordernumber" component={ProductView} />
           <OrderView />
         </Switch>
