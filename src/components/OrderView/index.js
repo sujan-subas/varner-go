@@ -67,6 +67,7 @@ class Overview extends React.Component {
     const ordersFromDatabase = allOrders
       .filter(order => order.order_status === tabKey)
       .map((order, i) => {
+        //  fix formate data
         // const formattedDate = format(
         //   new Date(order.created_in_ap_at),
         //   "MM/dd/yyyy"
