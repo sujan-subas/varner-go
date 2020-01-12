@@ -25,9 +25,21 @@ async function createOrder(orderObject) {
 
   const queryText = `
   insert into orders
-  (order_number, reference_order_no, order_date, delivery_date, part_delivery_flag, customer_name, customer_email, customer_phonenumber, customer_addressline1, customer_addressline4, customer_zipcode, customer_city, order_list, created_in_app_at)
+  (order_number, 
+    reference_order_no, 
+    order_date, 
+    delivery_date, 
+    part_delivery_flag, 
+    customer_name, 
+    customer_email, 
+    customer_phonenumber, 
+    customer_addressline1, 
+    customer_addressline4, 
+    customer_zipcode, 
+    customer_city, 
+    order_list)
     values
-	    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+	    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
     returning
     *
     `;
@@ -44,8 +56,7 @@ async function createOrder(orderObject) {
     addressLine4,
     zipCode,
     city,
-    JSON.stringify(orderList),
-    "timestamptz default now()"
+    JSON.stringify(orderList)
   ];
 
   console.log({ queryValues });
@@ -54,21 +65,7 @@ async function createOrder(orderObject) {
 
   return rows[0];
 }
-// post data in customer table in postgres
-// async function createCustomer(code, name) {
-//   const { rows } = await pool.query(
-//     `
-//     insert into customer
-//       (code, name)
-//     values
-//       ($1, $2)
-//     returning
-//       *
-//       `,
-//     [code, name]
-//   );
-//   return rows[0];
-// }
+
 // get data from postgres
 async function getAllOrders() {
   try {
@@ -115,29 +112,7 @@ async function getOrder(ordernumber) {
     console.log(`Error: ${error.message}`);
   }
 }
-// async function getOrdersByStatus(orderstatus) {
-//   try {
-//     const data = await pool.query(
-//       `
-//       select
-//         *
-//       from
-//         orders
-//       where
-//         order_status = $1`,
-//       [orderstatus]
-//     );
-//     if (data.length === "") {
-//       console.log(`No orders finished`);
-//       return `No orders finished`;
-//     } else {
-//       console.log(data.rows);
-//       return data.rows;
-//     }
-//   } catch (error) {
-//     console.log(`Error: ${error.message}`);
-//   }
-// }
+
 async function updateOrderStatus(ordernumber, orderstatus) {
   const queryText = `
     update 
@@ -152,20 +127,20 @@ async function updateOrderStatus(ordernumber, orderstatus) {
   const queryValues = [ordernumber, orderstatus];
 
   const { rows } = await pool.query(queryText, queryValues);
-  // const orders = rows.map(order => {
-  //   return {
-  //     ordernumber: ordernumber,
-  //     orderstatus: orderstatus
-  //   };
-  // });
 
   return rows[0];
 }
 
 module.exports = {
-  createOrder, //check,
-  getAllOrders, //check
-  getOrder, //check
-  // getOrdersByStatus, //check
+  createOrder,
+  getAllOrders,
+  getOrder,
   updateOrderStatus
 };
+
+/**
+ * todo:
+ * orderProcessed() that will move an order from the table "orders" to table "processed_orders"
+ * 
+ * 
+ */

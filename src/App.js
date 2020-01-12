@@ -22,7 +22,7 @@ function App() {
       <div className="App">
         <Switch>
           {/* <Route path="/" exact component={AcceptedOrder} /> */}
-          <Route path="/" exact component={Login} />
+          {/* <Route path="/" exact component={Login} /> */}
           {/* <Route path="/" component={OrderView} /> */}
           <Route path="/orders/:ordernumber" component={ProductView} />
           <OrderView />

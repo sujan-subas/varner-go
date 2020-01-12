@@ -45,15 +45,15 @@ class Overview extends React.Component {
   }
 
   render() {
+    /*
     if (!this.state.allOrders.length)
       return (
         <div className="container texr-white">
           Ingenting å hente! Sjekk om server er oppe å går ;-)
         </div>
       );
-
+     */   
     const { tabKey, allOrders } = this.state;
-
     let switchName = () => {
       let newName = "";
       if (this.state.tabKey === "delivered") {

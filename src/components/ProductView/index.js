@@ -1,6 +1,6 @@
 import React, { AcceptedOrder } from "react";
 import { getFormattedDeadLine } from "../../utils/time";
-//import { getOrderByOrderNumber } from "../../clientAPI/clientAPI";
+import { getOrderByOrderNumber } from "../../clientAPI/clientAPI";
 
 const fakeorder = {
   status: "new",
@@ -55,13 +55,13 @@ class Product extends React.Component {
   }
 
     async componentDidMount() {
-        //const { ordernumber } = this.props.match.params;
+        const { ordernumber } = this.props.match.params;
 
         try {
             this.setState({ isLoading: true });
             
-            //const order = await getOrderByOrderNumber(ordernumber);
-            const order = fakeorder;
+            const order = await getOrderByOrderNumber(ordernumber);
+            //const order = fakeorder;
 
             this.setState({ order });
             
