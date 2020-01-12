@@ -35,9 +35,9 @@ api.post("/orders", async (req, res) => {
     const orderXml = req.body;
     const orderObject = await getJsonFromXml(orderXml);
     // console.log(util.inspect(orderXml, false, null, true /* enable colors */))
-    console.log("****************", orderObject);
-    const newOrder = await createOrder(orderObject);
-    res.send(newOrder);
+    // console.log("****************", orderObject);
+    // const newOrder = await createOrder(orderObject);
+    res.send(orderObject);
 
   } catch (error) {
     console.log(error.message);
