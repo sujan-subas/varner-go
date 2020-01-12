@@ -3,54 +3,56 @@ import { getFormattedDeadLine } from "../../utils/time";
 //import { getOrderByOrderNumber } from "../../clientAPI/clientAPI";
 
 const fakeorder = {
-    status: 'new',
-    orderNumber: 'BB-6WN-119682',
-    referenceOrderNo: '100119682',
-    deadLine: '2020-01-11T21:44:41',
-    acceptedTime: '2020-01-11T11:40:04',
-    customer: 'Jon Selenium',
-    phoneNumber: '+4746823125',
-    addressLine1: 'Sjøskogvn. 7',
-    zipCode: 1407,
-    city: 'Vinterbro',
-    orderLines: [
-        {
-            sku: 71944370010,
-            description: 'IW ABAD Tyra Bottom - 380/Red - L',
-            orderedQuantity: 1,
-            size: 'L',
-            color: 'Red',
-            image: 'https://cubus.imgix.net/globalassets/productimages/7227796_001_f_q_l_basic_ls_cubus.jpg?auto=format&w=1000'
-        },
-        {
-            sku: 71937770004,
-            description: 'DK NDC Tote - 990/Black - L',
-            orderedQuantity: 1,
-            size: 'L',
-            color: 'Black',
-            image: 'https://cubus.imgix.net/globalassets/productimages/7050221250411_f_q_70367219_l_basic_tank_top.jpg?auto=format&w=1000'
-        }
-    ],
-    fullAdress: function () {
-        return ' ' + this.addressLine1 + ', ' + this.zipCode + ' ' + this.city;
+  status: "new",
+  orderNumber: "BB-6WN-119682",
+  referenceOrderNo: "100119682",
+  deadLine: "2020-01-11T21:44:41",
+  acceptedTime: "2020-01-11T11:40:04",
+  customer: "Jon Selenium",
+  phoneNumber: "+4746823125",
+  addressLine1: "Sjøskogvn. 7",
+  zipCode: 1407,
+  city: "Vinterbro",
+  orderLines: [
+    {
+      sku: 71944370010,
+      description: "IW ABAD Tyra Bottom - 380/Red - L",
+      orderedQuantity: 1,
+      size: "L",
+      color: "Red",
+      image:
+        "https://cubus.imgix.net/globalassets/productimages/7227796_001_f_q_l_basic_ls_cubus.jpg?auto=format&w=1000"
+    },
+    {
+      sku: 71937770004,
+      description: "DK NDC Tote - 990/Black - L",
+      orderedQuantity: 1,
+      size: "L",
+      color: "Black",
+      image:
+        "https://cubus.imgix.net/globalassets/productimages/7050221250411_f_q_70367219_l_basic_tank_top.jpg?auto=format&w=1000"
     }
+  ],
+  fullAdress: function() {
+    return " " + this.addressLine1 + ", " + this.zipCode + " " + this.city;
+  }
 };
 
 class Product extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            time: '',
-            order: {},
-            pickedSkus: [],
-            isLoading: false,
-            error: null
-        }
+    this.state = {
+      time: "",
+      order: {},
+      pickedSkus: [],
+      isLoading: false,
+      error: null
+    };
 
-        this.handleChange = this.handleChange.bind(this);
-        this.timer = null;
-    }
+    this.handleChange = this.handleChange.bind(this);
+    this.timer = null;
+  }
 
     async componentDidMount() {
         //const { ordernumber } = this.props.match.params;
@@ -87,20 +89,6 @@ class Product extends React.Component {
         }
 
     }
-
-    handleChange(field, event) {
-        this.setState({
-            order: {
-                ...this.state.order,
-                [field]: event.target.value
-            }
-        })
-        //const { order } = this.state;
-        //await editOrder(order);
-        //const { history } = this.props;
-        //const id = this.state.order.orderNumber;
-        //history.replace(`/order/${id}`);
-    }
    
     getTime() {
         let time;
@@ -120,12 +108,24 @@ class Product extends React.Component {
         this.setState({
             time: time
         })
-
-        this.timer = setTimeout(() => this.getTime(), 1000)
     }
 
+  handleChange(field, event) {
+    this.setState({
+      order: {
+        ...this.state.order,
+        [field]: event.target.value
+      }
+    });
+    //const { order } = this.state;
+    //await editOrder(order);
+    //const { history } = this.props;
+    //const id = this.state.order.orderNumber;
+    //history.replace(`/order/${id}`);
+  }
 
-render() {
+
+  render() {
     const { order, pickedSkus, time } = this.state;
     let orderElements;
 

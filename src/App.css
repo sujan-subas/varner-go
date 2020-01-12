@@ -13,7 +13,11 @@
   /* green-color */
   --varner-green: #44a241;
 }
+<<<<<<< HEAD
 .order-card {
+=======
+.order-cards {
+>>>>>>> a7d5b8ea91704ee869fbd51b2e74d64df1bc2796
   border-left: var(--varner-green) 1rem solid;
   background-color: var(--varner-darker);
   color: var(--varner-text-white);

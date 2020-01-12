@@ -36,14 +36,21 @@ class Overview extends React.Component {
   }
 
   handleCardClick(ordernumber) {
+    console.log(`hande has been clicked`);
     const { history } = this.props;
     history.push(`/orders/${ordernumber}`);
+    console.log(`handle cards click`);
     console.log(history);
     console.log(ordernumber);
   }
 
   render() {
-    if (!this.state.allOrders.length) return null;
+    if (!this.state.allOrders.length)
+      return (
+        <div className="container texr-white">
+          Ingenting å hente! Sjekk om server er oppe å går ;-)
+        </div>
+      );
 
     const { tabKey, allOrders } = this.state;
 
@@ -60,15 +67,16 @@ class Overview extends React.Component {
     const ordersFromDatabase = allOrders
       .filter(order => order.order_status === tabKey)
       .map((order, i) => {
+        //  fix formate data
         // const formattedDate = format(
         //   new Date(order.created_in_ap_at),
         //   "MM/dd/yyyy"
         // );
         return (
           <div
-            className="text-white card product-cards m-4"
+            className="text-white card order-cards m-4"
             key={i}
-            onClick={this.handleCardClick.bind(this, order.order_number)}
+            onClick={() => this.handleCardClick.bind(this, order.order_number)}
           >
             <div className="card-header">
               Ordre nummer: {order.order_number} | {order.order_status}
@@ -76,7 +84,7 @@ class Overview extends React.Component {
             <div className="card-body ">
               <p>
                 Utløper om:{" "}
-                {order.expire !== 0 ? "Unable to state" : order.expire} 88 min
+                {order.expire === 0 ? "Unable to state" : order.expire} 88 min
               </p>
               <p>Antall varer: {order.order_list.length}</p>
               {/* <p>Bestillingsdato: {formattedDate} </p> */}
@@ -114,7 +122,7 @@ class Overview extends React.Component {
           activeKey={tabKey}
           onSelect={tabKey => this.handleChangeTab(tabKey)}
         >
-          <Nav.Link eventKey="new"> Nye ordre </Nav.Link>
+          <Nav.Link eventKey="new"> Nye ordre () </Nav.Link>
           <Nav.Link eventKey="in-process">Under behandling</Nav.Link>
           <Nav.Link eventKey="packed">Til henting</Nav.Link>
         </Nav>
