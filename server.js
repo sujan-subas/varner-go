@@ -26,17 +26,6 @@ const api = express();
 
 // Order post from Varner
 api.post("/orders", async (req, res) => {
-<<<<<<< HEAD
-	try {
-		const orderXml = req.body;
-		const orderObject = await getJsonFromXml(orderXml);
-		console.log("****************", orderObject);
-		const newOrder = await createOrder(orderObject);
-		res.send(newOrder);
-	} catch (error) {
-		console.log(error.message);
-	}
-=======
   try {
     const orderXml = req.body;
     const orderObject = await getJsonFromXml(orderXml);
@@ -48,7 +37,6 @@ api.post("/orders", async (req, res) => {
   } catch (error) {
     console.log(error.message);
   }
->>>>>>> Magnus-BackEnd
 });
 
 // get all orders
