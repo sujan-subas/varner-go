@@ -152,12 +152,6 @@ async function updateOrderStatus(ordernumber, orderstatus) {
   const queryValues = [ordernumber, orderstatus];
 
   const { rows } = await pool.query(queryText, queryValues);
-  // const orders = rows.map(order => {
-  //   return {
-  //     ordernumber: ordernumber,
-  //     orderstatus: orderstatus
-  //   };
-  // });
 
   return rows[0];
 }
