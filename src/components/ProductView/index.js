@@ -91,23 +91,23 @@ class Product extends React.Component {
     }
    
     getTime() {
-        let time;
-        const { order } = this.state;
-        if (order.status === 'new') {
-            time = getFormattedDeadLine(
-                new Date(order.deadLine), 
-                new Date()
-            )
-        } else if (order.status === 'in-process') {
-            time = getFormattedDeadLine(
-                new Date(),
-                new Date(order.acceptedTime)
-            )
-        }
-        
-        this.setState({
-            time: time
-        })
+      let time;
+      const { order } = this.state;
+      if (order.status === 'new') {
+          time = getFormattedDeadLine(
+              new Date(order.deadLine), 
+              new Date()
+          )
+      } else if (order.status === 'in-process') {
+          time = getFormattedDeadLine(
+              new Date(),
+              new Date(order.acceptedTime)
+          )
+      }
+      
+      this.setState({
+          time: time
+      })
     }
 
   handleChange(field, event) {
@@ -247,7 +247,13 @@ class Product extends React.Component {
             </React.Fragment>
         )
     }
-    return <React.Fragment></React.Fragment>;
+    return(
+      <React.Fragment>
+        <div>
+          <p>Loading</p>
+        </div>
+      </React.Fragment>
+    ) 
   }
 }
 
