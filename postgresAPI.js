@@ -25,27 +25,39 @@ async function createOrder (orderObject) {
 
 	const queryText = `
   insert into orders
-  (order_number, reference_order_no, order_date, delivery_date, part_delivery_flag, customer_name, customer_email, customer_phonenumber, customer_addressline1, customer_addressline4, customer_zipcode, customer_city, order_list)
+  (order_number, 
+    reference_order_no, 
+    order_date, 
+    delivery_date, 
+    part_delivery_flag, 
+    customer_name, 
+    customer_email, 
+    customer_phonenumber, 
+    customer_addressline1, 
+    customer_addressline4, 
+    customer_zipcode, 
+    customer_city, 
+    order_list)
     values
 	    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
     returning
     *
     `;
-	const queryValues = [
-		orderNumber,
-		refrenceOrderNumber,
-		orderDate,
-		deliveryDate,
-		partDeliveryFlag,
-		name,
-		email,
-		phoneNumber,
-		addressLine1,
-		addressLine4,
-		zipCode,
-		city,
-		JSON.stringify(orderList)
-	];
+  const queryValues = [
+    orderNumber,
+    refrenceOrderNumber,
+    orderDate,
+    deliveryDate,
+    partDeliveryFlag,
+    name,
+    email,
+    phoneNumber,
+    addressLine1,
+    addressLine4,
+    zipCode,
+    city,
+    JSON.stringify(orderList)
+  ];
 
 	console.log({ queryValues });
 
@@ -53,21 +65,7 @@ async function createOrder (orderObject) {
 
 	return rows[0];
 }
-// post data in customer table in postgres
-// async function createCustomer(code, name) {
-//   const { rows } = await pool.query(
-//     `
-//     insert into customer
-//       (code, name)
-//     values
-//       ($1, $2)
-//     returning
-//       *
-//       `,
-//     [code, name]
-//   );
-//   return rows[0];
-// }
+
 // get data from postgres
 async function getAllOrders () {
 	try {
@@ -134,8 +132,15 @@ async function updateOrderStatus (ordernumber, orderstatus) {
 }
 
 module.exports = {
-	createOrder, //check,
-	getAllOrders, //check
-	getOrder, //check
-	updateOrderStatus
+  createOrder,
+  getAllOrders,
+  getOrder,
+  updateOrderStatus
 };
+
+/**
+ * todo:
+ * orderProcessed() that will move an order from the table "orders" to table "processed_orders"
+ * 
+ * 
+ */

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { AcceptedOrder } from "react";
 import { getFormattedDeadLine } from "../../utils/time";
 import { getOrderByOrderNumber } from "../../clientAPI/clientAPI";
 
