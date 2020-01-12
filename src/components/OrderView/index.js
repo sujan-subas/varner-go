@@ -36,10 +36,9 @@ class Overview extends React.Component {
 	}
 
 	handleCardClick (ordernumber) {
-		console.log(`hande has been clicked`);
 		const { history } = this.props;
 		history.push(`/orders/${ordernumber}`);
-		console.log(`handle cards click`);
+		
 		console.log(history);
 		console.log(ordernumber);
 	}
@@ -59,8 +58,9 @@ class Overview extends React.Component {
 			}
 			return newName;
 		};
-
-		const ordersFromDatabase = allOrders.filter((order) => order.order_status === tabKey).map((order, i) => {
+		//filtrer på navenet til tabben
+		const ordersType = allOrders.filter((order) => order.order_status === tabKey);
+		const ordersFromDatabase = ordersType.map((order, i) => {
 			//  fix formate data
 			// const formattedDate = format(
 			//   new Date(order.created_in_ap_at),
@@ -70,7 +70,7 @@ class Overview extends React.Component {
 				<div
 					className="text-white card order-cards m-4"
 					key={i}
-					onClick={() => this.handleCardClick.bind(this, order.order_number)}
+					onClick={this.handleCardClick.bind(this, order.order_number)}
 				>
 					<div className="card-header">
 						Ordre nummer: {order.order_number} | {order.order_status}
@@ -97,8 +97,8 @@ class Overview extends React.Component {
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="mr-auto" activeKey={tabKey} onSelect={(tabKey) => this.handleChangeTab(tabKey)}>
-							<Nav.Link eventKey="delivered">Utlevert</Nav.Link>
-							<Nav.Link eventKey="rejected">Avvist</Nav.Link>
+							<Nav.Link eventKey="delivered">Utlevert ( ) </Nav.Link>
+							<Nav.Link eventKey="rejected">Avvist ( ) </Nav.Link>
 						</Nav>
 					</Navbar.Collapse>
 				</Navbar>
@@ -109,9 +109,9 @@ class Overview extends React.Component {
 					activeKey={tabKey}
 					onSelect={(tabKey) => this.handleChangeTab(tabKey)}
 				>
-					<Nav.Link eventKey="new"> Nye ordre () </Nav.Link>
-					<Nav.Link eventKey="in-process">Under behandling</Nav.Link>
-					<Nav.Link eventKey="packed">Til henting</Nav.Link>
+					<Nav.Link eventKey="new"> Nye ordre ( ) </Nav.Link>
+					<Nav.Link eventKey="in-process">Under behandling ( ) </Nav.Link>
+					<Nav.Link eventKey="packed">Til henting ( ) </Nav.Link>
 				</Nav>
 				<h2>{switchName()}</h2>
 				{ordersFromDatabase.length === 0 ? (
@@ -121,7 +121,6 @@ class Overview extends React.Component {
 				) : (
 					ordersFromDatabase
 				)}
-				{/* <div className="container">{orderElements}</div> */}
 			</React.Fragment>
 		);
 	}
