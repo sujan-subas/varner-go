@@ -17,6 +17,8 @@ async function getJSONfromXML(result) {
   const delivery = result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0].delivery[0];
   const costumer = result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0].invoiceCustomer[0];
   const orderLines = result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0].orderLines[0];
+  const sku = result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0].orderLines[0].orderLine[0].productId[0];
+
   // ******
   // New Object
   // console.log(orderLines.orderLine.length)
@@ -33,10 +35,15 @@ async function getJSONfromXML(result) {
     }
   })
 
+  // Handle SKU number
+  let skuNumber = sku.slice(0, 7) + '_' + sku.slice(7, 11)
+
+
   // GET ORDER API DETAILS (SKU API)
   const login = 'varnergofetch@protonmail.com';
   const password = 'varnergofetch';
-  const url = 'https://bikbok.com/no/api/productfeed/v2/get?variant=7244470_F922';
+  const url = `https://bikbok.com/no/api/productfeed/v2/get?variant=7244470_F922`;
+  let imgUrl;
   // Getting json.
   fetch(url, {
     headers: new Headers({
@@ -47,29 +54,38 @@ async function getJSONfromXML(result) {
     return response.json();
 
   }).then(function (res) {
-    console.log('this is res', res)
-  })
-  // Make new Object
-  const orderJson =
-  {
-    orderNumber: order.orderNumber[0],
-    refrenceOrderNumber: order.referenceOrderNo[0],
-    orderDate: order.orderDate[0], // year/month/day
-    deliveryDate: order.deliveryDate[0], // year/month/day
-    storeCode: delivery.placeOfDeliveryCode[0],
-    partDeliveryFlag: order.partDeliveryFlag[0],
-    name: costumer.name[0],
-    email: costumer.code[0],
-    phoneNumber: costumer.phoneNumber[0],
-    addressLine1: costumer.addressLine1[0],
-    addressLine4: costumer.addressLine4[0],
-    zipCode: costumer.zipCode[0],
-    city: costumer.city[0],
-    orderList: orderDetails
-  }
-  return orderJson;
-}
+    // console.log('..............................', res[0].ProductImages[0].Url)
+    imgUrl = res[0].ProductImages[0].Url;
+    return imgUrl
 
+  }).then(function(res) {
+    console.log(res)
+  })
+  
+  // Make new Object
+    const orderJson =
+    {
+      bildeUrl: 'ddd',
+      url: url,
+      sku: skuNumber,
+      orderNumber: order.orderNumber[0],
+      refrenceOrderNumber: order.referenceOrderNo[0],
+      orderDate: order.orderDate[0], // year/month/day
+      deliveryDate: order.deliveryDate[0], // year/month/day
+      storeCode: delivery.placeOfDeliveryCode[0],
+      partDeliveryFlag: order.partDeliveryFlag[0],
+      name: costumer.name[0],
+      email: costumer.code[0],
+      phoneNumber: costumer.phoneNumber[0],
+      addressLine1: costumer.addressLine1[0],
+      addressLine4: costumer.addressLine4[0],
+      zipCode: costumer.zipCode[0],
+      city: costumer.city[0],
+      orderList: orderDetails
+    }
+    return orderJson;
+  
+}
 
 
 module.exports = getJSONfromXML
