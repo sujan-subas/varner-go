@@ -5,6 +5,7 @@ const port = process.env.PORT;
 const bodyParser = require("body-parser");
 require("body-parser-xml")(bodyParser);
 const cors = require("cors");
+
 const util = require('util');
 
 // const secret = process.env.SECRET;
@@ -34,10 +35,10 @@ api.post("/orders", async (req, res) => {
     const orderXml = req.body;
     const orderObject = await getJsonFromXml(orderXml);
     // console.log(util.inspect(orderXml, false, null, true /* enable colors */))
-    // console.log("****************", orderObject);
-    // const newOrder = await createOrder(orderObject);
-    res.send(orderObject);
-    console.log(orderXml)
+    console.log("****************", orderObject);
+    const newOrder = await createOrder(orderObject);
+    res.send(newOrder);
+
   } catch (error) {
     console.log(error.message);
   }
@@ -78,6 +79,7 @@ api.patch("/orders/:ordernumber", async (req, res, next) => {
     console.log(`Error: ${error.message}`);
   }
 });
+
 app.use("/api", api);
 
 app.use((err, req, res, next) => {

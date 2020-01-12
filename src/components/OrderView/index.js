@@ -1,130 +1,108 @@
 import React from "react";
-import {
-  Nav,
-  NavDropdown,
-  Navbar,
-  Card,
-  Tab,
-  Tabs,
-  NavbarBrand
-} from "react-bootstrap";
-
-import { Link } from "react-router-dom";
+import { Nav, Navbar } from "react-bootstrap";
 import { format } from "date-fns";
-
-const orderLine = [
-  {
-    orderedQuantity: 1,
-    name: "Tore Stensrud",
-    referenceOrderNo: 4001344251,
-    orderDate: "2019-12-16T11:26:41",
-    status: "new"
-  },
-  {
-    orderedQuantity: 5,
-    name: "Marting Stensrud",
-    referenceOrderNo: 4001341234,
-    orderDate: "2019-12-16T11:26:41",
-    status: "new"
-  },
-  {
-    orderedQuantity: 4,
-    name: "Hiruth Stautland",
-    referenceOrderNo: 4001345432,
-    orderDate: "2019-12-16T11:26:41",
-    status: "new"
-  },
-  {
-    orderedQuantity: 2,
-    name: "Magnus Sagerup",
-    referenceOrderNo: 5001344252,
-    orderDate: "2019-12-21T11:26:42",
-    status: "in-process"
-  },
-  {
-    orderedQuantity: 3,
-    name: "Inge Martinsen",
-    referenceOrderNo: 6001344253,
-    orderDate: "2019-12-17T11:26:47",
-    status: "packed"
-  },
-  {
-    orderedQuantity: 2,
-    name: "Aske Plaske",
-    referenceOrderNo: 5001344252,
-    orderDate: "2019-12-22T17:26:42",
-    status: "delivered"
-  },
-  {
-    orderedQuantity: 2,
-    name: "Frank Sank",
-    referenceOrderNo: 5001344252,
-    orderDate: "2019-12-24T16:26:42",
-    status: "rejected"
-  }
-];
+import { getAllOrdersDB } from "../../clientAPI/clientAPI";
 
 class Overview extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      order: orderLine,
-      tabKey: "new"
+      // order: orderLine,
+      tabKey: "new",
+      error: false,
+      allOrders: [],
+      isLoading: true
     };
+  }
+
+  async componentDidMount() {
+    try {
+      const allOrders = await getAllOrdersDB();
+      this.setState({
+        allOrders,
+        isLoading: false
+      });
+    } catch (error) {
+      console.log(`Error: ${error.message}`);
+      this.setState({
+        error
+      });
+    }
   }
 
   handleChangeTab(tabKey) {
     this.setState({ tabKey });
   }
 
-  render() {
-    const { tabKey } = this.state;
+  handleCardClick(ordernumber) {
+    console.log(`hande has been clicked`);
+    const { history } = this.props;
+    history.push(`/orders/${ordernumber}`);
+    console.log(`handle cards click`);
+    console.log(history);
+    console.log(ordernumber);
+  }
 
-    const orderElements = orderLine
-      .filter(({ status, orderDate }) => status === tabKey)
-      .map(order => {
-        const formattedDate = format(new Date(order.orderDate), "MM/dd/yyyy");
-        console.log(order);
-        return (
-          <Card
-            className="color-card"
-            style={{ borderLeft: "1rem green solid" }}
-            text="white"
-            key={order.referenceOrderNo}
-          >
-            <Card.Header>Order id: {order.referenceOrderNo}</Card.Header>
-            <Card.Body>
-              <Card.Title>Order quantity: {order.orderedQuantity}</Card.Title>
-              <Card.Text>
-                Kunde: {order.name}
-                <br></br>
-                Bestillingsdato: {formattedDate}
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        );
-      });
+  render() {
+    if (!this.state.allOrders.length)
+      return (
+        <div className="container texr-white">
+          Ingenting å hente! Sjekk om server er oppe å går ;-)
+        </div>
+      );
+
+    const { tabKey, allOrders } = this.state;
 
     let switchName = () => {
       let newName = "";
-      if (this.state.tabKey === "new") {
-        newName = "Nye ordre";
-      } else if (this.state.tabKey === "in-process") {
-        newName = "Under behandling";
-      } else if (this.state.tabKey === "packed") {
-        newName = "Til henting";
-      } else if (this.state.tabKey === "delivered") {
+      if (this.state.tabKey === "delivered") {
         newName = "Levert";
       } else if (this.state.tabKey === "rejected") {
         newName = "Avvist";
       }
       return newName;
     };
+
+    const ordersFromDatabase = allOrders
+      .filter(order => order.order_status === tabKey)
+      .map((order, i) => {
+        //  fix formate data
+        // const formattedDate = format(
+        //   new Date(order.created_in_ap_at),
+        //   "MM/dd/yyyy"
+        // );
+        return (
+          <div
+            className="text-white card order-cards m-4"
+            key={i}
+            onClick={() => this.handleCardClick.bind(this, order.order_number)}
+          >
+            <div className="card-header">
+              Ordre nummer: {order.order_number} | {order.order_status}
+            </div>
+            <div className="card-body ">
+              <p>
+                Utløper om:{" "}
+                {order.expire === 0 ? "Unable to state" : order.expire} 88 min
+              </p>
+              <p>Antall varer: {order.order_list.length}</p>
+              {/* <p>Bestillingsdato: {formattedDate} </p> */}
+              <br />
+              <p>Referanse Nummer: {order.reference_order_no}</p>
+              <p>Name: {order.customer_name}</p>
+            </div>
+          </div>
+        );
+      });
+
+    //return
     return (
       <React.Fragment>
         <Navbar bg="light" expand="lg">
           <Navbar.Brand>Varner Go</Navbar.Brand>
+          <strong> Active Orders {allOrders.length}</strong>
+
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav
@@ -137,10 +115,6 @@ class Overview extends React.Component {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-        {/* <Navbar bg="light" expand="lg">
-          <NavbarBrand>{switchName()}</NavbarBrand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav"> */}
         <Nav
           className="justify-content-center color-nav"
           variant="tabs"
@@ -148,18 +122,21 @@ class Overview extends React.Component {
           activeKey={tabKey}
           onSelect={tabKey => this.handleChangeTab(tabKey)}
         >
-          <Nav.Link eventKey="new"> Nye ordre </Nav.Link>
+          <Nav.Link eventKey="new"> Nye ordre () </Nav.Link>
           <Nav.Link eventKey="in-process">Under behandling</Nav.Link>
           <Nav.Link eventKey="packed">Til henting</Nav.Link>
-          {/* <NavDropdown title="Fullført" id="nav-dropdown">
-            <NavDropdown.Item eventKey="delivered">Levert</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item eventKey="rejected">Avvist</NavDropdown.Item>
-          </NavDropdown> */}
         </Nav>
-        {/* </Navbar.Collapse>
-        </Navbar> */}
-        <div>{orderElements}</div>
+        <h2>{switchName()}</h2>
+        {ordersFromDatabase.length === 0 ? (
+          <div className="text-white">
+            <div className="container">
+              NO {tabKey.toLocaleUpperCase()} ORDERS
+            </div>
+          </div>
+        ) : (
+          ordersFromDatabase
+        )}
+        {/* <div className="container">{orderElements}</div> */}
       </React.Fragment>
     );
   }

@@ -45,7 +45,7 @@ async function createOrder(orderObject) {
     zipCode,
     city,
     JSON.stringify(orderList),
-    "now()"
+    "timestamptz default now()"
   ];
 
   console.log({ queryValues });
@@ -77,7 +77,9 @@ async function getAllOrders() {
         *
       from
         orders
-      order by orders.order_date desc
+      order
+        by orders.order_date desc
+
     `);
     if (data.length === "") {
       console.log(`No pick-up orders in database`);
@@ -98,7 +100,7 @@ async function getOrder(ordernumber) {
       from
         orders
       where 
-        "order_number" = $1
+        order_number = $1
             `,
       [ordernumber]
     );
@@ -113,50 +115,43 @@ async function getOrder(ordernumber) {
     console.log(`Error: ${error.message}`);
   }
 }
-async function getOrdersByStatus(orderstatus) {
-  try {
-    const data = await pool.query(
-      `
-      select
-        *
-      from 
-        orders
-      where 
-        order_status = $1`,
-      [orderstatus]
-    );
-    if (data.length === "") {
-      console.log(`No orders finished`);
-      return `No orders finished`;
-    } else {
-      console.log(data.rows);
-      return data.rows;
-    }
-  } catch (error) {
-    console.log(`Error: ${error.message}`);
-  }
-}
+// async function getOrdersByStatus(orderstatus) {
+//   try {
+//     const data = await pool.query(
+//       `
+//       select
+//         *
+//       from
+//         orders
+//       where
+//         order_status = $1`,
+//       [orderstatus]
+//     );
+//     if (data.length === "") {
+//       console.log(`No orders finished`);
+//       return `No orders finished`;
+//     } else {
+//       console.log(data.rows);
+//       return data.rows;
+//     }
+//   } catch (error) {
+//     console.log(`Error: ${error.message}`);
+//   }
+// }
 async function updateOrderStatus(ordernumber, orderstatus) {
   const queryText = `
     update 
       orders
     set
-      order_status = $2,
-      process_finished_at = $3
+      order_status = $2
     where
-      "order_number" = $1
+      order_number = $1
     returning
       *
   `;
-  const queryValues = [ordernumber, orderstatus, "now()"];
+  const queryValues = [ordernumber, orderstatus];
 
   const { rows } = await pool.query(queryText, queryValues);
-  // const orders = rows.map(order => {
-  //   return {
-  //     ordernumber: ordernumber,
-  //     orderstatus: orderstatus
-  //   };
-  // });
 
   return rows[0];
 }
@@ -165,6 +160,6 @@ module.exports = {
   createOrder, //check,
   getAllOrders, //check
   getOrder, //check
-  getOrdersByStatus, //check
+  // getOrdersByStatus, //check
   updateOrderStatus
 };
