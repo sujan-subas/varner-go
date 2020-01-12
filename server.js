@@ -5,6 +5,9 @@ const port = process.env.PORT;
 const bodyParser = require("body-parser");
 require("body-parser-xml")(bodyParser);
 const cors = require("cors");
+
+const util = require('util');
+
 // const secret = process.env.SECRET;
 const { createOrder, getAllOrders, getOrder, updateOrderStatus } = require("./postgresAPI");
 
@@ -23,6 +26,7 @@ const api = express();
 
 // Order post from Varner
 api.post("/orders", async (req, res) => {
+<<<<<<< HEAD
 	try {
 		const orderXml = req.body;
 		const orderObject = await getJsonFromXml(orderXml);
@@ -32,6 +36,19 @@ api.post("/orders", async (req, res) => {
 	} catch (error) {
 		console.log(error.message);
 	}
+=======
+  try {
+    const orderXml = req.body;
+    const orderObject = await getJsonFromXml(orderXml);
+    // console.log(util.inspect(orderXml, false, null, true /* enable colors */))
+    // console.log("****************", orderObject);
+    const newOrder = await createOrder(orderObject);
+    res.send(newOrder);
+
+  } catch (error) {
+    console.log(error.message);
+  }
+>>>>>>> Magnus-BackEnd
 });
 
 // get all orders
