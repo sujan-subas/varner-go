@@ -170,7 +170,7 @@ render() {
 
         return (
             <React.Fragment>
-                <div className="bg-dark">
+                <div className="body">
                     <header>
                         <button
                             className="btn"

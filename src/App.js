@@ -10,21 +10,23 @@ import "./App.css";
 
 function App() {
   return (
+    /*
     <React.Fragment>
       <ProductView />
     </React.Fragment>
-    /*
+    */
+    
     <HashRouter>
       <div className="App">
         <Switch>
-          {/* <Route path="/" exact component={LoginPage}/> }
+          {/* <Route path="/" exact component={LoginPage}/> */}
           <Route path="/" exact component={OrderView} />
           <Route path="/order/:ordernumber" component={ProductView} />
           <OrderView />
         </Switch>
       </div>
     </HashRouter>
-    */
+    
   );
 }
 
