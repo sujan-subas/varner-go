@@ -14,11 +14,7 @@ const { createOrder, getAllOrders, getOrder, updateOrderStatus } = require("./po
 const getJsonFromXml = require("./services/convert_xml");
 
 //  ------------
-<<<<<<< HEAD
-app.use(bodyParser.json()); 
-=======
 app.use(bodyParser.json());
->>>>>>> Develop
 app.use(bodyParser.xml());
 // app.use(bodyParser.urlencoded({ extended: true }));
 

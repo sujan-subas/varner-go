@@ -26,9 +26,6 @@ async function createOrder(orderObject) {
 
 	const queryText = `
   insert into orders
-<<<<<<< HEAD
-  (order_number, reference_order_no, order_date, delivery_date, part_delivery_flag, customer_name, customer_email, customer_phonenumber, customer_addressline1, customer_addressline4, customer_zipcode, customer_city, order_list, product_Image_Url)
-=======
   (order_number, 
     reference_order_no, 
     order_date, 
@@ -43,7 +40,6 @@ async function createOrder(orderObject) {
     customer_city, 
     order_list, 
     product_Image_Url)
->>>>>>> Develop
     values
 	    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
     returning
@@ -63,12 +59,7 @@ async function createOrder(orderObject) {
     zipCode,
     city,
     JSON.stringify(orderList),
-<<<<<<< HEAD
-    productImageUrl,
-    
-=======
     productImageUrl
->>>>>>> Develop
   ];
 
 	console.log({ queryValues });
