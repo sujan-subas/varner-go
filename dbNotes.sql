@@ -18,7 +18,8 @@ order_list json,
 order_status "type-order_status" default 'new',
 status_changed_at TIMESTAMPTZ DEFAULT Now(),
 process_finished_at date,
-created_in_app_at TIMESTAMPTZ DEFAULT Now(),
+created_in_app_at CURRENT_TIMESTAMP,
+product_image_url varchar,
 
 primary key(order_number, reference_order_no));
 

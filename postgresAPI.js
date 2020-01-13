@@ -116,8 +116,8 @@ async function getOrder(ordernumber) {
   }
 }
 
-async function updateOrderStatus(ordernumber, orderstatus) {
-  const queryText = `
+async function updateOrderStatus (ordernumber, order_status) {
+	const queryText = `
     update 
       orders
     set
@@ -127,7 +127,7 @@ async function updateOrderStatus(ordernumber, orderstatus) {
     returning
       *
   `;
-  const queryValues = [ordernumber, orderstatus];
+	const queryValues = [ ordernumber, order_status ];
 
   const { rows } = await pool.query(queryText, queryValues);
 
