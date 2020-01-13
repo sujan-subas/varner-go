@@ -155,33 +155,21 @@ class Product extends React.Component {
 						<div>
               <button 
                 value={"declined"} 
-<<<<<<< HEAD
-                onClick={this.handleChange.bind(this, "order_status")}
-=======
                 onClick={this.handleChange.bind(this)}
->>>>>>> FrontEnd
               >
 								Avvis ordre
 							</button>
 							{pickedSkus.length === order.order_list.length ? (
                 <button 
                   value={"packed"} 
-<<<<<<< HEAD
-                  onClick={this.handleChange.bind(this, "order_status")}
-=======
                   onClick={this.handleChange.bind(this)}
->>>>>>> FrontEnd
                 >
 									Klar til opphenting
 								</button>
 							) : (
                 <button 
                   value={"in-process"} 
-<<<<<<< HEAD
-                  onClick={this.handleChange.bind(this, "order_status")}
-=======
                   onClick={this.handleChange.bind(this)}
->>>>>>> FrontEnd
                 >
 									Ja, dette fikser vi
 								</button>
