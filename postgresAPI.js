@@ -2,29 +2,29 @@ require("dotenv").config();
 
 const Pool = require("pg").Pool;
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
+	connectionString: process.env.DATABASE_URL
 });
 
 // post data in orders table in postgres
-async function createOrder(orderObject) {
-  const {
-    orderNumber,
-    refrenceOrderNumber,
-    orderDate,
-    deliveryDate,
-    partDeliveryFlag,
-    name,
-    email,
-    phoneNumber,
-    addressLine1,
-    addressLine4,
-    zipCode,
-    city,
-    orderList,
-    productImageUrl
-  } = orderObject;
+async function createOrder (orderObject) {
+	const {
+		orderNumber,
+		refrenceOrderNumber,
+		orderDate,
+		deliveryDate,
+		partDeliveryFlag,
+		name,
+		email,
+		phoneNumber,
+		addressLine1,
+		addressLine4,
+		zipCode,
+		city,
+		orderList,
+		productImageUrl
+	} = orderObject;
 
-  const queryText = `
+	const queryText = `
   insert into orders
   (order_number, 
     reference_order_no, 
@@ -45,34 +45,34 @@ async function createOrder(orderObject) {
     returning
     *
     `;
-  const queryValues = [
-    orderNumber,
-    refrenceOrderNumber,
-    orderDate,
-    deliveryDate,
-    partDeliveryFlag,
-    name,
-    email,
-    phoneNumber,
-    addressLine1,
-    addressLine4,
-    zipCode,
-    city,
-    JSON.stringify(orderList),
-    productImageUrl
-  ];
+	const queryValues = [
+		orderNumber,
+		refrenceOrderNumber,
+		orderDate,
+		deliveryDate,
+		partDeliveryFlag,
+		name,
+		email,
+		phoneNumber,
+		addressLine1,
+		addressLine4,
+		zipCode,
+		city,
+		JSON.stringify(orderList),
+		productImageUrl
+	];
 
-  // console.log({ queryValues });
+	// console.log({ queryValues });
 
-  const { rows } = await pool.query(queryText, queryValues);
+	const { rows } = await pool.query(queryText, queryValues);
 
-  return rows[0];
+	return rows[0];
 }
 
 // get data from postgres
-async function getAllOrders() {
-  try {
-    const data = await pool.query(`
+async function getAllOrders () {
+	try {
+		const data = await pool.query(`
       select
         *
       from
@@ -81,20 +81,20 @@ async function getAllOrders() {
         by orders.order_date desc
 
     `);
-    if (data.length === "") {
-      console.log(`No pick-up orders in database`);
-      return `No pick-up orders in database`;
-    } else {
-      return data.rows;
-    }
-  } catch (error) {
-    console.log(`Error: ${error.message}`);
-  }
+		if (data.length === "") {
+			console.log(`No pick-up orders in database`);
+			return `No pick-up orders in database`;
+		} else {
+			return data.rows;
+		}
+	} catch (error) {
+		console.log(`Error: ${error.message}`);
+	}
 }
-async function getOrder(ordernumber) {
-  try {
-    const data = await pool.query(
-      `
+async function getOrder (ordernumber) {
+	try {
+		const data = await pool.query(
+			`
       select 
         *
       from
@@ -102,22 +102,22 @@ async function getOrder(ordernumber) {
       where 
         order_number = $1
             `,
-      [ordernumber]
-    );
+			[ ordernumber ]
+		);
 
-    if (data.length === ``) {
-      console.log(`No order with that order number`);
-      return `No order with that order number`;
-    } else {
-      return data.rows[0];
-    }
-  } catch (error) {
-    console.log(`Error: ${error.message}`);
-  }
+		if (data.length === ``) {
+			console.log(`No order with that order number`);
+			return `No order with that order number`;
+		} else {
+			return data.rows[0];
+		}
+	} catch (error) {
+		console.log(`Error: ${error.message}`);
+	}
 }
 
-async function updateOrderStatus(ordernumber, order_status) {
-  const queryText = `
+async function updateOrderStatus (ordernumber, order_status) {
+	const queryText = `
     update 
       orders
     set
@@ -127,11 +127,11 @@ async function updateOrderStatus(ordernumber, order_status) {
     returning
       *
   `;
-  const queryValues = [ordernumber, order_status];
+	const queryValues = [ ordernumber, order_status ];
 
-  const { rows } = await pool.query(queryText, queryValues);
+	const { rows } = await pool.query(queryText, queryValues);
 
-  return rows[0];
+	return rows[0];
 }
 
 // async function setExpire(ordernumber) {
@@ -167,13 +167,12 @@ async function updateOrderStatus(ordernumber, order_status) {
 
 // // async function setExpire
 
-// module.exports = {
-//   createOrder,
-//   getAllOrders,
-//   getOrder,
-//   updateOrderStatus,
-//   setExpire
-// };
+module.exports = {
+	createOrder,
+	getAllOrders,
+	getOrder,
+	updateOrderStatus
+};
 
 /**
  * todo:
