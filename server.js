@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 require("body-parser-xml")(bodyParser);
 const cors = require("cors");
 const util = require('util');
-
+app.use(cors());
 // const secret = process.env.SECRET;
 const { createOrder, getAllOrders, getOrder, updateOrderStatus } = require("./postgresAPI");
 // const {sendUpdate} = require('./src/clientAPI/clientAPI');
@@ -14,13 +14,17 @@ const { createOrder, getAllOrders, getOrder, updateOrderStatus } = require("./po
 const getJsonFromXml = require("./services/convert_xml");
 
 //  ------------
+<<<<<<< HEAD
 app.use(bodyParser.json()); 
+=======
+app.use(bodyParser.json());
+>>>>>>> Develop
 app.use(bodyParser.xml());
 // app.use(bodyParser.urlencoded({ extended: true }));
 
 // Build react app
 app.use(express.static("build"));
-app.use(cors());
+
 
 const api = express();
 
@@ -76,11 +80,11 @@ api.get("/orders/:ordernumber", async (req, res, next) => {
 // update orderstatus and processfinished
 api.patch("/orders/:ordernumber", async (req, res, next) => {
 	const { ordernumber } = req.params;
-	const { orderstatus } = req.body;
+	const { order_status } = req.body;
 	console.log(ordernumber);
-	console.log(orderstatus);
+	console.log(order_status);
 	try {
-		const updatedOrder = await updateOrderStatus(ordernumber, orderstatus);
+		const updatedOrder = await updateOrderStatus(ordernumber, order_status);
 		res.status(200).send(updatedOrder);
 	} catch (error) {
 		console.log(`Error: ${error.message}`);

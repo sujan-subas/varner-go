@@ -16,22 +16,3 @@ export function getFormattedDeadLine(timestamp1, timestamp2) {
     }
 }
 
-export function getTime() {
-  let time;
-  const { order } = this.state;
-  if (order.status === 'new') {
-      time = getFormattedDeadLine(
-          new Date(order.deadLine), 
-          new Date()
-      )
-  } else if (order.status === 'in-process') {
-      time = getFormattedDeadLine(
-          new Date(),
-          new Date(order.acceptedTime)
-      )
-  }
-  
-  this.setState({
-      time: time
-  })
-}
