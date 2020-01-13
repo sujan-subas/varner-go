@@ -1,27 +1,6 @@
 // const PORT = process.env.PORT;
 // const API_URL = `http://localhost:${PORT}/api`;
 const API_URL = "http://localhost:3000/api";
-const varner_API_Url = "https://e90c8b7c-df85-4c2f-83a1-2782d5f0c73f.mock.pstmn.io/api/order/update/"
-
-
-
-//Store ID and orderNumber , has this format: 625/N-456433/
-// ENDPOINT FOR UPDATE TIL VARNER
-export async function updateVarner(storeID, orderNumber, status, reason) {
-	const res = await fetch(`${varner_API_Url}/${storeID}/${orderNumber}`, {
-		method: "PATCH",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			status,
-			reason,
-			// sett inn time stamps naar dette er klart. Ikke sikkert dette er mulig.
-		})
-	});
-	return await res.json();
-}
-
 
 export async function getAllOrdersDB () {
 	const response = await fetch(`${API_URL}/orders`);
@@ -40,14 +19,14 @@ export async function getOrderByOrderNumber (ordernumber) {
 }
 
 export async function updateOrderStatus (ordernumber, orderstatus) {
-  console.log(JSON.stringify(orderstatus))
-	const res = await fetch(`${API_URL}/orders`, {
+	const res = await fetch(`${API_URL}/orders/${ordernumber}`, {
 		method: "PATCH",
 		headers: {
 			"Content-Type": "application/json"
 		},
-		body: JSON.stringify(ordernumber, orderstatus)
-	});
+		body: JSON.stringify({ ordernumber, orderstatus })
+  });
+  console.log(res)
 	return await res.json();
 }
 // Login / auth

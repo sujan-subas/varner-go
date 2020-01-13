@@ -1,42 +1,42 @@
-import React, { AcceptedOrder } from "react";
-import { getFormattedDeadLine } from "../../utils/time";
+import React from "react";
+//import { getFormattedDeadLine } from "../../utils/time";
 import { getOrderByOrderNumber, updateOrderStatus } from "../../clientAPI/clientAPI";
 
-const fakeorder = {
-	status: "new",
-	orderNumber: "BB-6WN-119682",
-	referenceOrderNo: "100119682",
-	deadLine: "2020-01-11T21:44:41",
-	acceptedTime: "2020-01-11T11:40:04",
-	customer: "Jon Selenium",
-	phoneNumber: "+4746823125",
-	addressLine1: "Sjøskogvn. 7",
-	zipCode: 1407,
-	city: "Vinterbro",
-	orderLines: [
-		{
-			sku: 71944370010,
-			description: "IW ABAD Tyra Bottom - 380/Red - L",
-			orderedQuantity: 1,
-			size: "L",
-			color: "Red",
-			image:
-				"https://cubus.imgix.net/globalassets/productimages/7227796_001_f_q_l_basic_ls_cubus.jpg?auto=format&w=1000"
-		},
-		{
-			sku: 71937770004,
-			description: "DK NDC Tote - 990/Black - L",
-			orderedQuantity: 1,
-			size: "L",
-			color: "Black",
-			image:
-				"https://cubus.imgix.net/globalassets/productimages/7050221250411_f_q_70367219_l_basic_tank_top.jpg?auto=format&w=1000"
-		}
-	],
-	fullAdress: function () {
-		return " " + this.addressLine1 + ", " + this.zipCode + " " + this.city;
-	}
-};
+// const fakeorder = {
+// 	status: "new",
+// 	orderNumber: "BB-6WN-119682",
+// 	referenceOrderNo: "100119682",
+// 	deadLine: "2020-01-11T21:44:41",
+// 	acceptedTime: "2020-01-11T11:40:04",
+// 	customer: "Jon Selenium",
+// 	phoneNumber: "+4746823125",
+// 	addressLine1: "Sjøskogvn. 7",
+// 	zipCode: 1407,
+// 	city: "Vinterbro",
+// 	orderLines: [
+// 		{
+// 			sku: 71944370010,
+// 			description: "IW ABAD Tyra Bottom - 380/Red - L",
+// 			orderedQuantity: 1,
+// 			size: "L",
+// 			color: "Red",
+// 			image:
+// 				"https://cubus.imgix.net/globalassets/productimages/7227796_001_f_q_l_basic_ls_cubus.jpg?auto=format&w=1000"
+// 		},
+// 		{
+// 			sku: 71937770004,
+// 			description: "DK NDC Tote - 990/Black - L",
+// 			orderedQuantity: 1,
+// 			size: "L",
+// 			color: "Black",
+// 			image:
+// 				"https://cubus.imgix.net/globalassets/productimages/7050221250411_f_q_70367219_l_basic_tank_top.jpg?auto=format&w=1000"
+// 		}
+// 	],
+// 	fullAdress: function () {
+// 		return " " + this.addressLine1 + ", " + this.zipCode + " " + this.city;
+// 	}
+// };
 
 class Product extends React.Component {
 	constructor (props) {
@@ -99,7 +99,9 @@ class Product extends React.Component {
     });
     */
    console.log(event.target.value)
-		const { ordernumber } = this.props.match.params;
+   
+    const { ordernumber } = this.props.match.params;
+    console.log(ordernumber)
     const order = await updateOrderStatus(ordernumber, event.target.value);
     this.setState({ order });
     this.getOrder();
@@ -191,21 +193,21 @@ class Product extends React.Component {
 						<div>
               <button 
                 value={"declined"} 
-                onClick={this.handleChange.bind(this, "orderstatus")}
+                onClick={this.handleChange.bind(this, "order_status")}
               >
 								Avvis ordre
 							</button>
 							{pickedSkus.length === order.order_list.length ? (
                 <button 
                   value={"packed"} 
-                  onClick={this.handleChange.bind(this, "orderstatus")}
+                  onClick={this.handleChange.bind(this, "order_status")}
                 >
 									Klar til opphenting
 								</button>
 							) : (
                 <button 
                   value={"in-process"} 
-                  onClick={this.handleChange.bind(this, "orderstatus")}
+                  onClick={this.handleChange.bind(this, "order_status")}
                 >
 									Ja, dette fikser vi
 								</button>
