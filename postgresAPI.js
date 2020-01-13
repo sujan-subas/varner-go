@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const Pool = require("pg").Pool;
 const pool = new Pool({
-	connectionString: process.env.DATABASE_URL
+  connectionString: process.env.DATABASE_URL
 });
 
 // post data in orders table in postgres
@@ -24,11 +24,11 @@ async function createOrder(orderObject) {
     productImageUrl
   } = orderObject;
 
-	const queryText = `
+  const queryText = `
   insert into orders
-  (order_number, reference_order_no, order_date, delivery_date, part_delivery_flag, customer_name, customer_email, customer_phonenumber, customer_addressline1, customer_addressline4, customer_zipcode, customer_city, order_list, product_Image_Url, created_in_app_at)
+  (order_number, reference_order_no, order_date, delivery_date, part_delivery_flag, customer_name, customer_email, customer_phonenumber, customer_addressline1, customer_addressline4, customer_zipcode, customer_city, order_list, product_Image_Url)
     values
-	    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+	    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
     returning
     *
     `;
@@ -46,21 +46,21 @@ async function createOrder(orderObject) {
     zipCode,
     city,
     JSON.stringify(orderList),
-    productImageUrl,
-    "timestamptz default now()"
+    productImageUrl
   ];
 
-	console.log({ queryValues });
+  console.log({ queryValues });
 
-	const { rows } = await pool.query(queryText, queryValues);
+  const { rows } = await pool.query(queryText, queryValues);
 
-	return rows[0];
+  return rows[0];
 }
 
 // get data from postgres
-async function getAllOrders () {
-	try {
-		const data = await pool.query(`
+async function getAllOrders() {
+
+  try {
+    const data = await pool.query(`
       select
         *
       from
@@ -69,20 +69,20 @@ async function getAllOrders () {
         by orders.order_date desc
 
     `);
-		if (data.length === "") {
-			console.log(`No pick-up orders in database`);
-			return `No pick-up orders in database`;
-		} else {
-			return data.rows;
-		}
-	} catch (error) {
-		console.log(`Error: ${error.message}`);
-	}
+    if (data.length === "") {
+      console.log(`No pick-up orders in database`);
+      return `No pick-up orders in database`;
+    } else {
+      return data.rows;
+    }
+  } catch (error) {
+    console.log(`Error: ${error.message}`);
+  }
 }
-async function getOrder (ordernumber) {
-	try {
-		const data = await pool.query(
-			`
+async function getOrder(ordernumber) {
+  try {
+    const data = await pool.query(
+      `
       select 
         *
       from
@@ -90,22 +90,22 @@ async function getOrder (ordernumber) {
       where 
         order_number = $1
             `,
-			[ ordernumber ]
-		);
+      [ordernumber]
+    );
 
-		if (data.length === ``) {
-			console.log(`No order with that order number`);
-			return `No order with that order number`;
-		} else {
-			return data.rows[0];
-		}
-	} catch (error) {
-		console.log(`Error: ${error.message}`);
-	}
+    if (data.length === ``) {
+      console.log(`No order with that order number`);
+      return `No order with that order number`;
+    } else {
+      return data.rows[0];
+    }
+  } catch (error) {
+    console.log(`Error: ${error.message}`);
+  }
 }
 
-async function updateOrderStatus (ordernumber, orderstatus) {
-	const queryText = `
+async function updateOrderStatus(ordernumber, orderstatus) {
+  const queryText = `
     update 
       orders
     set
@@ -115,12 +115,34 @@ async function updateOrderStatus (ordernumber, orderstatus) {
     returning
       *
   `;
-	const queryValues = [ ordernumber, orderstatus ];
+  const queryValues = [ordernumber, orderstatus];
 
-	const { rows } = await pool.query(queryText, queryValues);
+  const { rows } = await pool.query(queryText, queryValues);
 
-	return rows[0];
+  return rows[0];
 }
+
+async function setExpire(ordernumber){
+  const queryText = `
+  select
+    created_in_app 
+  from
+    orders
+  where 
+    order_number = $1
+  returning
+   *
+  `
+  const queryValues = [ordernumber]
+  const row = await pool.query(queryText, queryValues)
+  console.log(row[0])
+//slice timestamp fix
+  if(row[0] > 17.00){
+// 
+  } 
+}
+
+async function setExpire
 
 module.exports = {
   createOrder,
@@ -132,6 +154,6 @@ module.exports = {
 /**
  * todo:
  * orderProcessed() that will move an order from the table "orders" to table "processed_orders"
- * 
- * 
+ *
+ *
  */
