@@ -19,6 +19,7 @@ export async function getOrderByOrderNumber (ordernumber) {
 }
 
 export async function updateOrderStatus (ordernumber, orderstatus) {
+  console.log(JSON.stringify(orderstatus))
 	const res = await fetch(`${API_URL}/orders`, {
 		method: "PATCH",
 		headers: {

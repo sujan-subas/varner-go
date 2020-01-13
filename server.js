@@ -7,7 +7,7 @@ require("body-parser-xml")(bodyParser);
 const cors = require("cors");
 
 const util = require('util');
-
+app.use(cors());
 // const secret = process.env.SECRET;
 const { createOrder, getAllOrders, getOrder, updateOrderStatus } = require("./postgresAPI");
 
@@ -20,7 +20,7 @@ app.use(bodyParser.xml());
 
 // Build react app
 app.use(express.static("build"));
-app.use(cors());
+
 
 const api = express();
 
@@ -66,11 +66,11 @@ api.get("/orders/:ordernumber", async (req, res, next) => {
 // update orderstatus and processfinished
 api.patch("/orders/:ordernumber", async (req, res, next) => {
 	const { ordernumber } = req.params;
-	const { orderstatus } = req.body;
+	const { order_status } = req.body;
 	console.log(ordernumber);
-	console.log(orderstatus);
+	console.log(order_status);
 	try {
-		const updatedOrder = await updateOrderStatus(ordernumber, orderstatus);
+		const updatedOrder = await updateOrderStatus(ordernumber, order_status);
 		res.status(200).send(updatedOrder);
 	} catch (error) {
 		console.log(`Error: ${error.message}`);

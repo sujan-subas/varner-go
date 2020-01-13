@@ -1,6 +1,6 @@
 import React, { AcceptedOrder } from "react";
 import { getFormattedDeadLine } from "../../utils/time";
-import { getOrderByOrderNumber } from "../../clientAPI/clientAPI";
+import { getOrderByOrderNumber, updateOrderStatus } from "../../clientAPI/clientAPI";
 
 const fakeorder = {
 	status: "new",
@@ -55,12 +55,14 @@ class Product extends React.Component {
 	}
 
 	async componentDidMount () {
-		const { ordernumber } = this.props.match.params;
+		await this.getOrder();
+  }
+  
+  async getOrder() {
+    const { ordernumber } = this.props.match.params;
 		try {
 			this.setState({ isLoading: true });
-
 			const order = await getOrderByOrderNumber(ordernumber);
-			console.log("prodView" + order);
 			this.setState({ order });
 
 			this.getTime();
@@ -70,7 +72,7 @@ class Product extends React.Component {
 		} catch (error) {
 			this.setState({ error });
 		}
-	}
+  }
 
 	handleClick (sku) {
 		if (this.state.pickedSkus.includes(sku)) {
@@ -87,34 +89,38 @@ class Product extends React.Component {
 		}
 	}
 
-	handleChange (field, event) {
+	async handleChange (field, event) {
+    /*
 		this.setState({
 			order: {
 				...this.state.order,
 				[field]: event.target.value
 			}
-		});
-		//const { order } = this.state;
-		//await editOrder(order);
+    });
+    */
+   console.log(event.target.value)
+		const { ordernumber } = this.props.match.params;
+    const order = await updateOrderStatus(ordernumber, event.target.value);
+    this.setState({ order });
+    this.getOrder();
 		//const { history } = this.props;
-		//const id = this.state.order.orderNumber;
-		//history.replace(`/order/${id}`);
+		//history.replace(`/order/${ordernumber}`);
 	}
 
 	getTime () {
-		let time;
-		const { order } = this.state;
-		if (order.order_status === "new") {
-			time = getFormattedDeadLine(new Date(order.deadLine), new Date());
-		} else if (order.status === "in-process") {
-			time = getFormattedDeadLine(new Date(), new Date(order.created_in_app_at));
-		}
+		// let time;
+		// const { order } = this.state;
+		// if (order.order_status === "new") {
+		// 	time = getFormattedDeadLine(new Date(order.deadLine), new Date());
+		// } else if (order.order_status === "in-process") {
+		// 	time = getFormattedDeadLine(new Date(), new Date(order.created_in_app_at));
+		// }
 
-		this.setState({
-			time: time
-		});
+		// this.setState({
+		// 	time: time
+		// });
 
-		this.timer = setTimeout(() => this.getTime(), 1000);
+		// this.timer = setTimeout(() => this.getTime(), 1000);
 	}
 
 	render () {
@@ -122,30 +128,30 @@ class Product extends React.Component {
 		console.log(order);
 		let orderElements;
 
-		if (order && order.orderLines) {
-			orderElements = order.orderLines.map(({ description, size, color, orderedQuantity, image, sku }) => {
+		if (order && order.order_list) {
+			orderElements = order.order_list.map(({ description, size, color, orderQuantity, productId }) => {
 				return (
-					<div key={sku}>
-						<img src={image} alt="" width="123" height="164" />
+					<div key={productId}>
+						<img src={"https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"} alt="" width="123" height="164" />
 						<h2>{description}</h2>
-						<p>Str: {size}</p>
-						<p>Farge: {color}</p>
-						<p>Antall: {orderedQuantity}</p>
-						<p>SKU: {sku}</p>
-						<button onClick={this.handleClick.bind(this, sku)}>
-							{this.state.pickedSkus.includes(sku) ? "Plukket" : "Skal plukke"}
+						<p>Str: skriv funktion som tar ut storlek ur description</p>
+						<p>Farge: skriv funtion som tar ut farge</p>
+						<p>Antall: {orderQuantity}</p>
+						<p>SKU: {productId}</p>
+						<button onClick={this.handleClick.bind(this, productId)}>
+							{this.state.pickedSkus.includes(productId) ? "Plukket" : "Skal plukke"}
 						</button>
 					</div>
 				);
 			});
 
-			const fullAdress = this.state.order.fullAdress();
+			//const fullAdress = this.state.order.fullAdress(); skriv fullAdress()
 
 			return (
 				<React.Fragment>
 					<div>
 						<header>
-							{order.status === "new" ? (
+							{order.order_status === "new" ? (
 								<h3>
 									Utløper om:
 									{time}
@@ -159,7 +165,7 @@ class Product extends React.Component {
 
 							<h3>
 								Antall varer:
-								{order.orderLines.length}
+								{order.order_list.length}
 							</h3>
 							<h3>
 								Varer plukket:
@@ -168,14 +174,14 @@ class Product extends React.Component {
 						</header>
 						<div>
 							<h1>Sammendrag av bestilling</h1>
-							<p>Status: {order.status}</p>
-							<p>{order.orderDate}</p>
-							<p>{order.referenceOrderNo}</p>
-							<p>{order.customer}</p>
-							<p>{order.phoneNumber}</p>
+							<p>Status: {order.order_status}</p>
+							<p>{order.order_date}</p>
+							<p>{order.reference_order_no}</p>
+							<p>{order.customer_name}</p>
+							<p>{order.customer_phonenumber}</p>
 							<p>
 								Leveringsadresse:
-								{fullAdress}
+								{/* {fullAdress} */}
 							</p>
 						</div>
 						<div>
@@ -183,15 +189,24 @@ class Product extends React.Component {
 							{orderElements}
 						</div>
 						<div>
-							<button value={"rejected"} onClick={this.handleChange.bind(this, "status")}>
+              <button 
+                value={"declined"} 
+                onClick={this.handleChange.bind(this, "orderstatus")}
+              >
 								Avvis ordre
 							</button>
-							{pickedSkus.length === order.orderLines.length ? (
-								<button value={"packed"} onClick={this.handleChange.bind(this, "status")}>
+							{pickedSkus.length === order.order_list.length ? (
+                <button 
+                  value={"packed"} 
+                  onClick={this.handleChange.bind(this, "orderstatus")}
+                >
 									Klar til opphenting
 								</button>
 							) : (
-								<button value={"in-process"} onClick={this.handleChange.bind(this, "status")}>
+                <button 
+                  value={"in-process"} 
+                  onClick={this.handleChange.bind(this, "orderstatus")}
+                >
 									Ja, dette fikser vi
 								</button>
 							)}
