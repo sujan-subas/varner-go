@@ -10,26 +10,20 @@ import ProductView from "./container/ProductView";
 import { HashRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 
-function App() {
-  return (
-    /*
-    <React.Fragment>
-      <ProductView />
-    </React.Fragment>
-    */
-
-    <HashRouter>
-      <div className="App">
-        <Switch>
-          {/* <Route path="/" exact component={AcceptedOrder} /> */}
-          {/* <Route path="/" exact component={Login} /> */}
-          {/* <Route path="/" component={OrderView} /> */}
-          {/* <Route path="/orders/:ordernumber" component={ProductView} /> */}
-          <OrderView />
-        </Switch>
-      </div>
-    </HashRouter>
-  );
+function App () {
+	return (
+		<HashRouter>
+			<div className="App">
+				<Switch>
+					{/* <Route path="/" exact component={AcceptedOrder} /> */}
+					{/* <Route path="/" exact component={Login} /> */}
+					<Route path="/" exact component={OrderView} />
+					<Route path="/orders/:ordernumber" component={ProductView} />
+					<OrderView />
+				</Switch>
+			</div>
+		</HashRouter>
+	);
 }
 
 export default App;

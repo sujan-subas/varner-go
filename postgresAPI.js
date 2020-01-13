@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const Pool = require("pg").Pool;
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
+	connectionString: process.env.DATABASE_URL
 });
 
 // post data in orders table in postgres
@@ -20,10 +20,11 @@ async function createOrder(orderObject) {
     addressLine4,
     zipCode,
     city,
-    orderList
+    orderList,
+    productImageUrl
   } = orderObject;
 
-  const queryText = `
+	const queryText = `
   insert into orders
   (order_number, 
     reference_order_no, 
@@ -37,9 +38,10 @@ async function createOrder(orderObject) {
     customer_addressline4, 
     customer_zipcode, 
     customer_city, 
-    order_list)
+    order_list, 
+    product_Image_Url)
     values
-	    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+	    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
     returning
     *
     `;
@@ -56,20 +58,21 @@ async function createOrder(orderObject) {
     addressLine4,
     zipCode,
     city,
-    JSON.stringify(orderList)
+    JSON.stringify(orderList),
+    productImageUrl
   ];
 
-  console.log({ queryValues });
+	console.log({ queryValues });
 
-  const { rows } = await pool.query(queryText, queryValues);
+	const { rows } = await pool.query(queryText, queryValues);
 
-  return rows[0];
+	return rows[0];
 }
 
 // get data from postgres
-async function getAllOrders() {
-  try {
-    const data = await pool.query(`
+async function getAllOrders () {
+	try {
+		const data = await pool.query(`
       select
         *
       from
@@ -78,20 +81,20 @@ async function getAllOrders() {
         by orders.order_date desc
 
     `);
-    if (data.length === "") {
-      console.log(`No pick-up orders in database`);
-      return `No pick-up orders in database`;
-    } else {
-      return data.rows;
-    }
-  } catch (error) {
-    console.log(`Error: ${error.message}`);
-  }
+		if (data.length === "") {
+			console.log(`No pick-up orders in database`);
+			return `No pick-up orders in database`;
+		} else {
+			return data.rows;
+		}
+	} catch (error) {
+		console.log(`Error: ${error.message}`);
+	}
 }
-async function getOrder(ordernumber) {
-  try {
-    const data = await pool.query(
-      `
+async function getOrder (ordernumber) {
+	try {
+		const data = await pool.query(
+			`
       select 
         *
       from
@@ -99,22 +102,22 @@ async function getOrder(ordernumber) {
       where 
         order_number = $1
             `,
-      [ordernumber]
-    );
+			[ ordernumber ]
+		);
 
-    if (data.length === ``) {
-      console.log(`No order with that order number`);
-      return `No order with that order number`;
-    } else {
-      return data.rows[0];
-    }
-  } catch (error) {
-    console.log(`Error: ${error.message}`);
-  }
+		if (data.length === ``) {
+			console.log(`No order with that order number`);
+			return `No order with that order number`;
+		} else {
+			return data.rows[0];
+		}
+	} catch (error) {
+		console.log(`Error: ${error.message}`);
+	}
 }
 
-async function updateOrderStatus(ordernumber, orderstatus) {
-  const queryText = `
+async function updateOrderStatus (ordernumber, orderstatus) {
+	const queryText = `
     update 
       orders
     set
@@ -124,11 +127,11 @@ async function updateOrderStatus(ordernumber, orderstatus) {
     returning
       *
   `;
-  const queryValues = [ordernumber, orderstatus];
+	const queryValues = [ ordernumber, orderstatus ];
 
-  const { rows } = await pool.query(queryText, queryValues);
+	const { rows } = await pool.query(queryText, queryValues);
 
-  return rows[0];
+	return rows[0];
 }
 
 module.exports = {
