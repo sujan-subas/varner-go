@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ecomOrderMessageRequest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://types.host.api.varner.wm6.swisslog.com/">
+	<messageHeader xmlns="">
+		<msgId>0212201912320378669</msgId>
+		<msgType>ecomOrder</msgType>
+		<transCode>NEW</transCode>
+		<sender>ECOM</sender>
+		<receiver>WM6</receiver>
+		<version>1.0</version>
+	</messageHeader>
+	<orderMessage xmlns="">
+		<orderMessageHeader>
+			<msgID>0212201912320378669</msgID>
+			<msgDate>2019-12-02T12:32:03</msgDate>
+			<webStoreWhs>1WN</webStoreWhs>
+			<salesCountry>NO</salesCountry>
+			<chainId>40</chainId>
+		</orderMessageHeader>
+		<orders>
+			<order>
+				<orderNumber>DM-1WN-1344252</orderNumber>
+				<referenceOrderNo>4001344252</referenceOrderNo>
+				<orderType>NOR</orderType>
+				<orderDate>2019-12-02T11:24:11</orderDate>
+				<deliveryDate>2019-12-02T12:32:03</deliveryDate>
+				<currencyCode>NOK</currencyCode>
+				<languageCode>NOR</languageCode>
+				<partDeliveryFlag>1</partDeliveryFlag>
+				<instruction />
+				<priority>3</priority>
+				<delivery>
+					<deliveryMethodId>C</deliveryMethodId>
+					<wayOfDeliveryDescription>Pick up in store</wayOfDeliveryDescription>
+					<placeOfDeliveryCode>230</placeOfDeliveryCode>
+				</delivery>
+				<invoiceCustomer>
+					<code>tore.stensrud@varner.com</code>
+					<name>Tore Stensrud</name>
+					<addressLine1>Nedre Toppenahaug 171</addressLine1>
+					<addressLine4>Norge</addressLine4>
+					<zipCode>1353</zipCode>
+					<city>BÆRUMS VERK</city>
+					<phoneNumber>+4748059780</phoneNumber>
+					<email>tore.stensrud@varner.com</email>
+					<countryCode>NO</countryCode>
+				</invoiceCustomer>
+				<deliveryCustomer>
+					<code>tore.stensrud@varner.com</code>
+					<name>Dressmann Kolsås</name>
+					<attention>Tore Stensrud</attention>
+					<addressLine1>Rødskiferveien 1</addressLine1>
+					<addressLine4>Norge</addressLine4>
+					<zipCode>1352</zipCode>
+					<city>Bærum</city>
+					<phoneNumber>+4748059780</phoneNumber>
+					<email>tore.stensrud@varner.com</email>
+					<countryCode>NO</countryCode>
+				</deliveryCustomer>
+				<orderCustomer>
+					<code>tore.stensrud@varner.com</code>
+					<name>Tore Stensrud</name>
+					<addressLine1>Nedre Toppenahaug 171</addressLine1>
+					<addressLine4>Norge</addressLine4>
+					<zipCode>1353</zipCode>
+					<city>BÆRUMS VERK</city>
+					<phoneNumber>+4748059780</phoneNumber>
+					<email>tore.stensrud@varner.com</email>
+					<countryCode>NO</countryCode>
+				</orderCustomer>
+				<orderLines>
+					<orderLine>
+						<position>1</position>
+						<productId>72226650002</productId>
+						<description>Shirt Cotton Premium SF Twill - 500/L.Blue - M</description>
+						<orderedQuantity>1</orderedQuantity>
+						<price>599</price>
+						<discountAmount>0</discountAmount>
+						<priceConsumer>599</priceConsumer>
+						<packageCode />
+					</orderLine>
+					<orderLine>
+						<position>2</position>
+						<productId>72226650003</productId>
+						<description>Shirt Cotton Premium SF Twill - 500/L.Blue - L</description>
+						<orderedQuantity>1</orderedQuantity>
+						<price>599</price>
+						<discountAmount>0</discountAmount>
+						<priceConsumer>599</priceConsumer>
+						<packageCode />
+					</orderLine>
+				</orderLines>
+			</order>
+		</orders>
+	</orderMessage>
+</ecomOrderMessageRequest>

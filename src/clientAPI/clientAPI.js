@@ -22,7 +22,6 @@ export async function updateVarner(storeID, orderNumber, status, reason) {
 	return await res.json();
 }
 
-
 export async function getAllOrdersDB () {
 	const response = await fetch(`${API_URL}/orders`);
 	const data = await response.json();

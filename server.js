@@ -14,7 +14,7 @@ const { createOrder, getAllOrders, getOrder, updateOrderStatus } = require("./po
 const getJsonFromXml = require("./services/convert_xml");
 
 //  ------------
-app.use(bodyParser.json()); b
+app.use(bodyParser.json()); 
 app.use(bodyParser.xml());
 // app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -42,7 +42,7 @@ api.post("/orders", async (req, res) => {
     // console.log(util.inspect(orderXml, false, null, true /* enable colors */))
     // console.log("****************", orderObject);
     const newOrder = await createOrder(orderObject);
-    res.send(newOrder);
+    res.send(orderObject);
 
   } catch (error) {
     console.log(error.message);
