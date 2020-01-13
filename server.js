@@ -36,7 +36,6 @@ api.patch('/updatevarner/:storeID/:produktID', async(req,res) => {
 
 // Order post from Varner
 api.post("/orders", async (req, res) => {
-  //   const ordernumber = req.body;
   try {
     const orderXml = req.body;
     const orderObject = await getJsonFromXml(orderXml);

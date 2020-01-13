@@ -2,7 +2,7 @@ import React from "react";
 import { getFormattedDeadLine, getFormattedDate } from "../../utils/time";
 import { getSize, getColor } from "../../utils/extractProductInfo";
 import { getOrderByOrderNumber, updateOrderStatus } from "../../clientAPI/clientAPI";
-import AcceptedOrder from "./AcceptedOrder";
+import AcceptedOrder from "../AcceptDecline";
 
 class Product extends React.Component {
 	constructor (props) {
