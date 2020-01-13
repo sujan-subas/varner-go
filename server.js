@@ -5,16 +5,16 @@ const port = process.env.PORT;
 const bodyParser = require("body-parser");
 require("body-parser-xml")(bodyParser);
 const cors = require("cors");
-
 const util = require('util');
 app.use(cors());
 // const secret = process.env.SECRET;
 const { createOrder, getAllOrders, getOrder, updateOrderStatus } = require("./postgresAPI");
+// const {sendUpdate} = require('./src/clientAPI/clientAPI');
 
 const getJsonFromXml = require("./services/convert_xml");
 
 //  ------------
-app.use(bodyParser.json());
+app.use(bodyParser.json()); b
 app.use(bodyParser.xml());
 // app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -23,6 +23,16 @@ app.use(express.static("build"));
 
 
 const api = express();
+
+
+
+// POST updated status to Varner
+api.patch('/updatevarner/:storeID/:produktID', async(req,res) => {
+	const {storeID, produktID} = req.params;
+	console.log(storeID, produktID)
+	res.send({storeID, produktID})
+})
+
 
 // Order post from Varner
 api.post("/orders", async (req, res) => {
