@@ -8,7 +8,7 @@ const cors = require("cors");
 const util = require('util');
 app.use(cors());
 // const secret = process.env.SECRET;
-const { createOrder, getAllOrders, getOrder, updateOrderStatus } = require("./postgresAPI");
+const { createOrder, getAllOrders, or, updateOrderStatus } = require("./postgresAPI");
 // const {sendUpdate} = require('./src/clientAPI/clientAPI');
 
 const getJsonFromXml = require("./services/convert_xml");

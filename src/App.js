@@ -1,11 +1,10 @@
 import React from "react";
 import "./App.css";
-// import AcceptOrder from "./components/ProductView/AcceptedOrder";
+import AcceptedOrder from "./components/ProductView/AcceptedOrder";
 // import HeaderContainer from "./container/HeaderContainer";
 // import InfoContanier from "./container/InfoContainer";
 import Login from "./components/Login";
 import OrderView from "./container/OrderView";
-import AcceptedOrder from "./components/ProductView";
 import ProductView from "./container/ProductView";
 import { HashRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
@@ -17,9 +16,9 @@ function App () {
 				<Switch>
 					{/* <Route path="/" exact component={AcceptedOrder} /> */}
 					{/* <Route path="/" exact component={Login} /> */}
-					<Route path="/orders" exact component={OrderView} />
-					<Route path="/orders/:ordernumber" component={ProductView} />
-          {/* <Route path="/orders/:ordernumber/decline" component={AcceptedOrder} /> */}
+					{/* <Route path="/orders" exact component={OrderView} /> */}
+					<Route path="/orders/" component={ProductView} />
+					<Route path="/orders/:ordernumber/decline" component={AcceptedOrder} />
 					<OrderView />
 				</Switch>
 			</div>
