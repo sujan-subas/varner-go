@@ -18,6 +18,7 @@ class Overview extends React.Component {
   }
 
   async componentDidMount() {
+    console.log(this.props);
     try {
       const allOrders = await getAllOrdersDB();
       this.setState({
@@ -40,14 +41,14 @@ class Overview extends React.Component {
     const { history } = this.props;
     history.push(`/orders/${ordernumber}`);
 
-    console.log(history);
-    console.log(ordernumber);
+    console.log("orderview: " + history);
+    console.log("orderview: " + ordernumber);
   }
 
   render() {
     if (!this.state.allOrders.length)
       return (
-        <div className="container texr-white">
+        <div className="container text-white">
           Ingenting å hente! Sjekk om server er oppe å går! npm run nodemon
         </div>
       );

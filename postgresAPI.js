@@ -62,7 +62,7 @@ async function createOrder(orderObject) {
     productImageUrl
   ];
 
-  console.log({ queryValues });
+  // console.log({ queryValues });
 
   const { rows } = await pool.query(queryText, queryValues);
 
@@ -140,18 +140,15 @@ async function setExpire(ordernumber) {
     created_in_app 
   from
     orders
-  where 
-    order_number = $1
-  returning
-   *
   `;
   const queryValues = [ordernumber];
-  const row = await pool.query(queryText, queryValues);
-  console.log(row[0]);
+  const rows = await pool.query(queryText, queryValues);
+  console.log(rows[0]);
+  return rows[0];
   //slice timestamp fix
-  if (row[0] > 17.0) {
-    //
-  }
+  // if (row[0] > 17.0) {
+  //   //
+  // }
 }
 
 // async function setExpire
@@ -160,7 +157,8 @@ module.exports = {
   createOrder,
   getAllOrders,
   getOrder,
-  updateOrderStatus
+  updateOrderStatus,
+  setExpire
 };
 
 /**
