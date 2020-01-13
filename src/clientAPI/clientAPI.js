@@ -49,7 +49,6 @@ export async function updateOrderStatus (ordernumber, orderstatus) {
 		},
 		body: JSON.stringify({ ordernumber, orderstatus })
   });
-  console.log(res)
 	return await res.json();
 }
 // Login / auth

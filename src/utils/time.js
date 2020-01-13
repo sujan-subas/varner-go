@@ -1,4 +1,4 @@
-import { differenceInMinutes } from 'date-fns';
+import { differenceInMinutes, format } from 'date-fns';
 
 
 export function getFormattedDeadLine(timestamp1, timestamp2) {
@@ -16,3 +16,8 @@ export function getFormattedDeadLine(timestamp1, timestamp2) {
     }
 }
 
+export function getFormattedDate(timestamp) {
+  console.log(new Date(timestamp))
+  const formattedDate = format(new Date(timestamp), 'dd-MM-yy hh:mm');
+  return formattedDate;
+}
