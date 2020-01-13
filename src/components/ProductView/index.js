@@ -1,42 +1,43 @@
-import React, { AcceptedOrder } from "react";
-import { getFormattedDeadLine } from "../../utils/time";
+import React from "react";
+import { getFormattedDeadLine, getFormattedDate } from "../../utils/time";
+import { getSize, getColor } from "../../utils/extractProductInfo";
 import { getOrderByOrderNumber, updateOrderStatus } from "../../clientAPI/clientAPI";
 
-const fakeorder = {
-	status: "new",
-	orderNumber: "BB-6WN-119682",
-	referenceOrderNo: "100119682",
-	deadLine: "2020-01-11T21:44:41",
-	acceptedTime: "2020-01-11T11:40:04",
-	customer: "Jon Selenium",
-	phoneNumber: "+4746823125",
-	addressLine1: "Sjøskogvn. 7",
-	zipCode: 1407,
-	city: "Vinterbro",
-	orderLines: [
-		{
-			sku: 71944370010,
-			description: "IW ABAD Tyra Bottom - 380/Red - L",
-			orderedQuantity: 1,
-			size: "L",
-			color: "Red",
-			image:
-				"https://cubus.imgix.net/globalassets/productimages/7227796_001_f_q_l_basic_ls_cubus.jpg?auto=format&w=1000"
-		},
-		{
-			sku: 71937770004,
-			description: "DK NDC Tote - 990/Black - L",
-			orderedQuantity: 1,
-			size: "L",
-			color: "Black",
-			image:
-				"https://cubus.imgix.net/globalassets/productimages/7050221250411_f_q_70367219_l_basic_tank_top.jpg?auto=format&w=1000"
-		}
-	],
-	fullAdress: function () {
-		return " " + this.addressLine1 + ", " + this.zipCode + " " + this.city;
-	}
-};
+// const fakeorder = {
+// 	status: "new",
+// 	orderNumber: "BB-6WN-119682",
+// 	referenceOrderNo: "100119682",
+// 	deadLine: "2020-01-11T21:44:41",
+// 	acceptedTime: "2020-01-11T11:40:04",
+// 	customer: "Jon Selenium",
+// 	phoneNumber: "+4746823125",
+// 	addressLine1: "Sjøskogvn. 7",
+// 	zipCode: 1407,
+// 	city: "Vinterbro",
+// 	orderLines: [
+// 		{
+// 			sku: 71944370010,
+// 			description: "IW ABAD Tyra Bottom - 380/Red - L",
+// 			orderedQuantity: 1,
+// 			size: "L",
+// 			color: "Red",
+// 			image:
+// 				"https://cubus.imgix.net/globalassets/productimages/7227796_001_f_q_l_basic_ls_cubus.jpg?auto=format&w=1000"
+// 		},
+// 		{
+// 			sku: 71937770004,
+// 			description: "DK NDC Tote - 990/Black - L",
+// 			orderedQuantity: 1,
+// 			size: "L",
+// 			color: "Black",
+// 			image:
+// 				"https://cubus.imgix.net/globalassets/productimages/7050221250411_f_q_70367219_l_basic_tank_top.jpg?auto=format&w=1000"
+// 		}
+// 	],
+// 	fullAdress: function () {
+// 		return " " + this.addressLine1 + ", " + this.zipCode + " " + this.city;
+// 	}
+// };
 
 class Product extends React.Component {
 	constructor (props) {
@@ -134,8 +135,8 @@ class Product extends React.Component {
 					<div key={productId}>
 						<img src={"https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"} alt="" width="123" height="164" />
 						<h2>{description}</h2>
-						<p>Str: skriv funktion som tar ut storlek ur description</p>
-						<p>Farge: skriv funtion som tar ut farge</p>
+						<p>Str: {getSize(description)}</p>
+						<p>Farge: {getColor(description)}</p>
 						<p>Antall: {orderQuantity}</p>
 						<p>SKU: {productId}</p>
 						<button onClick={this.handleClick.bind(this, productId)}>
@@ -175,14 +176,10 @@ class Product extends React.Component {
 						<div>
 							<h1>Sammendrag av bestilling</h1>
 							<p>Status: {order.order_status}</p>
-							<p>{order.order_date}</p>
-							<p>{order.reference_order_no}</p>
-							<p>{order.customer_name}</p>
-							<p>{order.customer_phonenumber}</p>
-							<p>
-								Leveringsadresse:
-								{/* {fullAdress} */}
-							</p>
+							<p>Bestillingstidspunkt: {getFormattedDate(order.order_date)}</p>
+							<p>ReservasjonsID: {order.reference_order_no}</p>
+							<p>Kunde: {order.customer_name}</p>
+							<p>Telefon: {order.customer_phonenumber}</p>
 						</div>
 						<div>
 							<h1>Produktinformasjon</h1>
