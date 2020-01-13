@@ -20,6 +20,7 @@ status_changed_at TIMESTAMPTZ DEFAULT Now(),
 process_finished_at date,
 created_in_app_at CURRENT_TIMESTAMP,
 product_image_url varchar,
+expires_at date,
 
 primary key(order_number, reference_order_no));
 
