@@ -99,12 +99,17 @@ class Product extends React.Component {
 			}
     });
     */
-   console.log(event.target.value)
 		const { ordernumber } = this.props.match.params;
-    const order = await updateOrderStatus(ordernumber, event.target.value);
-    this.setState({ order });
-    this.getOrder();
-		//const { history } = this.props;
+    //const order = await updateOrderStatus(ordernumber, event.target.value);
+    //this.setState({ order });
+    //this.getOrder();
+    
+    if (event.target.value === "declined") {
+      console.log("declined")
+      const { history } = this.props;
+      history.push(`/orders/${ordernumber}/decline`);
+    }
+		//
 		//history.replace(`/order/${ordernumber}`);
 	}
 

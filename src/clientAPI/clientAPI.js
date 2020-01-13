@@ -46,8 +46,8 @@ export async function updateOrderStatus (ordernumber, orderstatus) {
 		headers: {
 			"Content-Type": "application/json"
 		},
-		body: JSON.stringify(ordernumber, orderstatus)
-	});
+		body: JSON.stringify({ ordernumber, orderstatus })
+  });
 	return await res.json();
 }
 // Login / auth
