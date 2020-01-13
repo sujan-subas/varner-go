@@ -1,6 +1,8 @@
 import React from "react";
-//import { getFormattedDeadLine } from "../../utils/time";
+import { getFormattedDeadLine, getFormattedDate } from "../../utils/time";
+import { getSize, getColor } from "../../utils/extractProductInfo";
 import { getOrderByOrderNumber, updateOrderStatus } from "../../clientAPI/clientAPI";
+import AcceptedOrder from "./AcceptedOrder";
 
 // const fakeorder = {
 // 	status: "new",
@@ -98,14 +100,13 @@ class Product extends React.Component {
 			}
     });
     */
-   console.log(event.target.value)
-   
-    const { ordernumber } = this.props.match.params;
-    console.log(ordernumber)
-    const order = await updateOrderStatus(ordernumber, event.target.value);
-    this.setState({ order });
-    this.getOrder();
-		//const { history } = this.props;
+		const { ordernumber } = this.props.match.params;
+    //const order = await updateOrderStatus(ordernumber, event.target.value);
+    //this.setState({ order });
+    //this.getOrder();
+    console.log('klick')
+    return <AcceptedOrder ordernumber={ordernumber}/>
+		//
 		//history.replace(`/order/${ordernumber}`);
 	}
 
@@ -136,8 +137,8 @@ class Product extends React.Component {
 					<div key={productId}>
 						<img src={"https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"} alt="" width="123" height="164" />
 						<h2>{description}</h2>
-						<p>Str: skriv funktion som tar ut storlek ur description</p>
-						<p>Farge: skriv funtion som tar ut farge</p>
+						<p>Str: {getSize(description)}</p>
+						<p>Farge: {getColor(description)}</p>
 						<p>Antall: {orderQuantity}</p>
 						<p>SKU: {productId}</p>
 						<button onClick={this.handleClick.bind(this, productId)}>
@@ -177,14 +178,10 @@ class Product extends React.Component {
 						<div>
 							<h1>Sammendrag av bestilling</h1>
 							<p>Status: {order.order_status}</p>
-							<p>{order.order_date}</p>
-							<p>{order.reference_order_no}</p>
-							<p>{order.customer_name}</p>
-							<p>{order.customer_phonenumber}</p>
-							<p>
-								Leveringsadresse:
-								{/* {fullAdress} */}
-							</p>
+							<p>Bestillingstidspunkt: {getFormattedDate(order.order_date)}</p>
+							<p>ReservasjonsID: {order.reference_order_no}</p>
+							<p>Kunde: {order.customer_name}</p>
+							<p>Telefon: {order.customer_phonenumber}</p>
 						</div>
 						<div>
 							<h1>Produktinformasjon</h1>
@@ -193,21 +190,33 @@ class Product extends React.Component {
 						<div>
               <button 
                 value={"declined"} 
+<<<<<<< HEAD
                 onClick={this.handleChange.bind(this, "order_status")}
+=======
+                onClick={this.handleChange.bind(this)}
+>>>>>>> FrontEnd
               >
 								Avvis ordre
 							</button>
 							{pickedSkus.length === order.order_list.length ? (
                 <button 
                   value={"packed"} 
+<<<<<<< HEAD
                   onClick={this.handleChange.bind(this, "order_status")}
+=======
+                  onClick={this.handleChange.bind(this)}
+>>>>>>> FrontEnd
                 >
 									Klar til opphenting
 								</button>
 							) : (
                 <button 
                   value={"in-process"} 
+<<<<<<< HEAD
                   onClick={this.handleChange.bind(this, "order_status")}
+=======
+                  onClick={this.handleChange.bind(this)}
+>>>>>>> FrontEnd
                 >
 									Ja, dette fikser vi
 								</button>
