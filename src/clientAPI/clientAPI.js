@@ -19,13 +19,13 @@ export async function getOrderByOrderNumber (ordernumber) {
 }
 
 export async function updateOrderStatus (ordernumber, orderstatus) {
-	const res = await fetch(`${API_URL}/orders`, {
+	const res = await fetch(`${API_URL}/orders/${ordernumber}`, {
 		method: "PATCH",
 		headers: {
 			"Content-Type": "application/json"
 		},
-		body: JSON.stringify(ordernumber, orderstatus)
-	});
+		body: JSON.stringify({ ordernumber, orderstatus })
+  });
 	return await res.json();
 }
 // Login / auth

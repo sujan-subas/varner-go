@@ -26,7 +26,20 @@ async function createOrder(orderObject) {
 
   const queryText = `
   insert into orders
-  (order_number, reference_order_no, order_date, delivery_date, part_delivery_flag, customer_name, customer_email, customer_phonenumber, customer_addressline1, customer_addressline4, customer_zipcode, customer_city, order_list, product_Image_Url)
+  (order_number, 
+    reference_order_no, 
+    order_date, 
+    delivery_date, 
+    part_delivery_flag, 
+    customer_name, 
+    customer_email, 
+    customer_phonenumber, 
+    customer_addressline1, 
+    customer_addressline4, 
+    customer_zipcode, 
+    customer_city, 
+    order_list, 
+    product_Image_Url)
     values
 	    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
     returning
@@ -58,7 +71,6 @@ async function createOrder(orderObject) {
 
 // get data from postgres
 async function getAllOrders() {
-
   try {
     const data = await pool.query(`
       select
@@ -104,7 +116,7 @@ async function getOrder(ordernumber) {
   }
 }
 
-async function updateOrderStatus(ordernumber, orderstatus) {
+async function updateOrderStatus(ordernumber, order_status) {
   const queryText = `
     update 
       orders
@@ -115,14 +127,14 @@ async function updateOrderStatus(ordernumber, orderstatus) {
     returning
       *
   `;
-  const queryValues = [ordernumber, orderstatus];
+  const queryValues = [ordernumber, order_status];
 
   const { rows } = await pool.query(queryText, queryValues);
 
   return rows[0];
 }
 
-async function setExpire(ordernumber){
+async function setExpire(ordernumber) {
   const queryText = `
   select
     created_in_app 
@@ -132,17 +144,15 @@ async function setExpire(ordernumber){
     order_number = $1
   returning
    *
-  `
-  const queryValues = [ordernumber]
-  const row = await pool.query(queryText, queryValues)
-  console.log(row[0])
-//slice timestamp fix
-  if(row[0] > 17.00){
-// 
-  } 
+  `;
+  const queryValues = [ordernumber];
+  const row = await pool.query(queryText, queryValues);
+  console.log(row[0]);
+  //slice timestamp fix
+  if (row[0] > 17.0) {
+    //
+  }
 }
-
-async function setExpire
 
 module.exports = {
   createOrder,
