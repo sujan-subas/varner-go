@@ -17,19 +17,18 @@ function App() {
       <ProductView />
     </React.Fragment>
     */
-    
+
     <HashRouter>
       <div className="App">
         <Switch>
           {/* <Route path="/" exact component={AcceptedOrder} /> */}
           {/* <Route path="/" exact component={Login} /> */}
           {/* <Route path="/" component={OrderView} /> */}
-          <Route path="/orders/:ordernumber" component={ProductView} />
+          {/* <Route path="/orders/:ordernumber" component={ProductView} /> */}
           <OrderView />
         </Switch>
       </div>
     </HashRouter>
-    
   );
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Nav, Navbar } from "react-bootstrap";
+import { Nav, Navbar, Form, Button, FormControl } from "react-bootstrap";
 import { format } from "date-fns";
 import { getAllOrdersDB } from "../../clientAPI/clientAPI";
 import { getFormattedDeadline } from "../../utils/time";
@@ -13,7 +13,10 @@ class Overview extends React.Component {
       tabKey: "new",
       error: false,
       allOrders: [],
-      isLoading: true
+      isLoading: true,
+      // search
+      search: "",
+      searchResult: []
     };
   }
 
@@ -32,6 +35,11 @@ class Overview extends React.Component {
     }
   }
 
+  // search
+  updateSearch(event) {
+    this.setState({ search: event.target.value.substr(0, 20) });
+  }
+
   handleChangeTab(tabKey) {
     this.setState({ tabKey });
   }
@@ -46,6 +54,7 @@ class Overview extends React.Component {
   }
 
   render() {
+    let filteredOrders = this.state.allOrders;
     /*
     if (!this.state.allOrders.length)
       return (
@@ -53,7 +62,8 @@ class Overview extends React.Component {
           Ingenting å hente! Sjekk om server er oppe å går ;-)
         </div>
       );
-     */   
+     */
+
     const { tabKey, allOrders } = this.state;
     let switchName = () => {
       let newName = "";
@@ -64,9 +74,14 @@ class Overview extends React.Component {
       }
       return newName;
     };
-
-    const ordersFromDatabase = allOrders
-      .filter(order => order.order_status === tabKey)
+    //console.log(allOrders);
+    const ordersFromDatabase = filteredOrders
+      .filter(order => {
+        return (
+          order.order_status === tabKey &&
+          order.order_status.indexOf(this.state.search.toLowerCase()) !== -1
+        );
+      })
       .map((order, i) => {
         //  fix formate data
         // const formattedDate = format(
@@ -114,6 +129,16 @@ class Overview extends React.Component {
               <Nav.Link eventKey="delivered">Utlevert</Nav.Link>
               <Nav.Link eventKey="rejected">Avvist</Nav.Link>
             </Nav>
+            <Form inline>
+              <FormControl
+                type="text"
+                valye={this.state.search}
+                onChange={this.updateSearch.bind(this)}
+                placeholder="Search"
+                className="mr-sm-2"
+              />
+              <Button variant="outline-success">Search</Button>
+            </Form>
           </Navbar.Collapse>
         </Navbar>
         <Nav
@@ -123,8 +148,12 @@ class Overview extends React.Component {
           activeKey={tabKey}
           onSelect={tabKey => this.handleChangeTab(tabKey)}
         >
-          <Nav.Link eventKey="new"> Nye ordre () </Nav.Link>
-          <Nav.Link eventKey="in-process">Under behandling</Nav.Link>
+          <Nav.Link eventKey="new">
+            Nye ordre ({ordersFromDatabase.length}){" "}
+          </Nav.Link>
+          <Nav.Link eventKey="in-process">
+            Under behandling ({ordersFromDatabase.length})
+          </Nav.Link>
           <Nav.Link eventKey="packed">Til henting</Nav.Link>
         </Nav>
         <h2>{switchName()}</h2>
