@@ -2,6 +2,7 @@ import React from "react";
 import { getFormattedDeadLine, getFormattedDate } from "../../utils/time";
 import { getSize, getColor } from "../../utils/extractProductInfo";
 import { getOrderByOrderNumber, updateOrderStatus } from "../../clientAPI/clientAPI";
+import AcceptedOrder from "./AcceptedOrder";
 
 // const fakeorder = {
 // 	status: "new",
@@ -103,12 +104,8 @@ class Product extends React.Component {
     //const order = await updateOrderStatus(ordernumber, event.target.value);
     //this.setState({ order });
     //this.getOrder();
-    
-    if (event.target.value === "declined") {
-      console.log("declined")
-      const { history } = this.props;
-      history.push(`/orders/${ordernumber}/decline`);
-    }
+    console.log('klick')
+    return <AcceptedOrder ordernumber={ordernumber}/>
 		//
 		//history.replace(`/order/${ordernumber}`);
 	}
@@ -193,21 +190,21 @@ class Product extends React.Component {
 						<div>
               <button 
                 value={"declined"} 
-                onClick={this.handleChange.bind(this, "orderstatus")}
+                onClick={this.handleChange.bind(this)}
               >
 								Avvis ordre
 							</button>
 							{pickedSkus.length === order.order_list.length ? (
                 <button 
                   value={"packed"} 
-                  onClick={this.handleChange.bind(this, "orderstatus")}
+                  onClick={this.handleChange.bind(this)}
                 >
 									Klar til opphenting
 								</button>
 							) : (
                 <button 
                   value={"in-process"} 
-                  onClick={this.handleChange.bind(this, "orderstatus")}
+                  onClick={this.handleChange.bind(this)}
                 >
 									Ja, dette fikser vi
 								</button>
