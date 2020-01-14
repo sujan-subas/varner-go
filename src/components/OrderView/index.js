@@ -9,7 +9,6 @@ class Overview extends React.Component {
     super(props);
 
     this.state = {
-      // order: orderLine,
       tabKey: "new",
       error: false,
       allOrders: [],
@@ -53,10 +52,11 @@ class Overview extends React.Component {
 
   render() {
     let filteredOrders = this.state.allOrders;
+
     if (!this.state.allOrders.length)
       return (
         <div className="container texr-white">
-          Ingenting å hente! Sjekk om server er oppe å går ;-
+          Ingenting å hente! Sjekk om server er oppe å går!
         </div>
       );
 
@@ -71,6 +71,7 @@ class Overview extends React.Component {
       }
       return newName;
     };
+
     //filtrer på navenet til tabben
     const ordersFromDatabase = filteredOrders
       .filter(

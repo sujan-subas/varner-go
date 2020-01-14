@@ -5,7 +5,7 @@ const port = process.env.PORT;
 const bodyParser = require("body-parser");
 require("body-parser-xml")(bodyParser);
 const cors = require("cors");
-const util = require('util');
+const util = require("util");
 app.use(cors());
 // const secret = process.env.SECRET;
 const { createOrder, getAllOrders, getOrder, updateOrderStatus } = require("./postgresAPI");
@@ -21,21 +21,18 @@ app.use(bodyParser.xml());
 // Build react app
 app.use(express.static("build"));
 
-
 const api = express();
 
-
-
 // POST updated status to Varner
-api.patch('/updatevarner/:storeID/:produktID', async(req,res) => {
-	const {storeID, produktID} = req.params;
-	console.log(storeID, produktID)
-	res.send({storeID, produktID})
-})
-
+api.patch("/updatevarner/:storeID/:produktID", async (req, res) => {
+	const { storeID, produktID } = req.params;
+	console.log(storeID, produktID);
+	res.send({ storeID, produktID });
+});
 
 // Order post from Varner
 api.post("/orders", async (req, res) => {
+<<<<<<< HEAD
   try {
     const orderXml = req.body;
     const orderObject = await getJsonFromXml(orderXml);
@@ -43,10 +40,18 @@ api.post("/orders", async (req, res) => {
     // console.log("****************", orderObject);
     // const newOrder = await createOrder(orderObject);
     res.send(orderObject);
+=======
+	try {
+		const orderXml = req.body;
+		const orderObject = await getJsonFromXml(orderXml);
+		// console.log("****************", orderObject);
+		const newOrder = await createOrder(orderObject);
+>>>>>>> Develop
 
-  } catch (error) {
-    console.log(error.message);
-  }
+		res.send(newOrder);
+	} catch (error) {
+		console.log(error.message);
+	}
 });
 
 // get all orders
@@ -69,9 +74,6 @@ api.get("/orders/:ordernumber", async (req, res, next) => {
 		console.log(error);
 	}
 });
-
-// api.get('/orders/:finished')
-// api.get('/orders/:declined')
 
 // update orderstatus and processfinished
 api.patch("/orders/:ordernumber", async (req, res, next) => {
@@ -100,9 +102,8 @@ app.listen(port, () => {
 	console.log(`running on port: ${port}`);
 });
 
-
 /**
  * todo later:
  * whrite delete processed order from endpoint
- * 
+ *
  */

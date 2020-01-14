@@ -6,23 +6,23 @@ const pool = new Pool({
 });
 
 // post data in orders table in postgres
-async function createOrder(orderObject) {
-  const {
-    orderNumber,
-    refrenceOrderNumber,
-    orderDate,
-    deliveryDate,
-    partDeliveryFlag,
-    name,
-    email,
-    phoneNumber,
-    addressLine1,
-    addressLine4,
-    zipCode,
-    city,
-    orderList,
-    productImageUrl
-  } = orderObject;
+async function createOrder (orderObject) {
+	const {
+		orderNumber,
+		refrenceOrderNumber,
+		orderDate,
+		deliveryDate,
+		partDeliveryFlag,
+		name,
+		email,
+		phoneNumber,
+		addressLine1,
+		addressLine4,
+		zipCode,
+		city,
+		orderList,
+		productImageUrl
+	} = orderObject;
 
 	const queryText = `
   insert into orders
@@ -45,24 +45,24 @@ async function createOrder(orderObject) {
     returning
     *
     `;
-  const queryValues = [
-    orderNumber,
-    refrenceOrderNumber,
-    orderDate,
-    deliveryDate,
-    partDeliveryFlag,
-    name,
-    email,
-    phoneNumber,
-    addressLine1,
-    addressLine4,
-    zipCode,
-    city,
-    JSON.stringify(orderList),
-    productImageUrl
-  ];
+	const queryValues = [
+		orderNumber,
+		refrenceOrderNumber,
+		orderDate,
+		deliveryDate,
+		partDeliveryFlag,
+		name,
+		email,
+		phoneNumber,
+		addressLine1,
+		addressLine4,
+		zipCode,
+		city,
+		JSON.stringify(orderList),
+		productImageUrl
+	];
 
-	console.log({ queryValues });
+	// console.log({ queryValues });
 
 	const { rows } = await pool.query(queryText, queryValues);
 
@@ -134,16 +134,49 @@ async function updateOrderStatus (ordernumber, order_status) {
 	return rows[0];
 }
 
+// async function setExpire(ordernumber) {
+//   const queryText = `
+//   select
+//     created_in_app
+//   from
+//     orders
+//   where
+//     order_number = $1
+//   returning
+//    *
+//   `;
+//   const queryValues = [ordernumber];
+//   const row = await pool.query(queryText, queryValues);
+//   console.log(row[0]);
+//   //slice timestamp fix
+//   if (row[0] > 17.0) {
+//     //
+//   }
+// }
+
+//   `;
+//   const queryValues = [ordernumber];
+//   const rows = await pool.query(queryText, queryValues);
+//   console.log(rows[0]);
+//   return rows[0];
+//   //slice timestamp fix
+//   // if (row[0] > 17.0) {
+//   //   //
+//   // }
+// }
+
+// // async function setExpire
+
 module.exports = {
-  createOrder,
-  getAllOrders,
-  getOrder,
-  updateOrderStatus
+	createOrder,
+	getAllOrders,
+	getOrder,
+	updateOrderStatus
 };
 
 /**
  * todo:
  * orderProcessed() that will move an order from the table "orders" to table "processed_orders"
- * 
- * 
+ *
+ *
  */
