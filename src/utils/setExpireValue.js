@@ -33,20 +33,12 @@ export function setExpireValue(timestamp) {
     date.setDate(date.getDate() + delayDays);
     return date;
   };
-  // Date.prototype.addDaysToTime = function(delayDays) {
-  //   var date = new Date(this.valueOf());
-  //   date.setDate(date.getDate() + delayDays);
-  //   return date;
-  // };
+
   // eslint-disable-next-line no-extend-native
   Date.prototype.addHoursToTime = function(expireTime) {
     this.setHours(this.getHours() + expireTime);
     return this;
   };
-  // Date.prototype.addHoursToTime = function(expireTime) {
-  //   this.setHours(this.getHours() + expireTime);
-  //   return this;
-  // };
 
   //OBS! Pay attention to timezone differents. browser reads timestamp right.
   // expire value when order is placed between 17:00+ and 00:00
