@@ -5,39 +5,30 @@ const base64 = require('base-64');
 // Set Header
 global.Headers = fetch.Headers;
 
-// Basic auth to express.
 
 //GET XML FILE from Varner
 async function getJSONfromXML(result) {
-    // console.log(result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0].orderLines[0].orderLine[1]);
-    //Shortcuts
     const order = result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0];
     const delivery = result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0].delivery[0];
     const costumer =result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0].invoiceCustomer[0];
     const orderLines = result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0].orderLines[0];
     const sku = result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0].orderLines[0].orderLine[0].productId[0];
 
-    // ******
-    // New Object
-    // console.log(orderLines.orderLine.length)
-
     // Handle orderList, will work for multiple orders.
     let orderDetails = orderLines.orderLine.map(function (order) {
-        // console.log(order)
+       
         return {
             position: Number(order.position[0]),
             // productId: Number(order.productId[0]),
             // Formatere sku nummer riktig. 
-            productId: order.productId[0].slice(0,7) + '_' + order.productId[0].slice(7,11),
+            productId: order.productId[0].slice(0,7),
             description: order.description[0],
             orderQuantity: order.orderedQuantity[0],
             price: order.price[0]
         };
     });
 
-    // // Handle SKU number
-    // let skuNumber = sku.slice(0, 7) + '_' + sku.slice(7, 11);
-    // console.log('dette er skhhhh', skuNumber)
+  
 
     // Make new Object
     const orderJson = {
@@ -57,20 +48,21 @@ async function getJSONfromXML(result) {
         zipCode: costumer.zipCode[0],
         city: costumer.city[0],
         orderList: orderDetails
-    };
 
+    };
+    console.log('heeeeee')
     const nummerSKU = await getSKUfromApi(orderJson)
-    // console.log(nummerSKU)
+    console.log(orderJson.orderList[0].productId)
 
     return nummerSKU;
 }
 async function getSKUfromApi(orderJsonFromFunc) {
     // console.log('dette er json*****', orderJsonFromFunc)
     // GET ORDER API DETAILS (SKU API)
-    let imageLink = orderJsonFromFunc.model_number;
+    // const produktIdURL = orderJsonFromFunc.orderList // J
     const login = 'varnergofetch@protonmail.com';
     const password = 'varnergofetch';
-    const url = `https://bikbok.com/no/api/productfeed/v2/get?variant=7244470_F922`;
+    const url = `https://bikbok.com/no/api/productfeed/v2/get?style=${produktIdURL}`;  //7134708
     // const url = `https://bikbok.com/no/api/productfeed/v2/get?variant=${imageLink}`;
 
     let imgUrl;
@@ -83,10 +75,11 @@ async function getSKUfromApi(orderJsonFromFunc) {
         .then(response => {
             if (!response.ok) throw new Error(response.status);
             return response.json();
+
         })
         .then(function (res) {
-            // console.log('..............................', res[0].ProductImages[0].Url)
-            imgUrl = res[0].ProductImages[0].Url;
+            console.log('..............................', res)
+            // styleCode
             return imgUrl;
         })
         .then(function (imgUrl) {
@@ -96,14 +89,11 @@ async function getSKUfromApi(orderJsonFromFunc) {
     // Add field for  image link based on sku 
     const JSONDataPlussImgLink = orderJsonFromFunc;
     JSONDataPlussImgLink.productImageUrl = returnFromFetch
-    console.log(JSONDataPlussImgLink)
+    // console.log(JSONDataPlussImgLink)
 
     return JSONDataPlussImgLink
 
 }
-/*
-* todo: add deadline stamp.
-* Altså en funksjon som rekner ut deadline, med hennsyn til åpningstider. 
- */
+
 
 module.exports = getJSONfromXML;
