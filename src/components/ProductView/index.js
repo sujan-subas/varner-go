@@ -56,8 +56,11 @@ class ProductView extends React.Component {
     }
   }
 
+  // Denne funksjonen skal til Accept/Decline . Patch route fungerer. MS.
 	async handleChange (status, event) {
     const { ordernumber } = this.props.match.params;
+    // console.log('ddddddddddddddddddddddddddd')
+    // console.log('target value', event.target.value)
     console.log(ordernumber, event.target.value);
     updateOrderStatus(ordernumber, event.target.value)
     const { history } = this.props;
