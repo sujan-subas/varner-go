@@ -7,7 +7,6 @@ import { getOrderByOrderNumber, updateOrderStatus } from "../../clientAPI/client
 class ProductView extends React.Component {
 	constructor (props) {
     super(props);
-    console.log("props", props)
 
 		this.state = {
 			time: "",
