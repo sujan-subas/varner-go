@@ -7,7 +7,7 @@ import {
   updateOrderStatus
 } from "../../clientAPI/clientAPI";
 
-class Product extends React.Component {
+class ProductView extends React.Component {
   constructor(props) {
     super(props);
     console.log("props", props);
@@ -24,25 +24,18 @@ class Product extends React.Component {
     this.timer = null;
   }
 
-  async componentDidMount() {
-    await this.getOrder();
-  }
-
-  async getOrder() {
-    const { ordernumber } = this.props.match.params;
-    try {
-      this.setState({ isLoading: true });
-      const order = await getOrderByOrderNumber(ordernumber);
-      this.setState({ order });
-
+	async getOrder () {
+		const { ordernumber } = this.props.match.params;
+		try {
+			this.setState({ isLoading: true });
+			const order = await getOrderByOrderNumber(ordernumber);
+			this.setState({ order });
       this.getTime();
-      //const count = this.state.order.orderLines.length;
-      //this.setState({ orderCount: count, isLoading: false });
-      //console.log(this.state.order);
-    } catch (error) {
-      this.setState({ error });
-    }
-  }
+      this.setState({ isLoading: false })
+		} catch (error) {
+			this.setState({ error });
+		}
+	}
 
   handleClick(sku) {
     if (this.state.pickedSkus.includes(sku)) {
@@ -59,12 +52,14 @@ class Product extends React.Component {
     }
   }
 
-  async handleChange(status) {
-    console.log(this.props);
-    console.log(status);
-    const { history } = this.props;
+	async handleChange (status, event) {
     const { ordernumber } = this.props.match.params;
-    history.push(`/orders/${ordernumber}/processing/${status}`);
+    console.log(ordernumber, event.target.value);
+    updateOrderStatus(ordernumber, event.target.value)
+    const { history } = this.props;
+    
+    history.push(`/orders/${ordernumber}/processing`)
+
   }
 
   getTime() {
