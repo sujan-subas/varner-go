@@ -24,6 +24,10 @@ class ProductView extends React.Component {
     this.timer = null;
   }
 
+  componentDidMount() {
+    this.getOrder()
+  }
+
 	async getOrder () {
 		const { ordernumber } = this.props.match.params;
 		try {
@@ -35,8 +39,8 @@ class ProductView extends React.Component {
 		} catch (error) {
 			this.setState({ error });
 		}
-	}
-
+  }
+  
   handleClick(sku) {
     if (this.state.pickedSkus.includes(sku)) {
       let i = this.state.pickedSkus.indexOf(sku);
