@@ -9,16 +9,19 @@ import AcceptDecline from "./components/AcceptDecline";
 import { HashRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 
-function App () {
-	return (
-		<HashRouter>
-			<div className="App">
-				<Switch>
-					<Route path="/" exact component={OverView} />
-					{/* <Route path="/" exact component={Login} /> */}
-					<Route path="/orders" exact component={OverView} />
-					<Route path="/orders/:ordernumber" component={ProductView} />
-					<Route path="/orders/:ordernumber/processing:status" component={AcceptDecline} />
+function App() {
+  return (
+    <HashRouter>
+      <div className="App">
+        <Switch>
+          <Route path="/" exact component={OverView} />
+          {/* <Route path="/" exact component={Login} /> */}
+          <Route exact path="/orders" component={OverView} />
+          <Route exact path="/orders/:ordernumber" component={ProductView} />
+          <Route
+            path="/orders/:ordernumber/:status"
+            component={AcceptDecline}
+          />
           {/* <Route path="/orders/:ordernumber/processing" component={Testing} /> */}
         </Switch>
       </div>
