@@ -7,7 +7,8 @@ const varner_API_Url = "https://e90c8b7c-df85-4c2f-83a1-2782d5f0c73f.mock.pstmn.
 
 //Store ID and orderNumber , has this format: 625/N-456433/
 // ENDPOINT FOR UPDATE TIL VARNER
-export async function updateVarner(storeID, orderNumber, status, reason) {
+export async function updateVarner(reason, storeID, orderNumber, status) {
+	// console.log('from VARNERFUNC', reason, storeID, orderNumber, status)
 	const res = await fetch(`${varner_API_Url}/${storeID}/${orderNumber}`, {
 		method: "PATCH",
 		headers: {
@@ -18,8 +19,10 @@ export async function updateVarner(storeID, orderNumber, status, reason) {
 			reason,
 			// sett inn time stamps naar dette er klart. Ikke sikkert dette er mulig.
 		})
-	});
-	return await res.json();
+	}).then(function(res) {
+		console.log(res)
+	})
+	// return await res.json();
 }
 
 export async function getAllOrdersDB () {
