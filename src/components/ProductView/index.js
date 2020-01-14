@@ -206,7 +206,8 @@ class ProductView extends React.Component {
                 <div className="col-6">
                   {pickedSkus.length === order.order_list.length ? (
                     <button
-                      onClick={this.handleChange.bind(this, "in-process")}
+                      value={"packed"}
+                      onClick={this.handleChange.bind(this, "packed")}
                       className="btn varner-btn-green w-75 mx-2 rounded-0"
                     >
                       Klar til opphenting
