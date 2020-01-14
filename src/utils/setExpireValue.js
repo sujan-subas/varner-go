@@ -50,6 +50,7 @@ export function setExpireValue(timestamp) {
   // expire value left when order is placed between 00:00 and 10:00
   if (hours < 10 && hours < openingTimeHour) {
     let newExpire = new Date().setHours("12,00,00");
+
     let expires = new Date(newExpire);
     console.log(`Expires at: ${expires}`);
     return expires;

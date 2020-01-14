@@ -18,7 +18,7 @@ function App () {
 					{/* <Route path="/" exact component={Login} /> */}
 					<Route path="/orders" exact component={OrderView} />
 					<Route path="/orders/:ordernumber" component={ProductView} />
-					<Route path="/orders/:ordernumber/decline" component={AcceptDecline} />
+					<Route path="/orders/:ordernumber/processorder" component={AcceptDecline} />
 					<OrderView />
 				</Switch>
 			</div>

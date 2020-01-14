@@ -1,5 +1,6 @@
 import React from "react";
 import { getFormattedDeadLine, getFormattedDate } from "../../utils/time";
+import { setExpireValue } from "../../utils/setExpireValue";
 import { getSize, getColor } from "../../utils/extractProductInfo";
 import {
   getOrderByOrderNumber,
@@ -77,19 +78,22 @@ class Product extends React.Component {
     //history.replace(`/order/${ordernumber}`);
   }
 
-  getTime() {
-    // let time;
-    // const { order } = this.state;
-    // if (order.order_status === "new") {
-    // 	time = getFormattedDeadLine(new Date(order.deadLine), new Date());
-    // } else if (order.order_status === "in-process") {
-    // 	time = getFormattedDeadLine(new Date(), new Date(order.created_in_app_at));
-    // }
-    // this.setState({
-    // 	time: time
-    // });
-    // this.timer = setTimeout(() => this.getTime(), 1000);
-  }
+	getTime () {
+		let time;
+    const { order } = this.state;
+    const deadLine = setExpireValue(order.process_finished_at)
+		if (order.order_status === "new") {
+			time = getFormattedDeadLine(new Date(deadLine), new Date());
+		} else if (order.order_status === "in-process") {
+			time = getFormattedDeadLine(new Date(), new Date(order.created_in_app_at));
+		}
+
+		this.setState({
+			time: time
+		});
+
+		this.timer = setTimeout(() => this.getTime(), 1000);
+	}
 
   render() {
     const { order, pickedSkus, time } = this.state;
