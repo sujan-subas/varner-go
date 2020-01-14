@@ -66,19 +66,23 @@ class ProductView extends React.Component {
 
   }
 
-  getTime() {
-    // let time;
-    // const { order } = this.state;
-    // const deadLine = setExpireValue(order.process_finished_at)
-    // if (order.order_status === "new") {
-    // 	time = getFormattedDeadLine(new Date(deadLine), new Date());
-    // } else if (order.order_status === "in-process") {
-    // 	time = getFormattedDeadLine(new Date(), new Date(order.created_in_app_at));
-    // }
-    // this.setState({
-    // 	time: time
-    // });
-    // this.timer = setTimeout(() => this.getTime(), 1000);
+  async getTime() {
+    let time;
+    const { order } = this.state;
+    console.log(order.created_in_app_at);
+    const deadLine = await setExpireValue("Tue, 14 Jan 2020 11:17:18 GMT");
+    console.log(deadLine)
+    if (order.order_status === "new") {
+      time = getFormattedDeadLine(new Date(deadLine), new Date());
+      console.log(time);
+    } else if (order.order_status === "in-process") {
+      time = getFormattedDeadLine(new Date(), new Date(order.created_in_app_at));
+      console.log(time);
+    }
+    this.setState({
+    	time: time
+    });
+    //this.timer = setTimeout(() => this.getTime(), 1000);
   }
 
   render() {
