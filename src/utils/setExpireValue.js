@@ -27,11 +27,14 @@ export function setExpireValue(timestamp) {
   }
 
   //  general time left, store open and more than 2 hours to closing time
+  // eslint-disable-next-line no-extend-native
   Date.prototype.addDaysToTime = function(delayDays) {
     var date = new Date(this.valueOf());
     date.setDate(date.getDate() + delayDays);
     return date;
   };
+
+  // eslint-disable-next-line no-extend-native
   Date.prototype.addHoursToTime = function(expireTime) {
     this.setHours(this.getHours() + expireTime);
     return this;
@@ -39,27 +42,36 @@ export function setExpireValue(timestamp) {
 
   //OBS! Pay attention to timezone differents. browser reads timestamp right.
   // expire value when order is placed between 17:00+ and 00:00
-  if (hours >= 17 && hours < 24) {
+  function limitedProccesingTime() {
     let nextWorkingDay = new Date(time).addDaysToTime(1);
     let newExpire = nextWorkingDay.setHours(10);
     let expires = new Date(newExpire);
     console.log(`Expires at: ${expires}`);
     return expires;
   }
+  if (hours >= 17 && hours < 24) {
+    limitedProccesingTime();
+  }
 
   // expire value left when order is placed between 00:00 and 10:00
-  if (hours < 10 && hours < openingTimeHour) {
-    let newExpire = new Date().setHours(12, 00, 00);
+  function zeroToTen() {
+    let newExpire = new Date().setHours(parseInt("12,00,00"));
     let expires = new Date(newExpire);
     console.log(`Expires at: ${expires}`);
     return expires;
   }
+  if (hours < 10 && hours < openingTimeHour) {
+    zeroToTen();
+  }
 
   // expire value when order is made between 10:00 and 17:00
-  if (hours > openingTimeHour && hours < 17) {
+  function fullProccesingTime() {
     let expires = new Date(time).addHoursToTime(2);
     console.log(`Expires at: ${expires}`);
     return expires;
+  }
+  if (hours > openingTimeHour && hours < 17) {
+    fullProccesingTime();
   }
 }
 // console.log(compareTime(created_in_app_at))

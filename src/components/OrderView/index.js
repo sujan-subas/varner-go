@@ -188,10 +188,7 @@ class Overview extends React.Component {
           onSelect={tabKey => this.handleChangeTab(tabKey)}
         >
           <Nav.Link eventKey="new">
-            Nye ordre{" "}
-            <Badge variant="success" className="center">
-              {statusCountNew.length}
-            </Badge>
+            Nye ordre <Badge variant="success">{statusCountNew.length}</Badge>
             {/* Nye ordre ({statusCountNew.length}){" "} */}
           </Nav.Link>
           <Nav.Link eventKey="in-process">

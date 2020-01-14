@@ -13,6 +13,18 @@
   /* green-color */
   --varner-green: #44a241;
 }
+.varner-black-theme {
+  color: var(--varner-text-white);
+  background-color: var(--varner-text-dark);
+}
+.varner-white-theme {
+  color: var(--varner-text-dark);
+  background-color: var(--varner-text-white);
+}
+.varner-btn-green {
+  color: var(--varner-text-white);
+  background: var(--varner-green);
+}
 .order-cards {
   border-left: var(--varner-green) 1rem solid;
   background-color: var(--varner-darker);
