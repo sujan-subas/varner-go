@@ -25,7 +25,7 @@ class ProductView extends React.Component {
   }
 
   componentDidMount() {
-    this.getOrder();
+    this.getOrder()
   }
 
 	async getOrder () {
@@ -39,8 +39,8 @@ class ProductView extends React.Component {
 		} catch (error) {
 			this.setState({ error });
 		}
-	}
-
+  }
+  
   handleClick(sku) {
     if (this.state.pickedSkus.includes(sku)) {
       let i = this.state.pickedSkus.indexOf(sku);
@@ -56,6 +56,7 @@ class ProductView extends React.Component {
     }
   }
 
+  // Denne funksjonen skal til Accept/Decline . Patch route fungerer. MS.
 	async handleChange (status, event) {
     const { ordernumber } = this.props.match.params;
     // console.log('ddddddddddddddddddddddddddd')
