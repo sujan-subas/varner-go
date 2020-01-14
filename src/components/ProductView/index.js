@@ -4,7 +4,7 @@ import { setExpireValue } from "../../utils/setExpireValue";
 import { getSize, getColor } from "../../utils/extractProductInfo";
 import { getOrderByOrderNumber, updateOrderStatus } from "../../clientAPI/clientAPI";
 
-class Product extends React.Component {
+class ProductView extends React.Component {
 	constructor (props) {
     super(props);
     console.log("props", props)

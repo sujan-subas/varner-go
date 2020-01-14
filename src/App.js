@@ -6,6 +6,7 @@ import AcceptDecline from "./container/AcceptDecline";
 // import Login from "./components/Login";
 import OrderView from "./container/OrderView";
 import ProductView from "./container/ProductView";
+//import ProductView from "./components/ProductView";
 import { HashRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 
