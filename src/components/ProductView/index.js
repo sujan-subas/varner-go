@@ -30,11 +30,8 @@ class ProductView extends React.Component {
 			this.setState({ isLoading: true });
 			const order = await getOrderByOrderNumber(ordernumber);
 			this.setState({ order });
-
-			this.getTime();
-			//const count = this.state.order.orderLines.length;
-			//this.setState({ orderCount: count, isLoading: false });
-			//console.log(this.state.order);
+      this.getTime();
+      this.setState({ isLoading: false })
 		} catch (error) {
 			this.setState({ error });
 		}
@@ -55,10 +52,13 @@ class ProductView extends React.Component {
 		}
 	}
 
-	async handleChange (status) {
-    const { history } = this.props;
+	async handleChange (status, event) {
     const { ordernumber } = this.props.match.params;
-    history.push(`/orders/${ordernumber}/processing/${status}`)
+    console.log(ordernumber, event.target.value);
+    updateOrderStatus(ordernumber, event.target.value)
+    const { history } = this.props;
+    
+    history.push(`/orders/${ordernumber}/processing`)
 
   }
 
@@ -197,12 +197,12 @@ class ProductView extends React.Component {
                 Avvis ordre
               </button>
               {pickedSkus.length === order.order_list.length ? (
-                <button onClick={this.handleChange.bind(this, "declined")}>
+                <button value={"packed"} onClick={this.handleChange.bind(this, "packed")}>
                   Klar til opphenting
                 </button>
               ) : (
                 <button
-                  onClick={this.handleChange.bind(this, "declined")}
+                  onClick={this.handleChange.bind(this, "in-process")}
                 >
                   Ja, dette fikser vi
                 </button>
