@@ -3,8 +3,7 @@ import { getFormattedDeadLine, getFormattedDate } from "../../utils/time";
 import { setExpireValue } from "../../utils/setExpireValue";
 import { getSize, getColor } from "../../utils/extractProductInfo";
 import { getOrderByOrderNumber, updateOrderStatus } from "../../clientAPI/clientAPI";
-import AcceptedOrder from "./AcceptedOrder";
-
+import AcceptedOrder from "../AcceptDecline";
 
 class Product extends React.Component {
 	constructor (props) {
@@ -24,10 +23,10 @@ class Product extends React.Component {
 
 	async componentDidMount () {
 		await this.getOrder();
-  }
-  
-  async getOrder() {
-    const { ordernumber } = this.props.match.params;
+	}
+
+	async getOrder () {
+		const { ordernumber } = this.props.match.params;
 		try {
 			this.setState({ isLoading: true });
 			const order = await getOrderByOrderNumber(ordernumber);
@@ -40,7 +39,7 @@ class Product extends React.Component {
 		} catch (error) {
 			this.setState({ error });
 		}
-  }
+	}
 
 	handleClick (sku) {
 		if (this.state.pickedSkus.includes(sku)) {
@@ -58,7 +57,7 @@ class Product extends React.Component {
 	}
 
 	async handleChange (field, event) {
-    /*
+		/*
 		this.setState({
 			order: {
 				...this.state.order,
@@ -67,11 +66,11 @@ class Product extends React.Component {
     });
     */
 		const { ordernumber } = this.props.match.params;
-    //const order = await updateOrderStatus(ordernumber, event.target.value);
-    //this.setState({ order });
-    //this.getOrder();
-    console.log('klick')
-    return <AcceptedOrder ordernumber={ordernumber}/>
+		//const order = await updateOrderStatus(ordernumber, event.target.value);
+		//this.setState({ order });
+		//this.getOrder();
+		console.log("klick");
+		return <AcceptedOrder ordernumber={ordernumber} />;
 		//
 		//history.replace(`/order/${ordernumber}`);
 	}
@@ -102,7 +101,14 @@ class Product extends React.Component {
 			orderElements = order.order_list.map(({ description, size, color, orderQuantity, productId }) => {
 				return (
 					<div key={productId}>
-						<img src={"https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"} alt="" width="123" height="164" />
+						<img
+							src={
+								"https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
+							}
+							alt=""
+							width="123"
+							height="164"
+						/>
 						<h2>{description}</h2>
 						<p>Str: {getSize(description)}</p>
 						<p>Farge: {getColor(description)}</p>
@@ -155,24 +161,15 @@ class Product extends React.Component {
 							{orderElements}
 						</div>
 						<div>
-              <button 
-                value={"declined"} 
-                onClick={this.handleChange.bind(this)}
-              >
+							<button value={"declined"} onClick={this.handleChange.bind(this)}>
 								Avvis ordre
 							</button>
 							{pickedSkus.length === order.order_list.length ? (
-                <button 
-                  value={"packed"} 
-                  onClick={this.handleChange.bind(this)}
-                >
+								<button value={"packed"} onClick={this.handleChange.bind(this)}>
 									Klar til opphenting
 								</button>
 							) : (
-                <button 
-                  value={"in-process"} 
-                  onClick={this.handleChange.bind(this)}
-                >
+								<button value={"in-process"} onClick={this.handleChange.bind(this)}>
 									Ja, dette fikser vi
 								</button>
 							)}
