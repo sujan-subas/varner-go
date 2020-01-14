@@ -12,17 +12,10 @@ async function getJSONfromXML(result) {
     // console.log(result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0].orderLines[0].orderLine[1]);
     //Shortcuts
     const order = result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0];
-    const delivery = result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0]
-        .delivery[0];
-    const costumer =
-        result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0]
-            .invoiceCustomer[0];
-    const orderLines =
-        result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0]
-            .orderLines[0];
-    const sku =
-        result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0]
-            .orderLines[0].orderLine[0].productId[0];
+    const delivery = result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0].delivery[0];
+    const costumer =result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0].invoiceCustomer[0];
+    const orderLines = result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0].orderLines[0];
+    const sku = result.ecomOrderMessageRequest.orderMessage[0].orders[0].order[0].orderLines[0].orderLine[0].productId[0];
 
     // ******
     // New Object

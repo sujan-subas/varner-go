@@ -1,7 +1,6 @@
 // const PORT = process.env.PORT;
 // const API_URL = `http://localhost:${PORT}/api`;
 const API_URL = "http://localhost:3000/api";
-<<<<<<< HEAD
 const varner_API_Url = "https://e90c8b7c-df85-4c2f-83a1-2782d5f0c73f.mock.pstmn.io/api/order/update/"
 
 
@@ -22,8 +21,6 @@ export async function updateVarner(storeID, orderNumber, status, reason) {
 	});
 	return await res.json();
 }
-=======
->>>>>>> Develop
 
 export async function getAllOrdersDB () {
 	const response = await fetch(`${API_URL}/orders`);

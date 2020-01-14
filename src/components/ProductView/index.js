@@ -70,9 +70,10 @@ class Product extends React.Component {
     //this.setState({ order });
     //this.getOrder();
     console.log('klick')
-    return <AcceptedOrder ordernumber={ordernumber}/>
+    // return <AcceptedOrder ordernumber={ordernumber}/>
 		//
-		//history.replace(`/order/${ordernumber}`);
+		const {history} = this.props;
+		history.replace(`/order/${ordernumber}`);
 	}
 
 	getTime () {
