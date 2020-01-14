@@ -4,7 +4,7 @@ import { setExpireValue } from "../../utils/setExpireValue";
 import { getSize, getColor } from "../../utils/extractProductInfo";
 import { getOrderByOrderNumber, updateOrderStatus } from "../../clientAPI/clientAPI";
 
-class Product extends React.Component {
+class ProductView extends React.Component {
 	constructor (props) {
     super(props);
     console.log("props", props)
@@ -83,7 +83,6 @@ class Product extends React.Component {
   render() {
     const { order, pickedSkus, time } = this.state;
     // const antallVarer = order.order_list.length;
-    console.log(order);
     let orderElements;
     const header = (
       <header className="p-3">
@@ -111,13 +110,13 @@ class Product extends React.Component {
 
     if (order && order.order_list) {
       orderElements = order.order_list.map(
-        ({ description, size, color, orderQuantity, productId }) => {
+        ({ description, orderQuantity, productId }) => {
           return (
-            <div className="container">
+            <div className="container" key={productId}>
               <div className="card text-white order-cards mb-4 p-4">
                 <div className="row">
                   <div className="col-6">
-                    <div key={productId}>
+                    <div >
                       <img
                         src={
                           "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
@@ -179,9 +178,9 @@ class Product extends React.Component {
                     <p>Bestillingsdato: {getFormattedDate(order.order_date)}</p>
                     <p>ReservasjonsID: {order.reference_order_no}</p>
                     <p>Kunde: {order.customer_name}</p>
+                    <p>Telefon: {order.customer_phonenumber}</p>
                   </div>
                   <div className="col-sm-12 d-none d-lg-block">
-                    <p>Telefon: {order.customer_phonenumber}</p>
                     <p>Email: {order.customer_email}</p>
                     <p>Leveringsadresse: {order.customer_addressline1}</p>
                   </div>
@@ -218,4 +217,4 @@ class Product extends React.Component {
   }
 }
 
-export default Product;
+export default ProductView;
