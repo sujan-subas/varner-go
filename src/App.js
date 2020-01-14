@@ -14,11 +14,11 @@ function App () {
 		<HashRouter>
 			<div className="App">
 				<Switch>
-					{/* <Route path="/" exact component={AcceptedOrder} /> */}
+					<Route path="/" exact component={OrderView} />
 					{/* <Route path="/" exact component={Login} /> */}
 					<Route path="/orders" exact component={OrderView} />
 					<Route path="/orders/:ordernumber" component={ProductView} />
-					<Route path="/orders/:ordernumber/processorder" component={AcceptDecline} />
+					<Route path="/orders/:ordernumber/processing:status" component={AcceptDecline} />
 					<OrderView />
 				</Switch>
 			</div>

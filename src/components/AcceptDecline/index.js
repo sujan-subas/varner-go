@@ -3,7 +3,7 @@ import React from "react";
 //todo: legg til {history, når man går tilbake }
 // React router?
 
-export default class AcceptedOrder extends React.Component {
+export default class AcceptDecline extends React.Component {
   constructor(props) {
     super(props);
 
@@ -14,6 +14,21 @@ export default class AcceptedOrder extends React.Component {
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleDeclinedReason = this.handleDeclinedReason.bind(this);
+  }
+
+  updateState() {
+    const { status } = this.props.match.params;
+    console.log(this.props.match.params);
+    if (status === 'declined') {
+      this.setState({
+        declined: true
+      })
+    } else if (status === 'in-process') {
+      this.setState({
+        confirmed: true
+      })
+    }
+
   }
   //functions button container
   handleButtonClick(string) {
@@ -65,6 +80,7 @@ export default class AcceptedOrder extends React.Component {
 
   render() {
     const { comfirmed, declined } = this.state;
+
     return (
       // {/* background */}
       <div className="bg-dark " style={{ width: "100%", height: "100vh" }}>

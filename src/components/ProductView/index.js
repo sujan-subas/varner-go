@@ -3,16 +3,16 @@ import { getFormattedDeadLine, getFormattedDate } from "../../utils/time";
 import { setExpireValue } from "../../utils/setExpireValue";
 import { getSize, getColor } from "../../utils/extractProductInfo";
 import { getOrderByOrderNumber, updateOrderStatus } from "../../clientAPI/clientAPI";
-import AcceptedOrder from "../AcceptDecline";
 
 class Product extends React.Component {
 	constructor (props) {
-		super(props);
+    super(props);
+    console.log("props", props)
 
 		this.state = {
 			time: "",
 			order: {},
-			pickedSkus: [],
+      pickedSkus: [],
 			isLoading: false,
 			error: null
 		};
@@ -56,7 +56,10 @@ class Product extends React.Component {
 		}
 	}
 
-	async handleChange (field, event) {
+	async handleChange (status) {
+    const { history } = this.props;
+    const { ordernumber } = this.props.match.params;
+    history.push(`/orders/${ordernumber}/processing/${status}`)
 		/*
 		this.setState({
 			order: {
@@ -65,40 +68,31 @@ class Product extends React.Component {
 			}
     });
     */
-		const { ordernumber } = this.props.match.params;
-		//const order = await updateOrderStatus(ordernumber, event.target.value);
-		//this.setState({ order });
-		//this.getOrder();
-		console.log("klick");
-		return <AcceptedOrder ordernumber={ordernumber} />;
-		//
-		//history.replace(`/order/${ordernumber}`);
 	}
 
 	getTime () {
-		let time;
-    const { order } = this.state;
-    const deadLine = setExpireValue(order.process_finished_at)
-		if (order.order_status === "new") {
-			time = getFormattedDeadLine(new Date(deadLine), new Date());
-		} else if (order.order_status === "in-process") {
-			time = getFormattedDeadLine(new Date(), new Date(order.created_in_app_at));
-		}
+		// let time;
+    // const { order } = this.state;
+    // const deadLine = setExpireValue(order.process_finished_at)
+		// if (order.order_status === "new") {
+		// 	time = getFormattedDeadLine(new Date(deadLine), new Date());
+		// } else if (order.order_status === "in-process") {
+		// 	time = getFormattedDeadLine(new Date(), new Date(order.created_in_app_at));
+		// }
 
-		this.setState({
-			time: time
-		});
+		// this.setState({
+		// 	time: time
+		// });
 
-		this.timer = setTimeout(() => this.getTime(), 1000);
+		// this.timer = setTimeout(() => this.getTime(), 1000);
 	}
 
 	render () {
 		const { order, pickedSkus, time } = this.state;
-		console.log(order);
 		let orderElements;
 
 		if (order && order.order_list) {
-			orderElements = order.order_list.map(({ description, size, color, orderQuantity, productId }) => {
+			orderElements = order.order_list.map(({ description, orderQuantity, productId }) => {
 				return (
 					<div key={productId}>
 						<img
@@ -161,15 +155,15 @@ class Product extends React.Component {
 							{orderElements}
 						</div>
 						<div>
-							<button value={"declined"} onClick={this.handleChange.bind(this)}>
+							<button onClick={this.handleChange.bind(this, "declined")}>
 								Avvis ordre
 							</button>
 							{pickedSkus.length === order.order_list.length ? (
-								<button value={"packed"} onClick={this.handleChange.bind(this)}>
+								<button onClick={this.handleChange.bind(this, "packed")}>
 									Klar til opphenting
 								</button>
 							) : (
-								<button value={"in-process"} onClick={this.handleChange.bind(this)}>
+								<button onClick={this.handleChange.bind(this, "in-process")}>
 									Ja, dette fikser vi
 								</button>
 							)}
