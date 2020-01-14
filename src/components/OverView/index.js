@@ -1,10 +1,10 @@
-import React from "./node_modules/react";
-import { Nav, Navbar, Form, Button, FormControl, Badge } from "./node_modules/react-bootstrap";
+import React from "react";
+import { Nav, Navbar, Form, Button, FormControl, Badge } from "react-bootstrap";
 import { format } from "date-fns";
 import { getAllOrdersDB } from "../../clientAPI/clientAPI";
 import { getFormattedDeadline } from "../../utils/time";
 
-class Overview extends React.Component {
+class OverView extends React.Component {
   constructor(props) {
     super(props);
 
@@ -208,4 +208,4 @@ class Overview extends React.Component {
   }
 }
 
-export default Overview;
+export default OverView;
