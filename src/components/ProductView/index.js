@@ -24,6 +24,10 @@ class ProductView extends React.Component {
     this.timer = null;
   }
 
+  componentDidMount() {
+    this.getOrder();
+  }
+
 	async getOrder () {
 		const { ordernumber } = this.props.match.params;
 		try {
@@ -54,6 +58,8 @@ class ProductView extends React.Component {
 
 	async handleChange (status, event) {
     const { ordernumber } = this.props.match.params;
+    // console.log('ddddddddddddddddddddddddddd')
+    // console.log('target value', event.target.value)
     console.log(ordernumber, event.target.value);
     updateOrderStatus(ordernumber, event.target.value)
     const { history } = this.props;
@@ -202,7 +208,8 @@ class ProductView extends React.Component {
                 <div className="col-6">
                   {pickedSkus.length === order.order_list.length ? (
                     <button
-                      onClick={this.handleChange.bind(this, "in-process")}
+                      value={"packed"}
+                      onClick={this.handleChange.bind(this, "packed")}
                       className="btn varner-btn-green w-75 mx-2 rounded-0"
                     >
                       Klar til opphenting
