@@ -7,7 +7,7 @@ import ReadyForPickupView from "./ReadyForPickup";
 
 import { getOrderByOrderNumber } from "../../clientAPI/clientAPI";
 import { getColor, getSize } from "../../utils/extractProductInfo";
-import { getFormattedDate } from "../../utils/time";
+import { getFormattedDate } from "../../utils/getFormattedDeadLine";
 
 
 class OrderViews extends React.Component {

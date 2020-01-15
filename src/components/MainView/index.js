@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap";
 import { format } from "date-fns";
 import { getAllOrdersDB } from "../../clientAPI/clientAPI";
-import { getFormattedDeadline } from "../../utils/time";
+// import { getFormattedDeadline } from "../../utils/getFormattedDeadLine";
 import NoOrdersInDB from "./NoOrdersInDB";
 
 class MainView extends React.Component {
