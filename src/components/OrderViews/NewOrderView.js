@@ -1,14 +1,8 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 
-class NewOrderView extends React.Component {
-  render() {
-    return (
-      <div>
-        <p>Sujan hälsar tillbaka</p>
-        
-      </div>
-    )
-  }
-}
-
+const NewOrderView = props => {
+  console.log(props);
+  return <>hei</>;
+};
 export default NewOrderView;

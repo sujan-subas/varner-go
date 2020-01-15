@@ -6,6 +6,7 @@ import NewOrderView from "./NewOrderView";
 import ReadyForPickupView from "./ReadyForPickup";
 
 import { getOrderByOrderNumber } from "../../clientAPI/clientAPI";
+import { getColor, getSize } from "../../utils/extractProductInfo";
 
 class OrderViews extends React.Component {
   constructor(props) {
@@ -13,7 +14,11 @@ class OrderViews extends React.Component {
 
     this.state = {
       status: "",
+<<<<<<< HEAD
       order: null
+=======
+      order: {}
+>>>>>>> c776769447c90dab057f5c62f930a968c8397e71
     };
   }
 
@@ -67,7 +72,11 @@ class OrderViews extends React.Component {
 
     return (
       <div>
-        <ActiveView order={order} />
+        <ActiveView
+          order={this.state.order}
+          getColor={getColor}
+          getSize={getSize}
+        />
       </div>
     );
   }

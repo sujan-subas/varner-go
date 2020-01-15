@@ -11,11 +11,11 @@ export default class AcceptDecline extends React.Component {
     super(props);
 
     this.state = {
-      comfirmed: false,
-      declined: true,
+      comfirmed: true,
+      declined: false,
       reason: "",
-      storeID: "a45",
-      orderNumber: "33",
+      storeID: "a1",
+      orderNumber: "",
       status: "new"
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
@@ -24,31 +24,34 @@ export default class AcceptDecline extends React.Component {
 
   componentDidMount() {
     const { ordernumber } = this.props.match.params;
-    console.log(`Accept did mouth: ${ordernumber}`);
-    console.log(this.props.history.match);
+    console.log(`AcceptDeclineView did mouth: ${ordernumber}`);
     this.updateState();
   }
 
   updateState() {
     const { status } = this.props.match.params;
-    console.log(this.props.match.params);
     if (status === "declined") {
       this.setState({
-        declined: true
+        declined: true,
+        status
       });
     } else if (status === "in-process") {
       this.setState({
-        confirmed: true
+        declined: false,
+        status
       });
     }
   }
-  //functions button container
+  //functions footer buttons
   handleButtonClick(string) {
     console.log("string,", string);
     if (string === "ok") {
       this.setState({
         comfirmed: !this.state.comfirmed
       });
+      const { ordernumber } = this.props.match.params;
+      updateOrderStatus(ordernumber, 'packed', 'Orderen er godkjent')
+
     } else if (string === "declineOrder") {
       this.setState({
         comfirmed: !this.state.comfirmed
@@ -62,10 +65,6 @@ export default class AcceptDecline extends React.Component {
       }
       this.props.history.goBack()
     } else {
-      // sender til pos
-      //destructure state
-      const { reason, storeID, orderNumber, status } = this.state;
-      this.comfirmDelete(reason, storeID, orderNumber, status);
       alert("tilbake til oversikt");
     }
   }
@@ -73,24 +72,13 @@ export default class AcceptDecline extends React.Component {
   // functions button for decline reason
   async handleDeclinedReason(reason) {
     const { ordernumber } = this.props.match.params;
+    // console.log('ordernumber', ordernumber)
     try {
-      if (reason === "other") {
-        await updateOrderStatus(ordernumber, this.state.status);
-
-        console.log(
-          "other was the reason for declining the order, send to textfield to fill inn?"
-        );
-      } else {
-        this.setState({
-          comfirmed: !this.state.comfirmed,
-          reason
-        });
-        const updateDBState = await updateOrderStatus(
-          ordernumber,
-          this.state.status,
-          reason
-        );
-      }
+      await updateOrderStatus(ordernumber, this.state.status, reason);
+      this.setState({
+        comfirmed: !this.state.comfirmed,
+        reason
+      });
     } catch (error) {
       console.log(`Was not able to delete order! Error: ${error.message}`);
       alert(`Was not able to delete order!`);

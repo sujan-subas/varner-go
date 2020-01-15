@@ -9,7 +9,7 @@ const accepted = props => {
           style={{ fontSize: "8rem" }}
         />
         <div className="container">
-          <p className="display-4">Akseptert Ordren</p>
+          <p className="display-4">Aksepter Ordren</p>
           <div className="container">
             <strong className="w-25">
               Obs!Notere at orderen ikke er ferdig behandlet før varene er
@@ -19,7 +19,7 @@ const accepted = props => {
           </div>
           <button
             className="btn varner-btn-dark"
-            onClick={() => props.handleButtonClick.bind("ok")}
+            onClick={() => props.handleButtonClick("ok")}
             // alternative onclick for accepted orders?
           >
             Bekreft

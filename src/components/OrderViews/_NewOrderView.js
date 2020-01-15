@@ -1,20 +1,14 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 
-import { withRouter } from 'react-router-dom';
-import { getFormattedDeadLine, getFormattedDate } from "../../utils/time";
-import { setExpireValue } from "../../utils/setExpireValue";
-import { getSize, getColor } from "../../utils/extractProductInfo";
-import {
-  getOrderByOrderNumber,
-  updateOrderStatus
-} from "../../clientAPI/clientAPI";
-
-class ProcessingOrderView extends React.Component {
+class NewOrderView extends React.Component {
   constructor(props) {
     super(props);
+    console.log("props", props);
 
     this.state = {
       time: "",
+      order: {},
       pickedSkus: [],
       isLoading: false,
       error: null
@@ -23,23 +17,6 @@ class ProcessingOrderView extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.timer = null;
   }
-
-  // componentDidMount() {
-  //   this.getOrder();
-  // }
-
-  // async getOrder() {
-  //   const { ordernumber } = this.props.match.params;
-  //   try {
-  //     this.setState({ isLoading: true });
-  //     const order = await getOrderByOrderNumber(ordernumber);
-  //     this.setState({ order });
-  //     this.getTime();
-  //     this.setState({ isLoading: false });
-  //   } catch (error) {
-  //     this.setState({ error });
-  //   }
-  // }
 
   handleClick(sku) {
     if (this.state.pickedSkus.includes(sku)) {
@@ -56,26 +33,30 @@ class ProcessingOrderView extends React.Component {
     }
   }
 
-  async handleChange(status, event) {
-    const { ordernumber } = this.props.match.params;
-    const { history } = this.props;
-    history.push(`/orders/${ordernumber}/${status}`);
-  }
+  // async handleChange(status, event) {
+  //   const { ordernumber } = this.props.match.params;
+  //   const { history } = this.props;
+  //   history.push(`/orders/${ordernumber}/${status}`);
+  // }
 
-  //denna skall nog flyttas på
   // async getTime() {
   //   let time;
   //   const { order } = this.state;
+  //   console.log(order.created_in_app_at);
   //   const deadLine = await setExpireValue("Tue, 14 Jan 2020 11:17:18 GMT");
+  //   console.log(deadLine);
   //   if (order.order_status === "new") {
   //     time = getFormattedDeadLine(new Date(deadLine), new Date());
   //     console.log(time);
   //   } else if (order.order_status === "in-process") {
-  //     time = getFormattedDeadLine(new Date(), new Date(order.created_in_app_at));
+  //     time = getFormattedDeadLine(
+  //       new Date(),
+  //       new Date(order.created_in_app_at)
+  //     );
   //     console.log(time);
   //   }
   //   this.setState({
-  //   	time: time
+  //     time: time
   //   });
   //   //this.timer = setTimeout(() => this.getTime(), 1000);
   // }
@@ -83,8 +64,8 @@ class ProcessingOrderView extends React.Component {
   render() {
     const { pickedSkus, time } = this.state;
     const { order } = this.props;
+    console.log(order);
     let orderElements;
-
     const header = (
       <header className="p-3">
         <div className="row">
@@ -100,9 +81,10 @@ class ProcessingOrderView extends React.Component {
             </button>
           </div>
           <div className="col-9">
-            <h4>Ventet:</h4>
-            <h4>Antall varer: {order.order_list.length} </h4>
-            <h4>Varer plukket: {pickedSkus.length} av {order.order_list.length}</h4>
+            <h4>Utløper om: {order.expires_at}</h4>
+            {/* <h3> Antall varer: {order.order_list.length}  </h3> */}
+            <h4> Kunde: {order.customer_name} </h4>
+            <h4>Varer plukket: {pickedSkus.length}</h4>
           </div>
         </div>
       </header>
@@ -130,8 +112,8 @@ class ProcessingOrderView extends React.Component {
                   <div className="container p-4">
                     <h4>{description}</h4>
                     <br />
-                    <p>Str: {getSize(description)}</p>
-                    <p>Farge: {getColor(description)}</p>
+                    <p>Str: {props.getSize(description)}</p>
+                    <p>Farge: {props.getColor(description)}</p>
                     <p>Antall: {orderQuantity}</p>
                     <p>SKU: {productId}</p>
                   </div>
@@ -143,7 +125,7 @@ class ProcessingOrderView extends React.Component {
                   >
                     {this.state.pickedSkus.includes(productId)
                       ? "Plukket"
-                      : "Marker som plukket"}
+                      : "Skal plukke"}
                   </button>
                 </div>
               </div>
@@ -156,9 +138,39 @@ class ProcessingOrderView extends React.Component {
         <React.Fragment>
           {header}
           <div className="jumbotron jumbotron-fluid p-2 varner-white-theme">
+            {/* <header>
+              {order.order_status === "new" ? (
+                <h3>
+                  Utløper om:
+                  {time}
+                </h3>
+              ) : (
+                <h3>
+                  Venter på plukket varer:
+                  {time}
+                </h3>
+              )}
+            </header> */}
+            <div className="container">
+              <div className="row">
+                <div className="container">
+                  <div className="col-sm-12 ">
+                    <h3>Sammendrag av bestilling</h3>
+                    <p>Bestillingsdato: {getFormattedDate(order.order_date)}</p>
+                    <p>ReservasjonsID: {order.reference_order_no}</p>
+                    <p>Kunde: {order.customer_name}</p>
+                    <p>Telefon: {order.customer_phonenumber}</p>
+                  </div>
+                  <div className="col-sm-12 d-none d-lg-block">
+                    <p>Email: {order.customer_email}</p>
+                    <p>Leveringsadresse: {order.customer_addressline1}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="container">
-            <h1 className="text-center">Ordreoversikt</h1>
+            <h1 className="text-center">Produktinformasjon</h1>
             <div className="row">
               <div className="container">{orderElements}</div>
             </div>
@@ -169,18 +181,26 @@ class ProcessingOrderView extends React.Component {
                     onClick={this.handleChange.bind(this, "declined")}
                     className="btn varner-btn-green w-75 mx-2 rounded-0"
                   >
-                    Angre
+                    Avvis ordre
                   </button>
                 </div>
                 <div className="col-6">
+                  {pickedSkus.length === order.order_list.length ? (
                     <button
-                      disabled={pickedSkus.length !== order.order_list.length}
                       value={"packed"}
                       onClick={this.handleChange.bind(this, "packed")}
                       className="btn varner-btn-green w-75 mx-2 rounded-0"
                     >
                       Klar til opphenting
                     </button>
+                  ) : (
+                    <button
+                      onClick={this.handleChange.bind(this, "in-process")}
+                      className="btn varner-btn-green w-75 mx-2 rounded-0"
+                    >
+                      Ja, dette fikser vi
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -192,4 +212,4 @@ class ProcessingOrderView extends React.Component {
   }
 }
 
-export default withRouter(ProcessingOrderView);
+export default withRouter(NewOrderView);

@@ -12,6 +12,7 @@ import {
 import { format } from "date-fns";
 import { getAllOrdersDB } from "../../clientAPI/clientAPI";
 import { getFormattedDeadline } from "../../utils/time";
+import NoOrdersInDB from "./NoOrdersInDB";
 
 class MainView extends React.Component {
   constructor(props) {
@@ -62,12 +63,7 @@ class MainView extends React.Component {
 
   render() {
     let filteredOrders = this.state.allOrders;
-    if (!this.state.allOrders.length)
-      return (
-        <div className="container text-white">
-          Ingenting å hente! Sjekk om server er oppe å går ;
-        </div>
-      );
+    if (!this.state.allOrders.length) return <NoOrdersInDB />;
 
     const { tabKey, allOrders } = this.state;
 
@@ -81,7 +77,6 @@ class MainView extends React.Component {
       return newName;
     };
     //filtrer på navenet til tabben
-    console.log("heeeeeeeeeei", filteredOrders);
     const ordersFromDatabase = filteredOrders
       .filter(order => order.order_status === tabKey)
       .filter(
