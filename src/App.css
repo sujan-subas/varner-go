@@ -31,6 +31,7 @@
   width: 18rem;
   margin: 1rem;
   padding: 1rem;
+  box-shadow: 1px 1px 0.5px var(--varner-dark);
 }
 .order-cards {
   border-left: var(--varner-green) 1rem solid;
@@ -138,7 +139,7 @@ a {
 /* Slik at nav blir på en og samme rad */
 .nav-link {
   display: block;
-  padding: .5rem;
+  padding: 0.5rem;
   line-height: 2;
 }
 
@@ -146,7 +147,6 @@ a {
   border-top-left-radius: 0rem;
   border-top-right-radius: 0rem;
 }
-.card{
-
+.card {
   border-radius: 0rem;
 }

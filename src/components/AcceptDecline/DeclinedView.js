@@ -8,25 +8,25 @@ const DeclineView = props => {
           <h2 className="text-white p-3">Hvorfor vil du avvise ordren?</h2>
           <div className="container">
             <button
-              className="btn varner-btn-dark p-3 bg-light rounded-0"
+              className="btn varner-btn-dark"
               onClick={() => props.handleDeclinedReason("notAvailable")}
             >
               Varen er ikke tillgjengelig
             </button>
             <button
-              className="btn varner-btn-dark rounded-0"
+              className="btn varner-btn-dark "
               onClick={() => props.handleDeclinedReason("damage")}
             >
               Varen er skadet
             </button>
             <button
-              className="btn varner-btn-dark rounded-0"
+              className="btn varner-btn-dark "
               onClick={() => props.handleDeclinedReason("noTime")}
             >
               Har ikke tid
             </button>
             <button
-              className="btn varner-btn-dark rounded-0"
+              className="btn varner-btn-dark "
               onClick={() => props.handleDeclinedReason("other")}
             >
               Annet
@@ -43,8 +43,7 @@ const DeclineView = props => {
             <strong className="w-50 display-4">Ordren er avvis!</strong>
             <hr />
             <h5>
-              Fordi: {props.reason}! <br /> Du finner den under "avviste
-              ordre"!
+              Fordi: {props.reason}! <br /> Du finner den under "avviste ordre"!
             </h5>
           </div>
         </div>

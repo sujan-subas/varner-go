@@ -1,15 +1,11 @@
 import React from "react";
-//lag som functional component som tar inn props istendfor å ha egen state,
-//todo: legg til {history, når man går tilbake }
-// handleButtonClick får ikke inn verdien.. (string), har ikke funnet løsning.
-// sende inn storeID , ordernumber og stats via props?
-// React router?
-import { updateVarner } from "../../clientAPI/clientAPI";
+
 import { updateOrderStatus } from "../../clientAPI/clientAPI";
 import AcceptedView from "./AcceptedView";
 import DeclinedView from "./DeclinedView";
 import AcceptDeclineFooter from "./AcceptDeclineFooter";
 import Navbar from "../Navbar/Navbar";
+
 export default class AcceptDecline extends React.Component {
   constructor(props) {
     super(props);
@@ -78,7 +74,6 @@ export default class AcceptDecline extends React.Component {
     const { ordernumber } = this.props.match.params;
     try {
       if (reason === "other") {
-        await updateVarner(reason);
         await updateOrderStatus(ordernumber, this.state.status);
 
         console.log(
@@ -89,24 +84,17 @@ export default class AcceptDecline extends React.Component {
           comfirmed: !this.state.comfirmed,
           reason
         });
+        const updateDBState = await updateOrderStatus(
+          ordernumber,
+          this.state.status,
+          reason
+        );
       }
     } catch (error) {
       console.log(`Was not able to delete order! Error: ${error.message}`);
       alert(`Was not able to delete order!`);
     }
     console.log(reason);
-  }
-  // Function to handle accepted orders
-  confirmHandleOrder() {
-    console.log("accepeeeet");
-  }
-
-  // function to post delete request in data base and send order to sweed and api back to varner
-  comfirmDelete(reason, storeID, orderNumber, status) {
-    console.log(`comfirmDelete Pressed! send to database! Reason: ${reason} `);
-
-    //send to varner api
-    // updateVarner(reason, storeID, orderNumber, status);
   }
 
   render() {
