@@ -3,7 +3,7 @@ import "./App.css";
 
 //import Login from "./components/Login";
 
-import OverView from "./components/OverView";
+import MainView from "./components/MainView";
 
 import OrderViews from "./components/OrderViews";
 import AcceptDecline from "./components/AcceptDecline";
@@ -16,9 +16,9 @@ function App() {
     <HashRouter>
       <div className="App">
         <Switch>
-          <Route path="/" exact component={OverView} />
+          <Route path="/" exact component={MainView} />
           {/* <Route path="/" exact component={Login} /> */}
-          <Route exact path="/orders" component={OverView} />
+          <Route exact path="/orders" component={MainView} />
           <Route exact path="/orders/:ordernumber" component={OrderViews} />
           <Route
             path="/orders/:ordernumber/:status"
