@@ -42,20 +42,20 @@ class OrderViews extends React.Component {
     });
     console.log(this.state.status);
   }
-  handleClick(sku) {
-    if (this.state.pickedSkus.includes(sku)) {
-      let i = this.state.pickedSkus.indexOf(sku);
-      let pickedSkusCopy = [...this.state.pickedSkus];
-      pickedSkusCopy.splice(i, 1);
-      this.setState({
-        pickedSkus: pickedSkusCopy
-      });
-    } else {
-      this.setState({
-        pickedSkus: [...this.state.pickedSkus, sku]
-      });
-    }
-  }
+  // handleClick(sku) {
+  //   if (this.state.pickedSkus.includes(sku)) {
+  //     let i = this.state.pickedSkus.indexOf(sku);
+  //     let pickedSkusCopy = [...this.state.pickedSkus];
+  //     pickedSkusCopy.splice(i, 1);
+  //     this.setState({
+  //       pickedSkus: pickedSkusCopy
+  //     });
+  //   } else {
+  //     this.setState({
+  //       pickedSkus: [...this.state.pickedSkus, sku]
+  //     });
+  //   }
+  // }
 
   render() {
     const { status, order } = this.state;

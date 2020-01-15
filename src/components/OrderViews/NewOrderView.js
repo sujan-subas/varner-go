@@ -60,7 +60,7 @@ const NewOrderView = props => {
                         <div className="row">
                           <div className="col-xs-12 col-6">
                             <div className="container p-4">
-                              <h4>{description}</h4>
+                              <strong>{description}</strong>
                               <br />
                               <p>Str: {props.getSize(description)}</p>
                               <p>Farge: {props.getColor(description)}</p>
