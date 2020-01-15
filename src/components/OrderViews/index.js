@@ -1,11 +1,12 @@
 import React from "react";
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 
 import ProcessingOrderView from "./ProcessingOrderView";
 import NewOrderView from "./NewOrderView";
 import ReadyForPickupView from "./ReadyForPickup";
 
 import { getOrderByOrderNumber } from "../../clientAPI/clientAPI";
+import { getColor, getSize } from "../../utils/extractProductInfo";
 
 class OrderViews extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class OrderViews extends React.Component {
     this.state = {
       status: "",
       order: {}
-    }
+    };
   }
 
   componentDidMount() {
@@ -38,8 +39,8 @@ class OrderViews extends React.Component {
     const { order } = this.state;
     this.setState({
       status: order.order_status
-    })
-    console.log(this.state.status)
+    });
+    console.log(this.state.status);
   }
 
   render() {
@@ -48,24 +49,28 @@ class OrderViews extends React.Component {
     let ActiveView;
 
     switch (status) {
-      case 'new':
+      case "new":
         ActiveView = NewOrderView;
         break;
-      case 'in-process':
+      case "in-process":
         ActiveView = ProcessingOrderView;
         break;
-      case 'packed':
+      case "packed":
         ActiveView = ReadyForPickupView;
         break;
       default:
         ActiveView = NewOrderView;
-    };
+    }
 
     return (
       <div>
-        <ActiveView order={this.state.order} />
+        <ActiveView
+          order={this.state.order}
+          getColor={getColor}
+          getSize={getSize}
+        />
       </div>
-    )
+    );
   }
 }
 
