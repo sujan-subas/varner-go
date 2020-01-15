@@ -4,10 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { getFormattedDeadLine, getFormattedDate } from "../../utils/time";
 import { setExpireValue } from "../../utils/setExpireValue";
 import { getSize, getColor } from "../../utils/extractProductInfo";
-import {
-  getOrderByOrderNumber,
-  updateOrderStatus
-} from "../../clientAPI/clientAPI";
+import { updateOrderStatus } from "../../clientAPI/clientAPI";
 
 class ProcessingOrderView extends React.Component {
   constructor(props) {
@@ -61,7 +58,8 @@ class ProcessingOrderView extends React.Component {
     const { changeView, status, history } = this.props;
 
     if (statusValue === "new") {
-    //updateOrderStatus(ordernumber, statusValue)
+      //check PATCH request
+    updateOrderStatus(ordernumber, statusValue, "pending")
     changeView(status);
     }
 
