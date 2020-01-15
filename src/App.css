@@ -28,7 +28,7 @@
 .varner-btn-dark {
   color: var(--varner-text-white);
   background: var(--varner-darkest);
-  width: 18rem;
+  width: 80%;
   margin: 1rem;
   padding: 1rem;
   box-shadow: 1px 1px 0.5px var(--varner-dark);

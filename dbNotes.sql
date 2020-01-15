@@ -11,7 +11,7 @@ create type "type-order_status" as enum (
 'delivered'
 );
 create type "decline-reason" as enum ( 
-'Varen er ikke tillgjengelig',
+'Varen er ikke tilgjengelig',
 'Varen er skadet',
 'Har ikke tid',
 'Annet'
