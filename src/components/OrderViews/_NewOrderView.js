@@ -98,7 +98,7 @@ class NewOrderView extends React.Component {
               className="card text-white order-cards mb-4 p-4"
               key={productId}
             >
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-6">
                   <img
                     src={
@@ -128,7 +128,7 @@ class NewOrderView extends React.Component {
                       : "Skal plukke"}
                   </button>
                 </div>
-              </div>
+              </div> */}
             </div>
           );
         }
@@ -157,9 +157,9 @@ class NewOrderView extends React.Component {
           </div>
           <div className="container">
             {/* <h1 className="text-center">Produktinformasjon</h1> */}
-            <div className="row">
+            {/* <div className="row">
               <div className="container">{orderElements}</div>
-            </div>
+            </div> */}
             <div className="container m-4 text-center">
               <div className="row">
                 <div className="col-6">

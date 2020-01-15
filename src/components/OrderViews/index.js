@@ -56,6 +56,11 @@ class OrderViews extends React.Component {
   //     });
   //   }
   // }
+  async handleChange(status, event) {
+    const { ordernumber } = this.props.match.params;
+    const { history } = this.props;
+    history.push(`/orders/${ordernumber}/${status}`);
+  }
 
   render() {
     const { status, order } = this.state;
@@ -88,6 +93,7 @@ class OrderViews extends React.Component {
           getSize={getSize}
           getFormattedDate={getFormattedDate}
           handleClick={this.handleClick}
+          handleChange={this.handleChange}
         />
       </div>
     );
