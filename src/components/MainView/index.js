@@ -177,7 +177,7 @@ class MainView extends React.Component {
           </Navbar.Collapse>
         </Navbar>
         <Nav
-          className="justify-content-center color-nav"
+          className="color-nav"
           variant="tabs"
           defaultActiveKey="new"
           activeKey={tabKey}

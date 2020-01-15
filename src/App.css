@@ -60,7 +60,7 @@
 
 .nav-tabs {
   border-bottom: var(--varner-dark);
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 
 a.active {
@@ -137,7 +137,7 @@ a {
 }
 
 /* Slik at nav blir på en og samme rad */
-/* .nav-link {
+.nav-link {
   display: block;
   padding: 0.5rem;
   line-height: 2;
@@ -147,8 +147,6 @@ a {
   border-top-left-radius: 0rem;
   border-top-right-radius: 0rem;
 }
-.card {
+/* .card {
   border-radius: 0rem;
 } */
-
-

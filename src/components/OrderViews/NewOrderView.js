@@ -68,7 +68,7 @@ const NewOrderView = props => {
                               <p>SKU: {productId}</p>
                             </div>
                           </div>
-                          <div className="col-xs-12 col-6">
+                          <div className="col-xs-12 col-6 h-50">
                             <img
                               src={
                                 "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
