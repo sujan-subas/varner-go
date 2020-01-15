@@ -8,6 +8,8 @@ import ReadyForPickupView from "./ReadyForPickup";
 import { getOrderByOrderNumber } from "../../clientAPI/clientAPI";
 import { getColor, getSize } from "../../utils/extractProductInfo";
 import { getFormattedDate } from "../../utils/time";
+
+
 class OrderViews extends React.Component {
   constructor(props) {
     super(props);
@@ -42,20 +44,6 @@ class OrderViews extends React.Component {
     });
     console.log(this.state.status);
   }
-  // handleClick(sku) {
-  //   if (this.state.pickedSkus.includes(sku)) {
-  //     let i = this.state.pickedSkus.indexOf(sku);
-  //     let pickedSkusCopy = [...this.state.pickedSkus];
-  //     pickedSkusCopy.splice(i, 1);
-  //     this.setState({
-  //       pickedSkus: pickedSkusCopy
-  //     });
-  //   } else {
-  //     this.setState({
-  //       pickedSkus: [...this.state.pickedSkus, sku]
-  //     });
-  //   }
-  // }
 
   handleChangeView(parameter) {
     this.setState({ status: parameter })
