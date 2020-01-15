@@ -1,16 +1,22 @@
 import React from "react";
 //lag som functional component som tar inn props istendfor å ha egen state,
 //todo: legg til {history, når man går tilbake }
+// handleButtonClick får ikke inn verdien.. (string), har ikke funnet løsning. 
+// sende inn storeID , ordernumber og stats via props? 
 // React router?
+import {updateVarner} from '../../clientAPI/clientAPI'
 
 export default class AcceptDecline extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      comfirmed: false,
+      comfirmed: true,
       declined: false,
-      reason: ""
+      reason: "",
+      storeID: "a45",
+      orderNumber: "33",
+      status: "new"
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleDeclinedReason = this.handleDeclinedReason.bind(this);
@@ -38,6 +44,7 @@ export default class AcceptDecline extends React.Component {
   }
   //functions button container
   handleButtonClick(string) {
+    console.log('string,' ,string)
     if (string === "ok") {
       this.setState({
         comfirmed: !this.state.comfirmed
@@ -55,7 +62,9 @@ export default class AcceptDecline extends React.Component {
       }
     } else {
       // sender til pos
-      this.comfirmDelete(this.state.reason);
+      //destructure state
+      const {reason, storeID, orderNumber, status} = this.state
+      this.comfirmDelete(reason, storeID, orderNumber, status);
       alert("tilbake til oversikt");
     }
   }
@@ -77,11 +86,20 @@ export default class AcceptDecline extends React.Component {
       console.log(`Was not able to delete order! Error: ${error.message}`);
       alert(`Was not able to delete order!`);
     }
+    console.log(reason)
+  }
+  // Function to handle accepted orders
+  confirmHandleOrder() {
+    console.log('accepeeeet')
   }
 
   // function to post delete request in data base and send order to sweed and api back to varner
-  comfirmDelete(reason) {
-    console.log(`comfirmDelete Pressed! send to database! Reason: ${reason}`);
+  comfirmDelete(reason, storeID, orderNumber, status) {
+    console.log(`comfirmDelete Pressed! send to database! Reason: ${reason} `);
+  
+    //send to varner api
+    updateVarner(reason, storeID, orderNumber, status)
+
   }
 
   render() {
@@ -89,7 +107,7 @@ export default class AcceptDecline extends React.Component {
 
     return (
       // {/* background */}
-      <div className="bg-dark " style={{ width: "100%", height: "100vh" }}>
+      <div style={{ width: "100%", height: "100vh", color: "white" }}>
         {/* Header */}
         <header className="p-3">
           <button
@@ -97,7 +115,7 @@ export default class AcceptDecline extends React.Component {
             onClick={() => this.handleButtonClick("back")}
           >
             <i
-              className="fa fa-arrow-left text-success ml-4"
+              className="fa fa-arrow-left text-success ml-4 "
               style={{ transform: "scale(1.5, 1)" }}
             />
           </button>
@@ -126,7 +144,7 @@ export default class AcceptDecline extends React.Component {
                       </button>
                       <button
                         className="btn w-75 m-3 p-3 bg-light rounded-0"
-                        onClick={() => this.handleDeclinedReason("damadge")}
+                        onClick={() => this.handleDeclinedReason("damage")}
                       >
                         Varen er skadet
                       </button>
@@ -222,7 +240,9 @@ export default class AcceptDecline extends React.Component {
                       style={{
                         backgroundColor: "#000"
                       }}
-                      onClick={() => this.handleButtonClick("ok")}
+                      onClick={() => this.handleButtonClick.bind("ok")}
+                      // alternative onclick for accepted orders?
+                      
                     >
                       OK
                     </button>
@@ -258,22 +278,22 @@ export default class AcceptDecline extends React.Component {
                 ) : (
                   <>
                     <button
-                      className="btn btn-lg text-white p-3 mx-2 rounded-0"
+                      className="btn btn-lg text-white p-3 mx-2 rounded-0 bg-danger"
                       style={{
                         backgroundColor: "#000"
                       }}
                       onClick={() => this.handleButtonClick("back")}
                     >
-                      Feil grunn?!
+                      Avbryt
                     </button>
                     <button
-                      className="btn btn-lg text-white p-3 mx-2 rounded-0"
+                      className="btn btn-lg text-white p-3 mx-2 rounded-0 bg-success"
                       style={{
                         backgroundColor: "#000"
                       }}
                       onClick={() => this.handleButtonClick()}
                     >
-                      Til oversikt!
+                      Send
                     </button>
                   </>
                 )}
