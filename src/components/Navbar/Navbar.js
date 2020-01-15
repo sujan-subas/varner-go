@@ -1,11 +1,12 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom';
 
 const Navbar = props => {
 
 return (
     <button
     className="btn"
-    onClick={console.log('dddd')}
+    onClick={() => props.history.goBack()}
   >
     <i
       className="fa fa-arrow-left text-success ml-4 "
@@ -15,4 +16,4 @@ return (
 )
 }
 
-export default Navbar
+export default withRouter(Navbar)

@@ -60,6 +60,7 @@ export default class AcceptDecline extends React.Component {
           comfirmed: !this.state.comfirmed
         });
       }
+      this.props.history.goBack()
     } else {
       alert("tilbake til oversikt");
     }

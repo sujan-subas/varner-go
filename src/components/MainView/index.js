@@ -14,7 +14,7 @@ import { getAllOrdersDB } from "../../clientAPI/clientAPI";
 import { getFormattedDeadline } from "../../utils/time";
 import NoOrdersInDB from "./NoOrdersInDB";
 
-class OverView extends React.Component {
+class MainView extends React.Component {
   constructor(props) {
     super(props);
 
@@ -214,4 +214,4 @@ class OverView extends React.Component {
   }
 }
 
-export default OverView;
+export default MainView;
