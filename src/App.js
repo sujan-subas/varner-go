@@ -5,7 +5,7 @@ import "./App.css";
 
 import OverView from "./components/OverView";
 
-import ProcessingOrderView from "./components/ProcessingOrderView/ProcessingOrderView";
+import OrderViews from "./components/OrderViews";
 import AcceptDecline from "./components/AcceptDecline";
 // import Testing from "./components/ProductView";
 import { HashRouter, Route, Switch } from "react-router-dom";
@@ -19,7 +19,7 @@ function App() {
           <Route path="/" exact component={OverView} />
           {/* <Route path="/" exact component={Login} /> */}
           <Route exact path="/orders" component={OverView} />
-          <Route exact path="/orders/:ordernumber" component={ProcessingOrderView} />
+          <Route exact path="/orders/:ordernumber" component={OrderViews} />
           <Route
             path="/orders/:ordernumber/:status"
             component={AcceptDecline}
