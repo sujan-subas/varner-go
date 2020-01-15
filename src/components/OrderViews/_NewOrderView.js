@@ -18,20 +18,20 @@ class NewOrderView extends React.Component {
     this.timer = null;
   }
 
-  handleClick(sku) {
-    if (this.state.pickedSkus.includes(sku)) {
-      let i = this.state.pickedSkus.indexOf(sku);
-      let pickedSkusCopy = [...this.state.pickedSkus];
-      pickedSkusCopy.splice(i, 1);
-      this.setState({
-        pickedSkus: pickedSkusCopy
-      });
-    } else {
-      this.setState({
-        pickedSkus: [...this.state.pickedSkus, sku]
-      });
-    }
-  }
+  // handleClick(sku) {
+  //   if (this.state.pickedSkus.includes(sku)) {
+  //     let i = this.state.pickedSkus.indexOf(sku);
+  //     let pickedSkusCopy = [...this.state.pickedSkus];
+  //     pickedSkusCopy.splice(i, 1);
+  //     this.setState({
+  //       pickedSkus: pickedSkusCopy
+  //     });
+  //   } else {
+  //     this.setState({
+  //       pickedSkus: [...this.state.pickedSkus, sku]
+  //     });
+  //   }
+  // }
 
   // async handleChange(status, event) {
   //   const { ordernumber } = this.props.match.params;
@@ -66,29 +66,29 @@ class NewOrderView extends React.Component {
     const { order } = this.props;
     console.log(order);
     let orderElements;
-    const header = (
-      <header className="p-3">
-        <div className="row">
-          <div className="col-2">
-            <button
-              className="btn"
-              onClick={() => this.handleButtonClick("back")}
-            >
-              <i
-                className="fa fa-arrow-left text-success ml-4"
-                style={{ transform: "scale(1.5, 1)" }}
-              />
-            </button>
-          </div>
-          <div className="col-9">
-            <h4>Utløper om: {order.expires_at}</h4>
-            {/* <h3> Antall varer: {order.order_list.length}  </h3> */}
-            <h4> Kunde: {order.customer_name} </h4>
-            <h4>Varer plukket: {pickedSkus.length}</h4>
-          </div>
-        </div>
-      </header>
-    );
+    // const header = (
+    //   <header className="p-3">
+    //     <div className="row">
+    //       <div className="col-2">
+    //         <button
+    //           className="btn"
+    //           onClick={() => this.handleButtonClick("back")}
+    //         >
+    //           <i
+    //             className="fa fa-arrow-left text-success ml-4"
+    //             style={{ transform: "scale(1.5, 1)" }}
+    //           />
+    //         </button>
+    //       </div>
+    //       <div className="col-9">
+    //         <h4>Utløper om: {order.expires_at}</h4>
+    //         {/* <h3> Antall varer: {order.order_list.length}  </h3> */}
+    //         <h4> Kunde: {order.customer_name} </h4>
+    //         <h4>Varer plukket: {pickedSkus.length}</h4>
+    //       </div>
+    //     </div>
+    //   </header>
+    // );
 
     if (order && order.order_list) {
       orderElements = order.order_list.map(
@@ -152,25 +152,11 @@ class NewOrderView extends React.Component {
               )}
             </header> */}
             <div className="container">
-              <div className="row">
-                <div className="container">
-                  <div className="col-sm-12 ">
-                    <h3>Sammendrag av bestilling</h3>
-                    <p>Bestillingsdato: {getFormattedDate(order.order_date)}</p>
-                    <p>ReservasjonsID: {order.reference_order_no}</p>
-                    <p>Kunde: {order.customer_name}</p>
-                    <p>Telefon: {order.customer_phonenumber}</p>
-                  </div>
-                  <div className="col-sm-12 d-none d-lg-block">
-                    <p>Email: {order.customer_email}</p>
-                    <p>Leveringsadresse: {order.customer_addressline1}</p>
-                  </div>
-                </div>
-              </div>
+             */}
             </div>
           </div>
           <div className="container">
-            <h1 className="text-center">Produktinformasjon</h1>
+            {/* <h1 className="text-center">Produktinformasjon</h1> */}
             <div className="row">
               <div className="container">{orderElements}</div>
             </div>
