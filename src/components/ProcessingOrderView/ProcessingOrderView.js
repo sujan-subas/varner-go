@@ -75,16 +75,19 @@ class ProcessingOrderView extends React.Component {
     const { order } = this.state;
     console.log(order.created_in_app_at);
     const deadLine = await setExpireValue("Tue, 14 Jan 2020 11:17:18 GMT");
-    console.log(deadLine)
+    console.log(deadLine);
     if (order.order_status === "new") {
       time = getFormattedDeadLine(new Date(deadLine), new Date());
       console.log(time);
     } else if (order.order_status === "in-process") {
-      time = getFormattedDeadLine(new Date(), new Date(order.created_in_app_at));
+      time = getFormattedDeadLine(
+        new Date(),
+        new Date(order.created_in_app_at)
+      );
       console.log(time);
     }
     this.setState({
-    	time: time
+      time: time
     });
     //this.timer = setTimeout(() => this.getTime(), 1000);
   }
@@ -226,7 +229,7 @@ class ProcessingOrderView extends React.Component {
                       onClick={this.handleChange.bind(this, "in-process")}
                       className="btn varner-btn-green w-75 mx-2 rounded-0"
                     >
-                      Ja, dette fikser vi
+                      Godta Ordre
                     </button>
                   )}
                 </div>
