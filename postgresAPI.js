@@ -121,7 +121,7 @@ async function updateOrderStatus(ordernumber, order_status, reason) {
     update 
       orders
     set
-	  order_status = $2
+	  order_status = $2,
 	  decline_reason = $3
     where
       order_number = $1
