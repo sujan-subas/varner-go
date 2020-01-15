@@ -63,7 +63,7 @@ export default class AcceptDecline extends React.Component {
           comfirmed: !this.state.comfirmed
         });
       }
-      this.props.history.goBack()
+      this.props.history.goBack();
     } else {
       alert("tilbake til oversikt");
     }
@@ -96,7 +96,7 @@ export default class AcceptDecline extends React.Component {
           <Navbar />
         </header>
         {/* GREY CONTAINER */}
-        <main className="varner-black-theme container-fluid container">
+        <main className="varner-dark-theme container-fluid container">
           {declined ? (
             <DeclinedView
               handleDeclinedReason={this.handleDeclinedReason}

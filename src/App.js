@@ -4,6 +4,7 @@ import "./App.css";
 //import Login from "./components/Login";
 
 import MainView from "./components/MainView";
+import neworder from "./components/OrderViews/NewOrderView";
 
 import OrderViews from "./components/OrderViews";
 import AcceptDecline from "./components/AcceptDecline";
@@ -18,7 +19,7 @@ function App() {
         <Switch>
           <Route path="/" exact component={MainView} />
           {/* <Route path="/" exact component={Login} /> */}
-          <Route exact path="/orders" component={MainView} />
+          <Route exact path="/orders" component={neworder} />
           <Route exact path="/orders/:ordernumber" component={OrderViews} />
           <Route
             path="/orders/:ordernumber/:status"

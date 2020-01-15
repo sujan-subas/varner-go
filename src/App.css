@@ -13,7 +13,7 @@
   /* green-color */
   --varner-green: #44a241;
 }
-.varner-black-theme {
+.varne-dark-theme {
   color: var(--varner-text-white);
   background-color: var(--varner-text-dark);
 }
@@ -137,7 +137,7 @@ a {
 }
 
 /* Slik at nav blir på en og samme rad */
-.nav-link {
+/* .nav-link {
   display: block;
   padding: 0.5rem;
   line-height: 2;
@@ -149,4 +149,6 @@ a {
 }
 .card {
   border-radius: 0rem;
-}
+} */
+
+
