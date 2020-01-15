@@ -1,3 +1,4 @@
+
 import React from "react";
 import { getFormattedDeadLine, getFormattedDate } from "../../utils/time";
 import { setExpireValue } from "../../utils/setExpireValue";
@@ -6,6 +7,8 @@ import {
   getOrderByOrderNumber,
   updateOrderStatus
 } from "../../clientAPI/clientAPI";
+// const BrowserHistory = require('react-router/lib/BrowserHistory').default;
+
 
 class ProcessingOrderView extends React.Component {
   constructor(props) {
@@ -62,6 +65,11 @@ class ProcessingOrderView extends React.Component {
     history.push(`/orders/${ordernumber}/${status}`);
   }
 
+  handleBackButtonClick = () => {
+    //Handle back button
+    this.props.history.goBack()
+  }
+
   async getTime() {
     let time;
     const { order } = this.state;
@@ -82,6 +90,7 @@ class ProcessingOrderView extends React.Component {
   }
 
   render() {
+    console.log(this.props.history.goBack)
     const { order, pickedSkus, time } = this.state;
     // const antallVarer = order.order_list.length;
     let orderElements;
@@ -91,7 +100,7 @@ class ProcessingOrderView extends React.Component {
           <div className="col-2">
             <button
               className="btn"
-              onClick={() => this.handleButtonClick("back")}
+              onClick={() => this.handleBackButtonClick()}
             >
               <i
                 className="fa fa-arrow-left text-success ml-4"
