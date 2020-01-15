@@ -1,3 +1,4 @@
+
 import React from "react";
 import { getFormattedDeadLine, getFormattedDate } from "../../utils/time";
 import { setExpireValue } from "../../utils/setExpireValue";
@@ -6,6 +7,8 @@ import {
   getOrderByOrderNumber,
   updateOrderStatus
 } from "../../clientAPI/clientAPI";
+// const BrowserHistory = require('react-router/lib/BrowserHistory').default;
+
 
 class ProcessingOrderView extends React.Component {
   constructor(props) {
@@ -62,26 +65,35 @@ class ProcessingOrderView extends React.Component {
     history.push(`/orders/${ordernumber}/${status}`);
   }
 
+  handleBackButtonClick = () => {
+    //Handle back button
+    this.props.history.goBack()
+  }
+
   async getTime() {
     let time;
     const { order } = this.state;
     console.log(order.created_in_app_at);
     const deadLine = await setExpireValue("Tue, 14 Jan 2020 11:17:18 GMT");
-    console.log(deadLine)
+    console.log(deadLine);
     if (order.order_status === "new") {
       time = getFormattedDeadLine(new Date(deadLine), new Date());
       console.log(time);
     } else if (order.order_status === "in-process") {
-      time = getFormattedDeadLine(new Date(), new Date(order.created_in_app_at));
+      time = getFormattedDeadLine(
+        new Date(),
+        new Date(order.created_in_app_at)
+      );
       console.log(time);
     }
     this.setState({
-    	time: time
+      time: time
     });
     //this.timer = setTimeout(() => this.getTime(), 1000);
   }
 
   render() {
+    console.log(this.props.history.goBack)
     const { order, pickedSkus, time } = this.state;
     // const antallVarer = order.order_list.length;
     let orderElements;
@@ -91,7 +103,7 @@ class ProcessingOrderView extends React.Component {
           <div className="col-2">
             <button
               className="btn"
-              onClick={() => this.handleButtonClick("back")}
+              onClick={() => this.handleBackButtonClick()}
             >
               <i
                 className="fa fa-arrow-left text-success ml-4"
@@ -217,7 +229,7 @@ class ProcessingOrderView extends React.Component {
                       onClick={this.handleChange.bind(this, "in-process")}
                       className="btn varner-btn-green w-75 mx-2 rounded-0"
                     >
-                      Ja, dette fikser vi
+                      Godta Ordre
                     </button>
                   )}
                 </div>
