@@ -14,11 +14,7 @@ class OrderViews extends React.Component {
 
     this.state = {
       status: "",
-<<<<<<< HEAD
       order: null
-=======
-      order: {}
->>>>>>> c776769447c90dab057f5c62f930a968c8397e71
     };
   }
 

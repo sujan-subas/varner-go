@@ -1,14 +1,15 @@
 import React from "react";
 
-import {updateOrderStatus} from "../../clientAPI/clientAPI"
+import { updateOrderStatus } from "../../clientAPI/clientAPI";
+import BackButton from "../Navbar/Navbar";
 // import Navbar1 from "../Navbar/Navbar";
 import { Nav, Navbar, Card } from "react-bootstrap";
 
 class ReadyForPickupView extends React.Component {
   handleSendOrder = status => {
     console.log("HEI", status);
-    const orderNumber = this.props.order.order_number
-    updateOrderStatus(orderNumber, status)
+    const orderNumber = this.props.order.order_number;
+    updateOrderStatus(orderNumber, status);
   };
 
   render() {
@@ -38,7 +39,7 @@ class ReadyForPickupView extends React.Component {
     return (
       <div>
         <Navbar bg="light" expand="lg">
-          <Navbar.Brand>Tilbake</Navbar.Brand>
+          <BackButton />
           <Nav.Link className="justify-content-center">
             Henting ({this.props.order.customer_name}){" "}
           </Nav.Link>
