@@ -11,10 +11,10 @@ export default class AcceptDecline extends React.Component {
     super(props);
 
     this.state = {
-      comfirmed: false,
-      declined: true,
+      comfirmed: true,
+      declined: false,
       reason: "",
-      storeID: "a45",
+      storeID: "a1",
       orderNumber: "",
       status: "new"
     };
@@ -49,6 +49,9 @@ export default class AcceptDecline extends React.Component {
       this.setState({
         comfirmed: !this.state.comfirmed
       });
+      const { ordernumber } = this.props.match.params;
+      updateOrderStatus(ordernumber, 'packed', 'Orderen er godkjent')
+
     } else if (string === "declineOrder") {
       this.setState({
         comfirmed: !this.state.comfirmed
@@ -69,6 +72,7 @@ export default class AcceptDecline extends React.Component {
   // functions button for decline reason
   async handleDeclinedReason(reason) {
     const { ordernumber } = this.props.match.params;
+    // console.log('ordernumber', ordernumber)
     try {
       await updateOrderStatus(ordernumber, this.state.status, reason);
       this.setState({
