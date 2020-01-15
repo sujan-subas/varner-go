@@ -56,10 +56,21 @@ class ProcessingOrderView extends React.Component {
     }
   }
 
-  async handleChange(status, event) {
+  handleChange(statusValue, event) {
     const { ordernumber } = this.props.match.params;
-    const { history } = this.props;
-    history.push(`/orders/${ordernumber}/${status}`);
+    const { changeView, status, history } = this.props;
+
+    if (statusValue === "new") {
+    //updateOrderStatus(ordernumber, statusValue)
+    changeView(status);
+    }
+
+    // if(statusValue === "packed") {
+    //   changeView(status);
+    // }
+
+    
+    //history.push(`/orders/${ordernumber}/${status}`);
   }
 
   async getTime() {
@@ -86,7 +97,7 @@ class ProcessingOrderView extends React.Component {
           <div className="col-2">
             <button
               className="btn"
-              onClick={() => this.handleButtonClick("back")}
+              onClick={this.handleChange.bind(this, "new")}
             >
               <i
                 className="fa fa-arrow-left text-success ml-4"
@@ -161,7 +172,7 @@ class ProcessingOrderView extends React.Component {
               <div className="row">
                 <div className="col-6">
                   <button
-                    onClick={this.handleChange.bind(this, "declined")}
+                    onClick={this.handleChange.bind(this, "new")}
                     className="btn varner-btn-green w-75 mx-2 rounded-0"
                   >
                     Angre

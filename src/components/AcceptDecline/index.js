@@ -24,7 +24,7 @@ export default class AcceptDecline extends React.Component {
 
   componentDidMount() {
     const { ordernumber } = this.props.match.params;
-    console.log(`AcceptDeclineView did mouth: ${ordernumber}`);
+    console.log(`AcceptDeclineView did mount: ${ordernumber}`);
     this.updateState();
   }
 

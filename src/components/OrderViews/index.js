@@ -43,6 +43,10 @@ class OrderViews extends React.Component {
     console.log(this.state.status);
   }
 
+  handleChangeView(parameter) {
+    this.setState({ status: parameter })
+  }
+
   render() {
     const { status } = this.state;
 
@@ -68,6 +72,8 @@ class OrderViews extends React.Component {
           order={this.state.order}
           getColor={getColor}
           getSize={getSize}
+          status={this.status}
+          changeView={this.handleChangeView.bind(this)}
         />
       </div>
     );
