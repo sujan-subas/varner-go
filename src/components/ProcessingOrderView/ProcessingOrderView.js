@@ -7,7 +7,7 @@ import {
   updateOrderStatus
 } from "../../clientAPI/clientAPI";
 
-class ProductView extends React.Component {
+class ProcessingOrderView extends React.Component {
   constructor(props) {
     super(props);
     console.log("props", props);
@@ -234,4 +234,4 @@ class ProductView extends React.Component {
   }
 }
 
-export default ProductView;
+export default ProcessingOrderView;

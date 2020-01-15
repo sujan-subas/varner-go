@@ -47,10 +47,11 @@ export function setExpireValue(timestamp) {
     let newExpire = nextWorkingDay.setHours(10);
     let expires = new Date(newExpire);
     console.log(`Expires at: ${expires}`);
-    return expires;
+    return expires.toJSON();
   }
+
   if (hours >= 17 && hours < 24) {
-    limitedProccesingTime();
+    return limitedProccesingTime();
   }
 
   // expire value left when order is placed between 00:00 and 10:00
@@ -58,21 +59,25 @@ export function setExpireValue(timestamp) {
     let newExpire = new Date().setHours(parseInt("12,00,00"));
     let expires = new Date(newExpire);
     console.log(`Expires at: ${expires}`);
-    return expires;
+    return expires.toJSON();
   }
+  
   if (hours < 10 && hours < openingTimeHour) {
-    zeroToTen();
+    return zeroToTen();
   }
 
   // expire value when order is made between 10:00 and 17:00
   function fullProccesingTime() {
     let expires = new Date(time).addHoursToTime(2);
     console.log(`Expires at: ${expires}`);
-    return expires;
+    return expires.toJSON();
   }
+  
   if (hours > openingTimeHour && hours < 17) {
-    fullProccesingTime();
+    return fullProccesingTime();
   }
+
+  return 'yo'
 }
 // console.log(compareTime(created_in_app_at))
 // setExpireValue(created_in_app_at);

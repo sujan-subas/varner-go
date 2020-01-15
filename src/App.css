@@ -134,3 +134,19 @@ a {
   font-size: 1rem;
   text-align: right;
 }
+
+/* Slik at nav blir på en og samme rad */
+.nav-link {
+  display: block;
+  padding: .5rem;
+  line-height: 2;
+}
+
+.nav-tabs .nav-link {
+  border-top-left-radius: 0rem;
+  border-top-right-radius: 0rem;
+}
+.card{
+
+  border-radius: 0rem;
+}

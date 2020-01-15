@@ -1,5 +1,14 @@
 import React from "react";
-import { Nav, Navbar, Form, Button, FormControl, Badge } from "react-bootstrap";
+import {
+  Nav,
+  Navbar,
+  Form,
+  Button,
+  FormControl,
+  Badge,
+  Tab,
+  Tabs
+} from "react-bootstrap";
 import { format } from "date-fns";
 import { getAllOrdersDB } from "../../clientAPI/clientAPI";
 import { getFormattedDeadline } from "../../utils/time";
@@ -9,6 +18,7 @@ class OverView extends React.Component {
     super(props);
 
     this.state = {
+      // order: orderLine,
       tabKey: "new",
       error: false,
       allOrders: [],
@@ -52,11 +62,10 @@ class OverView extends React.Component {
 
   render() {
     let filteredOrders = this.state.allOrders;
-
     if (!this.state.allOrders.length)
       return (
-        <div className="container texr-white">
-          Ingenting å hente! Sjekk om server er oppe å går!
+        <div className="container text-white">
+          Ingenting å hente! Sjekk om server er oppe å går ;
         </div>
       );
 
@@ -71,14 +80,15 @@ class OverView extends React.Component {
       }
       return newName;
     };
-
     //filtrer på navenet til tabben
+    console.log("heeeeeeeeeei", filteredOrders);
     const ordersFromDatabase = filteredOrders
+      .filter(order => order.order_status === tabKey)
       .filter(
         order =>
-          order.order_status === tabKey &&
           order.reference_order_no.toLowerCase().indexOf(this.state.search) !==
-            -1
+            -1 ||
+          order.order_number.toLowerCase().indexOf(this.state.search) !== -1
       )
       .map((order, i) => {
         //  fix formate data
@@ -88,7 +98,7 @@ class OverView extends React.Component {
         // );
         return (
           <div
-            className="text-white card order-cards m-4"
+            className="text-white card order-cards m-4 "
             key={i}
             onClick={this.handleCardClick.bind(this, order.order_number)}
           >
@@ -135,7 +145,7 @@ class OverView extends React.Component {
     return (
       <React.Fragment>
         <Navbar bg="light" expand="lg">
-          <Navbar.Brand>Varner Go</Navbar.Brand>
+          {/* <Navbar.Brand>Varner Go</Navbar.Brand> */}
           <Form inline>
             <FormControl
               type="text"
