@@ -63,7 +63,7 @@ class OrderViews extends React.Component {
 
     return (
       <div>
-        <ActiveView />
+        <ActiveView order={this.state.order} />
       </div>
     )
   }

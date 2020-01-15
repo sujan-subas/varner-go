@@ -81,7 +81,6 @@ class MainView extends React.Component {
       return newName;
     };
     //filtrer på navenet til tabben
-    console.log("heeeeeeeeeei", filteredOrders);
     const ordersFromDatabase = filteredOrders
       .filter(order => order.order_status === tabKey)
       .filter(
