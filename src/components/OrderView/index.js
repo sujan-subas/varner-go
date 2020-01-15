@@ -83,11 +83,12 @@ class Overview extends React.Component {
     //filtrer på navenet til tabben
     console.log("heeeeeeeeeei", filteredOrders);
     const ordersFromDatabase = filteredOrders
+      .filter(order => order.order_status === tabKey)
       .filter(
         order =>
-          order.order_status === tabKey &&
           order.reference_order_no.toLowerCase().indexOf(this.state.search) !==
-            -1
+            -1 ||
+          order.order_number.toLowerCase().indexOf(this.state.search) !== -1
       )
       .map((order, i) => {
         //  fix formate data
@@ -173,7 +174,7 @@ class Overview extends React.Component {
                 {/* Utlevert ({statusCountDelivered.length}){" "} */}
               </Nav.Link>
               <Nav.Link eventKey="declined">
-                Avvist
+                Avvist{" "}
                 <Badge variant="danger">{statusCountDeclined.length}</Badge>
                 {/* Avvist ({statusCountDeclined.length}){" "} */}
               </Nav.Link>

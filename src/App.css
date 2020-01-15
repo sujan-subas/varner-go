@@ -139,3 +139,7 @@ a {
   border-top-left-radius: 0rem;
   border-top-right-radius: 0rem;
 }
+.card{
+
+  border-radius: 0rem;
+}
