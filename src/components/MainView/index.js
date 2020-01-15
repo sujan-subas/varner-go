@@ -13,7 +13,7 @@ import { format } from "date-fns";
 import { getAllOrdersDB } from "../../clientAPI/clientAPI";
 import { getFormattedDeadline } from "../../utils/time";
 
-class OverView extends React.Component {
+class MainView extends React.Component {
   constructor(props) {
     super(props);
 
@@ -218,4 +218,4 @@ class OverView extends React.Component {
   }
 }
 
-export default OverView;
+export default MainView;

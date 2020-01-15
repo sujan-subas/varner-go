@@ -1,5 +1,7 @@
 import React from "react";
-import ProcessingOrderView from "./ProcessingOrderView";
+import { withRouter } from 'react-router-dom';
+
+import ProcessingOrderView from "./ProcessingOrderViewblabla";
 import NewOrderView from "./NewOrderView";
 import ReadyForPickupView from "./ReadyForPickup";
 
@@ -67,4 +69,4 @@ class OrderViews extends React.Component {
   }
 }
 
-export default OrderViews;
+export default withRouter(OrderViews);
