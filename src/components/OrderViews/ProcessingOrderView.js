@@ -24,9 +24,9 @@ class ProcessingOrderView extends React.Component {
     this.timer = null;
   }
 
-  // componentDidMount() {
-  //   this.getOrder();
-  // }
+  componentDidMount() {
+    this.getTime();
+  }
 
   // async getOrder() {
   //   const { ordernumber } = this.props.match.params;
@@ -62,28 +62,23 @@ class ProcessingOrderView extends React.Component {
     history.push(`/orders/${ordernumber}/${status}`);
   }
 
-  //denna skall nog flyttas på
-  // async getTime() {
-  //   let time;
-  //   const { order } = this.state;
-  //   const deadLine = await setExpireValue("Tue, 14 Jan 2020 11:17:18 GMT");
-  //   if (order.order_status === "new") {
-  //     time = getFormattedDeadLine(new Date(deadLine), new Date());
-  //     console.log(time);
-  //   } else if (order.order_status === "in-process") {
-  //     time = getFormattedDeadLine(new Date(), new Date(order.created_in_app_at));
-  //     console.log(time);
-  //   }
-  //   this.setState({
-  //   	time: time
-  //   });
-  //   //this.timer = setTimeout(() => this.getTime(), 1000);
-  // }
+  async getTime() {
+    let time;
+    const { order } = this.props;
+    console.log(order.status_changed_at)
+    time = getFormattedDeadLine(new Date(), new Date(order.status_changed_at));
+    console.log(time);
+    this.setState({
+    	time: time
+    });
+    //this.timer = setTimeout(() => this.getTime(), 1000);
+  }
 
   render() {
     const { pickedSkus, time } = this.state;
     const { order } = this.props;
     let orderElements;
+
 
     const header = (
       <header className="p-3">
@@ -100,7 +95,7 @@ class ProcessingOrderView extends React.Component {
             </button>
           </div>
           <div className="col-9">
-            <h4>Ventet:</h4>
+            <h4>Ventet: {time}</h4>
             <h4>Antall varer: {order.order_list.length} </h4>
             <h4>Varer plukket: {pickedSkus.length} av {order.order_list.length}</h4>
           </div>
