@@ -16,8 +16,18 @@ create type "decline-reason" as enum (
 'Har ikke tid',
 'Annet'
 );
+// ----
+\dt 	-> shows all tables
+\d table_name 	-> shows table
 
+check what types are defined, and their values:
 
+select n.nspname as enum_schema,  
+       t.typname as enum_name,  
+       e.enumlabel as enum_value
+from pg_type t 
+   join pg_enum e on t.oid = e.enumtypid  
+   join pg_catalog.pg_namespace n ON n.oid = t.typnamespace
 
 -- Order Inn -------------------------------------
 create table orders (
