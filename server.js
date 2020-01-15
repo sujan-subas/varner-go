@@ -5,7 +5,8 @@ const port = process.env.PORT;
 const bodyParser = require("body-parser");
 require("body-parser-xml")(bodyParser);
 const cors = require("cors");
-const util = require("util");
+const nodeFetch = require('node-fetch');
+
 app.use(cors());
 // const secret = process.env.SECRET;
 const { createOrder, getAllOrders, getOrder, updateOrderStatus } = require("./postgresAPI");
@@ -24,13 +25,11 @@ app.use(express.static("build"));
 const api = express();
 
 // POST updated status to Varner
-api.patch("/updatevarner/:storeID/:produktID", async (req, res) => {
-	const { storeID, produktID } = req.params;
-	console.log(storeID, produktID);
-	res.send({ storeID, produktID });
-});
-
-
+// api.patch("/updatevarner/:storeID/:produktID", async (req, res) => {
+// 	const { storeID, produktID } = req.params;
+// 	console.log(storeID, produktID);
+// 	res.send({ storeID, produktID });
+// });
 
 
 // Order post from Varner
@@ -75,7 +74,7 @@ const varner_API_Url = "https://e90c8b7c-df85-4c2f-83a1-2782d5f0c73f.mock.pstmn.
 
 async function updateVarner(reason, storeID, orderNumber, status) {
 	// console.log('from VARNERFUNC', reason, storeID, orderNumber, status)
-	const res = await fetch(`${varner_API_Url}/${storeID}/${orderNumber}`, {
+	const res = await nodeFetch(`${varner_API_Url}/${storeID}/${orderNumber}`, {
 		method: "PATCH",
 		headers: {
 			"Content-Type": "application/json"
