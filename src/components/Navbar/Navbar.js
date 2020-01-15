@@ -5,7 +5,7 @@ const Navbar = props => {
 return (
     <button
     className="btn"
-    onClick={props.history.goBack()}
+    onClick={console.log('dddd')}
   >
     <i
       className="fa fa-arrow-left text-success ml-4 "

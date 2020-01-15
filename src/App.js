@@ -16,7 +16,7 @@ function App() {
     <HashRouter>
       <div className="App">
         <Switch>
-          <Route path="/" exact component={AcceptDecline} />
+          <Route path="/" exact component={OverView} />
           {/* <Route path="/" exact component={Login} /> */}
           <Route exact path="/orders" component={OverView} />
           <Route exact path="/orders/:ordernumber" component={OrderViews} />
