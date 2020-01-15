@@ -62,7 +62,7 @@ async function getSKUfromApi(orderJsonFromFunc) {
     // const produktIdURL = orderJsonFromFunc.orderList // J
     const login = 'varnergofetch@protonmail.com';
     const password = 'varnergofetch';
-    const url = `https://bikbok.com/no/api/productfeed/v2/get?style=${produktIdURL}`;  //7134708
+    const url = `https://bikbok.com/no/api/productfeed/v2/get?style=${7134708}`;  //7134708
     // const url = `https://bikbok.com/no/api/productfeed/v2/get?variant=${imageLink}`;
 
     let imgUrl;
