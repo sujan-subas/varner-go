@@ -137,7 +137,7 @@ a {
 }
 
 /* Slik at nav blir på en og samme rad */
-.nav-link {
+/* .nav-link {
   display: block;
   padding: 0.5rem;
   line-height: 2;
@@ -149,4 +149,6 @@ a {
 }
 .card {
   border-radius: 0rem;
-}
+} */
+
+

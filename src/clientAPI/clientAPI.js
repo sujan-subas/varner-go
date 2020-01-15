@@ -18,7 +18,7 @@ export async function getOrderByOrderNumber(ordernumber) {
   }
 }
 
-export async function updateOrderStatus(ordernumber, order_status, reason) {
+export async function (ordernumber, order_status, reason) {
   console.log("dette er fra updateOrderStatus", order_status);
   const res = await fetch(`${API_URL}/orders/${ordernumber}`, {
     method: "PATCH",

@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 
 import ProcessingOrderView from "./ProcessingOrderView";
 import NewOrderView from "./NewOrderView";
@@ -13,8 +13,8 @@ class OrderViews extends React.Component {
 
     this.state = {
       status: "",
-      order: {}
-    }
+      order: null
+    };
   }
 
   componentDidMount() {
@@ -38,34 +38,38 @@ class OrderViews extends React.Component {
     const { order } = this.state;
     this.setState({
       status: order.order_status
-    })
-    console.log(this.state.status)
+    });
+    console.log(this.state.status);
   }
 
   render() {
-    const { status } = this.state;
+    const { status, order } = this.state;
+
+    if (!order) {
+      return null;
+    }
 
     let ActiveView;
 
     switch (status) {
-      case 'new':
+      case "new":
         ActiveView = NewOrderView;
         break;
-      case 'in-process':
+      case "in-process":
         ActiveView = ProcessingOrderView;
         break;
-      case 'packed':
+      case "packed":
         ActiveView = ReadyForPickupView;
         break;
       default:
-        ActiveView = NewOrderView;
-    };
+        ActiveView = ReadyForPickupView;
+    }
 
     return (
       <div>
-        <ActiveView />
+        <ActiveView order={order} />
       </div>
-    )
+    );
   }
 }
 
