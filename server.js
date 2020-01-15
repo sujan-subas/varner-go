@@ -32,13 +32,15 @@ api.patch("/updatevarner/:storeID/:produktID", async (req, res) => {
 
 // Order post from Varner
 api.post("/orders", async (req, res) => {
-	try {
-		const orderXml = req.body;
-		const orderObject = await getJsonFromXml(orderXml);
-		// console.log("****************", orderObject);
-		const newOrder = await createOrder(orderObject);
+  try {
+    const orderXml = req.body;
+    const orderObject = await getJsonFromXml(orderXml);
+    // console.log(util.inspect(orderXml, false, null, true /* enable colors */))
+    // console.log("****************", orderObject);
+    // const newOrder = await createOrder(orderObject);
+    res.send(orderObject);
 
-		res.send(newOrder);
+		res.send(orderObject);
 	} catch (error) {
 		console.log(error.message);
 	}

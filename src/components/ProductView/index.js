@@ -24,18 +24,22 @@ class ProductView extends React.Component {
     this.timer = null;
   }
 
-	async getOrder () {
-		const { ordernumber } = this.props.match.params;
-		try {
-			this.setState({ isLoading: true });
-			const order = await getOrderByOrderNumber(ordernumber);
-			this.setState({ order });
+  componentDidMount() {
+    this.getOrder();
+  }
+
+  async getOrder() {
+    const { ordernumber } = this.props.match.params;
+    try {
+      this.setState({ isLoading: true });
+      const order = await getOrderByOrderNumber(ordernumber);
+      this.setState({ order });
       this.getTime();
-      this.setState({ isLoading: false })
-		} catch (error) {
-			this.setState({ error });
-		}
-	}
+      this.setState({ isLoading: false });
+    } catch (error) {
+      this.setState({ error });
+    }
+  }
 
   handleClick(sku) {
     if (this.state.pickedSkus.includes(sku)) {
@@ -52,29 +56,29 @@ class ProductView extends React.Component {
     }
   }
 
-	async handleChange (status, event) {
+  async handleChange(status, event) {
     const { ordernumber } = this.props.match.params;
-    console.log(ordernumber, event.target.value);
-    updateOrderStatus(ordernumber, event.target.value)
     const { history } = this.props;
-    
-    history.push(`/orders/${ordernumber}/processing`)
-
+    history.push(`/orders/${ordernumber}/${status}`);
   }
 
-  getTime() {
-    // let time;
-    // const { order } = this.state;
-    // const deadLine = setExpireValue(order.process_finished_at)
-    // if (order.order_status === "new") {
-    // 	time = getFormattedDeadLine(new Date(deadLine), new Date());
-    // } else if (order.order_status === "in-process") {
-    // 	time = getFormattedDeadLine(new Date(), new Date(order.created_in_app_at));
-    // }
-    // this.setState({
-    // 	time: time
-    // });
-    // this.timer = setTimeout(() => this.getTime(), 1000);
+  async getTime() {
+    let time;
+    const { order } = this.state;
+    console.log(order.created_in_app_at);
+    const deadLine = await setExpireValue("Tue, 14 Jan 2020 11:17:18 GMT");
+    console.log(deadLine)
+    if (order.order_status === "new") {
+      time = getFormattedDeadLine(new Date(deadLine), new Date());
+      console.log(time);
+    } else if (order.order_status === "in-process") {
+      time = getFormattedDeadLine(new Date(), new Date(order.created_in_app_at));
+      console.log(time);
+    }
+    this.setState({
+    	time: time
+    });
+    //this.timer = setTimeout(() => this.getTime(), 1000);
   }
 
   render() {
@@ -185,11 +189,11 @@ class ProductView extends React.Component {
             </div>
           </div>
           <div className="container">
-            <div>
-              <h1 className="text-center">Produktinformasjon</h1>
-              <div className="row">{orderElements}</div>
+            <h1 className="text-center">Produktinformasjon</h1>
+            <div className="row">
+              <div className="container">{orderElements}</div>
             </div>
-            <div className="container">
+            <div className="container m-4 text-center">
               <div className="row">
                 <div className="col-6">
                   <button
@@ -202,7 +206,8 @@ class ProductView extends React.Component {
                 <div className="col-6">
                   {pickedSkus.length === order.order_list.length ? (
                     <button
-                      onClick={this.handleChange.bind(this, "in-process")}
+                      value={"packed"}
+                      onClick={this.handleChange.bind(this, "packed")}
                       className="btn varner-btn-green w-75 mx-2 rounded-0"
                     >
                       Klar til opphenting
