@@ -13,7 +13,7 @@
   /* green-color */
   --varner-green: #44a241;
 }
-.varner-black-theme {
+.varne-dark-theme {
   color: var(--varner-text-white);
   background-color: var(--varner-text-dark);
 }
