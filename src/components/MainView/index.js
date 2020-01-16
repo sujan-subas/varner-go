@@ -75,7 +75,7 @@ class MainView extends React.Component {
         const formattedDate = getFormattedDate(order.order_date);
         return (
           <div
-            className="text-white card order-cards m-4 "
+            className="text-white card varner-dark-theme order-cards m-4 "
             key={i}
             onClick={this.handleCardClick.bind(this, order.order_number)}
           >
@@ -118,7 +118,7 @@ class MainView extends React.Component {
 
     return (
       <React.Fragment>
-        <Navbar className="bg-light shadow bg-light pb-0 " expand="lg">
+        <Navbar className="top-navbar shadow bg-light pb-0 " expand="lg">
           <div className="row p-2 m-0 w-100">
             <div className="col-3 mt-2">
               <strong>VarnerGo</strong>
@@ -170,7 +170,7 @@ class MainView extends React.Component {
           </Navbar.Collapse>
         </Navbar>
         <Nav
-          className="shadow color-nav "
+          className="shadow bottom-nav "
           variant="tabs"
           defaultActiveKey="new"
           activeKey={tabKey}
