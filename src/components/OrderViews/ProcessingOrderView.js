@@ -1,9 +1,8 @@
 import React from "react";
 
 import { withRouter } from "react-router-dom";
-import { getFormattedDeadLine, getFormattedDate } from "../../utils/getFormattedDeadLine";
+import { getFormattedDeadLine } from "../../utils/getFormattedDeadLine";
 import { getSize, getColor } from "../../utils/extractProductInfo";
-import { updateOrderStatus } from "../../clientAPI/clientAPI";
 
 class ProcessingOrderView extends React.Component {
 	constructor (props) {
@@ -34,20 +33,14 @@ class ProcessingOrderView extends React.Component {
 	}
 
 	handleChange (statusValue, event) {
-		const { ordernumber } = this.props.match.params;
-		const { changeView, status, history } = this.props;
+		const { changeView, status } = this.props;
 
 		if (statusValue === "new") {
 			//check PATCH request
-			updateOrderStatus(ordernumber, statusValue, "pending");
+			//updateOrderStatus(ordernumber, statusValue, "pending");
 			changeView(status);
 		}
 
-		// if(statusValue === "packed") {
-		//   changeView(status);
-		// }
-
-		//history.push(`/orders/${ordernumber}/${status}`);
 	}
 
 	render () {
