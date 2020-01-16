@@ -137,20 +137,15 @@ class ProcessingOrderView extends React.Component {
             <div className="row">
               <div className="container">{orderElements}</div>
             </div>
-            <div className="container m-4 text-center">
-              <div className="row">
-                <div className="col-6">
-
-                </div>
                 <br />
-                <Container className="buttons-container-1">
+                <Container>
                   <Row>
                     <Col>
                       <button
                         disabled={pickedSkus.length !== order.order_list.length}
                         value={"packed"}
                         onClick={this.handleChange.bind(this, "packed")}
-                        className="btn md-auto varner-btn-light mx-2 rounded-0 accepting-button"
+                        className="btn varner-btn-light mx-2 rounded-0 accepting-button"
                       >
                         Klar til opphenting
 									    </button>
@@ -158,19 +153,14 @@ class ProcessingOrderView extends React.Component {
                     <Col>
                       <button
                         onClick={this.handleChange.bind(this, "new")}
-                        className="btn justify-self-center varner-btn-dark mx-2 rounded-0 decline-button"
+                        className="btn varner-btn-dark mx-2 rounded-0 decline-button"
                       >
                         Angre
 									    </button>
                     </Col>
                   </Row>
                 </Container>
-                <div className="col-6">
-
-                </div>
               </div>
-            </div>
-          </div>
         </React.Fragment>
       );
     }

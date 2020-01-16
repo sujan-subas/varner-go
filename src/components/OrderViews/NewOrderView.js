@@ -1,4 +1,5 @@
 import React from "react";
+import { Container, Row, Col } from "react-bootstrap"
 import {
   getFormattedDate,
   getFormattedDeadLine
@@ -98,24 +99,28 @@ const NewOrderView = props => {
             )}
           </div>
         </div>
-        <div className="text-center m-4 ">
-          <div className="row">
+        <Container>
+          <Row>
+            <Col>
             <button
               onClick={props.handleChange.bind(this, "in-process")}
-              className="btn varner-btn-green m-4 col-10 rounded-0"
+              className="btn varner-btn-light m-4 rounded-0 accepting-button"
             >
               Godta Ordre
             </button>
-          </div>
-          <div className="row">
+            </Col>
+          </Row>
+          <Row>
+            <Col>
             <button
               onClick={props.handleChange.bind(this, "declined")}
-              className="btn m-4 btn-danger col-10 rounded-0"
+              className="btn m-4 varner-btn-dark rounded-0 decline-button"
             >
               Avvis Ordre
             </button>
-          </div>
-        </div>
+            </Col>
+          </Row>
+        </Container>
       </main>
     </>
   );
