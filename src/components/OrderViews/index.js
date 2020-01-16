@@ -94,7 +94,6 @@ class OrderViews extends React.Component {
           getColor={getColor}
           getSize={getSize}
           status={this.status}
-          //changeView={this.handleChangeView.bind(this)}
           getFormattedDate={getFormattedDate}
           handleClick={this.handleClick}
           now={this.state.now}
