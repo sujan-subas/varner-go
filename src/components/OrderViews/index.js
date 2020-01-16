@@ -58,7 +58,8 @@ class OrderViews extends React.Component {
   //     });
   //   }
   // }
-  async handleChange(status, event) {
+    handleChange = (status) => {
+      console.log(this.props)
     const { ordernumber } = this.props.match.params;
     const { history } = this.props;
     history.push(`/orders/${ordernumber}/${status}`);
@@ -94,7 +95,7 @@ class OrderViews extends React.Component {
           getColor={getColor}
           getSize={getSize}
           status={this.status}
-          changeView={this.handleChangeView.bind(this)}
+          changeView={this.handleChangeView}
           getFormattedDate={getFormattedDate}
           handleClick={this.handleClick}
           handleChange={this.handleChange}
