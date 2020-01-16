@@ -7,7 +7,8 @@ import ReadyForPickupView from "./ReadyForPickup";
 
 import { getOrderByOrderNumber } from "../../clientAPI/clientAPI";
 import { getColor, getSize } from "../../utils/extractProductInfo";
-import { getFormattedDate } from "../../utils/getFormattedDeadLine";
+import { getFormattedDate, getFormattedDeadLine } from "../../utils/getFormattedDeadLine";
+import { getExpiryFromOrderDate } from "../../utils/getExpiryFromOrderDate";
 
 
 class OrderViews extends React.Component {
@@ -16,13 +17,28 @@ class OrderViews extends React.Component {
 
     this.state = {
       status: "",
-      order: null
+      order: null,
+      now: new Date()
     };
+
+    this.timer = null;
   }
 
   componentDidMount() {
     this.getOrder();
+    this.timer = setInterval(this.updateTime.bind(this), 1000 * 60);
   }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
+  updateTime() {
+    this.setState({
+      now: new Date()
+    });
+  }
+
 
   async getOrder() {
     const { ordernumber } = this.props.match.params;
@@ -42,11 +58,10 @@ class OrderViews extends React.Component {
     this.setState({
       status: order.order_status
     });
-    console.log(this.state.status);
   }
 
-  handleChangeView(parameter) {
-    this.setState({ status: parameter })
+  handleChangeView(statusValue) {
+    this.setState({ status: statusValue })
   }
 
   render() {
@@ -82,6 +97,7 @@ class OrderViews extends React.Component {
           changeView={this.handleChangeView.bind(this)}
           getFormattedDate={getFormattedDate}
           handleClick={this.handleClick}
+          now={this.state.now}
         />
       </div>
     );
