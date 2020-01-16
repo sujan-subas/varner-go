@@ -44,9 +44,24 @@ class OrderViews extends React.Component {
     });
     console.log(this.state.status);
   }
-
-  handleChangeView(parameter) {
-    this.setState({ status: parameter })
+  // handleClick(sku) {
+  //   if (this.state.pickedSkus.includes(sku)) {
+  //     let i = this.state.pickedSkus.indexOf(sku);
+  //     let pickedSkusCopy = [...this.state.pickedSkus];
+  //     pickedSkusCopy.splice(i, 1);
+  //     this.setState({
+  //       pickedSkus: pickedSkusCopy
+  //     });
+  //   } else {
+  //     this.setState({
+  //       pickedSkus: [...this.state.pickedSkus, sku]
+  //     });
+  //   }
+  // }
+  async handleChange(status, event) {
+    const { ordernumber } = this.props.match.params;
+    const { history } = this.props;
+    history.push(`/orders/${ordernumber}/${status}`);
   }
 
   render() {
@@ -82,6 +97,7 @@ class OrderViews extends React.Component {
           changeView={this.handleChangeView.bind(this)}
           getFormattedDate={getFormattedDate}
           handleClick={this.handleClick}
+          handleChange={this.handleChange}
         />
       </div>
     );
