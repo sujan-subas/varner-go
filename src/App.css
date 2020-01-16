@@ -41,6 +41,14 @@
   padding: 1rem;
   box-shadow: 1px 1px 0.5px var(--varner-dark);
 }
+.varner-btn-black {
+  color: var(--varner-text-white);
+  background: var(--varner-black);
+  width: 80%;
+  margin: 1rem;
+  padding: 1rem;
+  box-shadow: 1px 1px 0.5px var(--varner-dark);
+}
 
 /* navbars */
 /* top navbar */

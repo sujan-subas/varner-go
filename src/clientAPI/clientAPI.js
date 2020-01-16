@@ -1,7 +1,7 @@
 // const PORT = process.env.PORT;
 // const API_URL = `http://localhost:${PORT}/api`;
 const API_URL = "http://localhost:3000/api";
-
+ 
 export async function getAllOrdersDB() {
   const response = await fetch(`${API_URL}/orders`);
   const data = await response.json();

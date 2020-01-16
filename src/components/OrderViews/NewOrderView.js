@@ -58,34 +58,29 @@ const NewOrderView = props => {
             {props.order.order_list.map(
               ({ description, orderQuantity, productId }) => {
                 return (
-                  <div className="row">
-                    <div className="col-xs-12 col-sm-6">
-                      <div
-                        className="card order-cards mb-4 p-4"
-                        key={productId}
-                      >
-                        <div className="row">
-                          <div className="col-sm-12">
-                            <h6>{props.getProductDescription(description)}</h6>
-                            <p>
-                              Str: {props.getSize(description)}
-                              <br />
-                              Farge: {props.getColor(description)}
-                              <br />
-                              Antall: {orderQuantity} <br />
-                              SKU: {productId}
-                            </p>
-                          </div>
-                          <div className="col-sm-10 col-md-6">
-                            <div className="product-image">
-                              <img
-                                src={
-                                  "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
-                                }
-                                alt="productImage"
-                                className="img-fluid"
-                              />{" "}
-                            </div>
+                  <div className="col-xs-12 col-sm-6" key={productId}>
+                    <div className="card order-cards mb-4 p-4">
+                      <div className="row">
+                        <div className="col-sm-12">
+                          <h6>{props.getProductDescription(description)}</h6>
+                          <p>
+                            Str: {props.getSize(description)}
+                            <br />
+                            Farge: {props.getColor(description)}
+                            <br />
+                            Antall: {orderQuantity} <br />
+                            SKU: {productId}
+                          </p>
+                        </div>
+                        <div className="col-sm-10 col-md-6">
+                          <div className="product-image">
+                            <img
+                              src={
+                                "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
+                              }
+                              alt="productImage"
+                              className="img-fluid"
+                            />{" "}
                           </div>
                         </div>
                       </div>

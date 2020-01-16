@@ -1,8 +1,7 @@
 import React from "react";
 
 import { updateOrderStatus } from "../../clientAPI/clientAPI";
-import BackButton from "../Navbar/Navbar";
-// import Navbar1 from "../Navbar/Navbar";
+import BackButton from "../AcceptDecline/Navbar";
 import { Nav, Navbar, Card } from "react-bootstrap";
 
 class ReadyForPickupView extends React.Component {
@@ -64,7 +63,6 @@ class ReadyForPickupView extends React.Component {
         <br />
         <div className="col-6 justify-content-center">
           <button
-            // value={"packed"}
             onClick={() => this.handleSendOrder("delivered")}
             data-toggle="modal"
             data-target="#myModal"
@@ -90,9 +88,7 @@ class ReadyForPickupView extends React.Component {
                 Du finner nå orderen under utlevert.
               </div>
               <div className="modal-footer">
-                <button className="btn btn-dark" data-dismiss="modal">
-                  <BackButton />
-                </button>
+                <BackButton />
               </div>
             </div>
           </div>
