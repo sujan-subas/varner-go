@@ -87,6 +87,7 @@ export default class AcceptDecline extends React.Component {
       alert(`Was not able to delete order!`);
     }
     console.log(reason);
+    this.props.history.push('/');
   }
 
   render() {

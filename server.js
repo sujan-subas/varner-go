@@ -8,8 +8,7 @@ const cors = require("cors");
 const fetch = require("node-fetch");
 app.use(cors());
 
-const fetch = require('node-fetch')
-// const secret = process.env.SECRET;
+
 
 const {
   createOrder,
