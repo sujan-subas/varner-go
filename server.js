@@ -5,6 +5,7 @@ const port = process.env.PORT;
 const bodyParser = require("body-parser");
 require("body-parser-xml")(bodyParser);
 const cors = require("cors");
+const fetch = require("node-fetch");
 app.use(cors());
 // const secret = process.env.SECRET;
 const {
@@ -103,14 +104,13 @@ api.patch("/orders/:ordernumber", async (req, res, next) => {
       ordernumber,
       order_status,
       decline_reason
-	);
-	await updateVarner(req.body);
-	
+    );
+    await updateVarner(req.body);
+
     res.status(200).send(updatedOrder);
   } catch (error) {
     console.log(`Error: ${error.message}`);
   }
-  
 });
 
 app.use("/api", api);

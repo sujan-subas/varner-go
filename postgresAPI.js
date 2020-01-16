@@ -24,6 +24,8 @@ async function createOrder(orderObject) {
     productImageUrl
   } = orderObject;
 
+  console.log({ orderObject });
+
   const queryText = `
   insert into orders
   (order_number, 
