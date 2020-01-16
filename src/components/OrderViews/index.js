@@ -5,7 +5,11 @@ import NewOrderView from "./NewOrderView";
 import ReadyForPickupView from "./ReadyForPickup";
 
 import { getOrderByOrderNumber } from "../../clientAPI/clientAPI";
-import { getColor, getSize } from "../../utils/extractProductInfo";
+import {
+  getColor,
+  getSize,
+  getProductDescription
+} from "../../utils/extractProductInfo";
 import { getFormattedDate } from "../../utils/getFormattedDeadLine";
 
 class OrderViews extends React.Component {
@@ -56,12 +60,12 @@ class OrderViews extends React.Component {
     });
   }
 
-  handleChange = (status) => {
-    console.log(this.props)
+  handleChange = status => {
+    console.log(this.props);
     const { ordernumber } = this.props.match.params;
     const { history } = this.props;
     history.push(`/orders/${ordernumber}/${status}`);
-  }
+  };
 
   render() {
     const { status, order } = this.state;
@@ -92,6 +96,7 @@ class OrderViews extends React.Component {
           order={order}
           getColor={getColor}
           getSize={getSize}
+          getProductDescription={getProductDescription}
           status={this.status}
           getFormattedDate={getFormattedDate}
           handleClick={this.handleClick}
