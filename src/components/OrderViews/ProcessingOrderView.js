@@ -49,7 +49,7 @@ class ProcessingOrderView extends React.Component {
 
   render() {
     const { pickedSkus } = this.state;
-    const { order, now } = this.props;
+    const { order, now, getProductDescription } = this.props;
     let orderElements;
 
     const formattedDeadLine = getFormattedDeadLine(
@@ -85,31 +85,32 @@ class ProcessingOrderView extends React.Component {
       orderElements = order.order_list.map(
         ({ description, orderQuantity, productId }) => {
           return (
-            <div
-              className="card text-white order-cards mb-4 p-4"
-              key={productId}
-            >
-              <div className="row">
-                <div className="col-6">
-                  <img
-                    src={
-                      "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
-                    }
-                    alt="productImage"
-                    className="img-fluid p-4"
-                  />
-                </div>
-                <div className="col-6">
-                  <div className="container p-4">
-                    <h4>{description}</h4>
-                    <br />
-                    <p>Str: {getSize(description)}</p>
-                    <p>Farge: {getColor(description)}</p>
-                    <p>Antall: {orderQuantity}</p>
-                    <p>SKU: {productId}</p>
+            <div className="col-xs-12 col-sm-6" key={productId}>
+              <div className="card order-cards mb-4 p-4">
+                <div className="row">
+                  <div className="col-sm-12">
+                    <h6>{getProductDescription(description)}</h6>
+                    <p>
+                      Str: {getSize(description)}
+                      <br />
+                      Farge: {getColor(description)}
+                      <br />
+                      Antall: {orderQuantity}
+                      <br />
+                      SKU: {productId}
+                    </p>
                   </div>
-                </div>
-                <div className="col-12 m-4 text-center">
+                  <div className="col-sm-10 col-md-6">
+                    <div className="product-image">
+                      <img
+                        src={
+                          "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
+                        }
+                        alt="productImage"
+                        className="img-fluid"
+                      />{" "}
+                    </div>
+                    <div className="col-12 m-4 text-center">
                   <button
                     className="btn btn-lg varner-btn-green w-75 mx-2 rounded-0"
                     onClick={this.handleClick.bind(this, productId)}
@@ -119,8 +120,48 @@ class ProcessingOrderView extends React.Component {
                       : "Marker som plukket"}
                   </button>
                 </div>
+                  </div>
+                </div>
               </div>
             </div>
+          // return (
+            
+          //   <div
+          //     className="card text-white order-cards mb-4 p-4 col-xs-12 col-sm-6"
+          //     key={productId}
+          //   >
+          //     <div className="row">
+          //       <div className="col-sm-12">
+          //       <img
+          //           src={
+          //             "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
+          //           }
+          //           alt="productImage"
+          //           className="img-fluid p-4"
+          //         />
+          //       </div>
+          //       <div className="col-6">
+          //         <div className="container p-4">
+          //           <h4>{description}</h4>
+          //           <br />
+          //           <p>Str: {getSize(description)}</p>
+          //           <p>Farge: {getColor(description)}</p>
+          //           <p>Antall: {orderQuantity}</p>
+          //           <p>SKU: {productId}</p>
+          //         </div>
+          //       </div>
+          //       <div className="col-12 m-4 text-center">
+          //         <button
+          //           className="btn btn-lg varner-btn-green w-75 mx-2 rounded-0"
+          //           onClick={this.handleClick.bind(this, productId)}
+          //         >
+          //           {this.state.pickedSkus.includes(productId)
+          //             ? "Plukket"
+          //             : "Marker som plukket"}
+          //         </button>
+          //       </div>
+          //     </div>
+          //   </div>
           );
         }
       );
