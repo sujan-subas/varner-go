@@ -27,6 +27,7 @@ const NewOrderView = props => {
           </div>
           <div className="col-10">
             <strong>Utløper om: {formattedDeadLine}</strong>
+            <br />
             <strong> Antall varer: {props.order.order_list.length} </strong>
           </div>
         </div>
@@ -75,7 +76,7 @@ const NewOrderView = props => {
                               SKU: {productId}
                             </p>
                           </div>
-                          <div className="col-sm-12 col-md-6">
+                          <div className="col-sm-10 col-md-6">
                             <div className="product-image">
                               <img
                                 src={
