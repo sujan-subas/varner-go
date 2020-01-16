@@ -5,31 +5,29 @@ import "./App.css";
 
 import MainView from "./components/MainView";
 import neworder from "./components/OrderViews/NewOrderView";
-
+import Footer from "./components/Footer/index";
 import OrderViews from "./components/OrderViews";
 import AcceptDecline from "./components/AcceptDecline";
 // import Testing from "./components/ProductView";
 import { HashRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 
-function App() {
-  return (
-    <HashRouter>
-      <div className="App">
-        <Switch>
-          <Route path="/" exact component={MainView} />
-          {/* <Route path="/" exact component={Login} /> */}
-          <Route exact path="/orders" component={OrderViews} />
-          <Route exact path="/orders/:ordernumber" component={OrderViews} />
-          <Route
-            path="/orders/:ordernumber/:status"
-            component={AcceptDecline}
-          />
-          {/* <Route path="/orders/:ordernumber/processing" component={Testing} /> */}
-        </Switch>
-      </div>
-    </HashRouter>
-  );
+function App () {
+	return (
+		<HashRouter>
+			<div className="App">
+				<Switch>
+					<Route path="/" exact component={MainView} />
+					{/* <Route path="/" exact component={Login} /> */}
+					<Route exact path="/orders" component={neworder} />
+					<Route exact path="/orders/:ordernumber" component={OrderViews} />
+					<Route path="/orders/:ordernumber/:status" component={AcceptDecline} />
+					{/* <Route path="/orders/:ordernumber/processing" component={Testing} /> */}
+				</Switch>
+				<Footer />
+			</div>
+		</HashRouter>
+	);
 }
 
 export default App;

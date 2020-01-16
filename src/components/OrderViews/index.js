@@ -7,7 +7,9 @@ import ReadyForPickupView from "./ReadyForPickup";
 
 import { getOrderByOrderNumber } from "../../clientAPI/clientAPI";
 import { getColor, getSize } from "../../utils/extractProductInfo";
-import { getFormattedDate } from "../../utils/time";
+import { getFormattedDate } from "../../utils/getFormattedDeadLine";
+
+
 class OrderViews extends React.Component {
   constructor(props) {
     super(props);
@@ -91,6 +93,8 @@ class OrderViews extends React.Component {
           order={order}
           getColor={getColor}
           getSize={getSize}
+          status={this.status}
+          changeView={this.handleChangeView.bind(this)}
           getFormattedDate={getFormattedDate}
           handleClick={this.handleClick}
           handleChange={this.handleChange}

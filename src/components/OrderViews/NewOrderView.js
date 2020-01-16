@@ -20,7 +20,7 @@ const NewOrderView = props => {
           </div>
           <div className="col-9">
             {/* <h4>Utløper om: {props.order.expires_at}</h4> */}
-            <h4> Antall varer: {props.order.order_list.length} </h4>
+            {/* <h4> Antall varer: {props.order.order_list.length} </h4> */}
             {/* <h4> Kunde: {props.order.customer_name} </h4>
             <h4>Varer plukket: {props.pickedSkus.length}</h4> */}
           </div>
