@@ -174,3 +174,13 @@ Footer {
 	position: absolute;
 	bottom: 0;
 }
+
+/* Modal */
+
+.modal-content {
+	width: 95%;
+	align-content: center;
+    background-color: var(--varner-green);
+	border-radius: 0rem;
+	margin-top: 220px;
+}
