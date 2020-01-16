@@ -1,7 +1,7 @@
 import React from "react";
 
 const DeclineView = props => {
-  return ( 
+  return (
     <div className="row">
       {!props.comfirmed ? (
         <div className="container">
