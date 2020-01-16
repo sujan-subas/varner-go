@@ -130,7 +130,7 @@ class ProcessingOrderView extends React.Component {
           {header}
           <div className="jumbotron jumbotron-fluid p-2 varner-white-theme" />
           <div className="container">
-            <h1 className="text-center">Ordreoversikt</h1>
+          <h3 className="text-center m-4">Ordreoversikt</h3>
             <div className="row">
               <div className="container">{orderElements}</div>
             </div>

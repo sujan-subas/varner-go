@@ -41,12 +41,14 @@ class ReadyForPickupView extends React.Component {
           <div className="col-9"><strong>Kunde: {this.props.order.customer_name}</strong></div>
         </Navbar>
         <div className="row varner-white-theme">
-          <div className="container">
+          <div className="container p-2 px-4">
             <div className="col-sm-12 ">
-              <h4>Sammendrag av bestilling</h4>
-              <p>ReservasjonsID: {this.props.order.reference_order_no}</p>
-              <p>Kunde: {this.props.order.customer_name}</p>
-              <p>Telefon: {this.props.order.customer_phonenumber}</p>
+              <h5>Sammendrag av bestilling</h5>
+              <strong>ReservasjonsID: {this.props.order.reference_order_no}</strong>
+              <br />
+              <strong>Kunde: {this.props.order.customer_name}</strong>
+              <br />
+              <strong>Telefon: {this.props.order.customer_phonenumber}</strong>
             </div>
             <div className="col-sm-12 d-none d-lg-block">
               <p>Email: {this.props.order.customer_email}</p>
@@ -55,7 +57,7 @@ class ReadyForPickupView extends React.Component {
           </div>
         </div>
         <div>
-          <h4>Ordreoversikt</h4>
+          <h3 className="text-center m-4">Ordreoversikt</h3>
           {listedProducts}
         </div>
         <br />

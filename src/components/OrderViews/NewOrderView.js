@@ -37,11 +37,15 @@ const NewOrderView = props => {
           <div className="container p-2 px-4">
             <div className="col-sm-12">
               <h5>Sammendrag av bestilling</h5>
+              <br />
               <strong>
                 Bestillingsdato: {getFormattedDate(props.order.order_date)}
               </strong>
+              <br />
               <strong>ReservasjonsID: {props.order.reference_order_no}</strong>
+              <br />
               <strong>Kunde: {props.order.customer_name}</strong>
+              <br />
               <strong>Telefon: {props.order.customer_phonenumber}</strong>
             </div>
             <div className="col-sm-12 d-none d-lg-block">
