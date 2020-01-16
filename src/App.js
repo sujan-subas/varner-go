@@ -4,7 +4,6 @@ import "./App.css";
 //import Login from "./components/Login";
 
 import MainView from "./components/MainView";
-import neworder from "./components/OrderViews/NewOrderView";
 import Footer from "./components/Footer/index";
 import OrderViews from "./components/OrderViews";
 import AcceptDecline from "./components/AcceptDecline";

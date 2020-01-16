@@ -51,7 +51,7 @@ export default class AcceptDecline extends React.Component {
       });
       const { ordernumber } = this.props.match.params;
       updateOrderStatus(ordernumber, 'in-process', 'Orderen er godkjent')
-      this.props.history.goBack();
+      this.props.history.push(`orders/${ordernumber}`)
 
 
     } else if (string === "declineOrder") {
@@ -74,8 +74,6 @@ export default class AcceptDecline extends React.Component {
 
   // functions button for decline reason
   async handleDeclinedReason(reason) {
-    console.log('this is props.hisorty', this.props.history.push('/') )
-
     const { ordernumber } = this.props.match.params;
     // console.log('ordernumber', ordernumber)
     try {
@@ -88,7 +86,7 @@ export default class AcceptDecline extends React.Component {
       console.log(`Was not able to delete order! Error: ${error.message}`);
       alert(`Was not able to delete order!`);
     }
-    // console.log(reason);
+    console.log(reason);
     this.props.history.push('/');
   }
 
