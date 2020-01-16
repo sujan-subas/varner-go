@@ -3,6 +3,8 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { getFormattedDeadLine } from "../../utils/getFormattedDeadLine";
 import { getSize, getColor } from "../../utils/extractProductInfo";
+import { updateOrderStatus } from "../../clientAPI/clientAPI";
+
 
 class ProcessingOrderView extends React.Component {
 	constructor (props) {
@@ -32,9 +34,18 @@ class ProcessingOrderView extends React.Component {
 		}
 	}
 
-	handleChange (statusValue, event) {
+	async handleChange (statusValue, event) {
 		const { changeView, status } = this.props;
+		console.log(this.props.order.order_number)
+		const {order_number} = this.props.order
+		console.log(order_number)
 
+		// console.log('ordernumber', orderNumber)
+		try {
+			await updateOrderStatus(order_number, 'packed') 
+		} catch (err) {
+			console.log(err)
+		}
 		if (statusValue === "new") {
 			//check PATCH request
 			//updateOrderStatus(ordernumber, statusValue, "pending");
@@ -57,7 +68,7 @@ class ProcessingOrderView extends React.Component {
 			<header className="p-3">
 				<div className="row">
 					<div className="col-2">
-						<button className="btn" onClick={this.handleChange.bind(this, "new")}>
+						<button className="btn" onClick={() => this.props.history.goBack()}>
 							<i className="fa fa-arrow-left text-success ml-4" style={{ transform: "scale(1.5, 1)" }} />
 						</button>
 					</div>
