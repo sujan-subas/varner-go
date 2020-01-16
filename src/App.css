@@ -20,9 +20,13 @@
   min-height: 100vh;
 }
 /* varner specs */
-.varne-dark-theme {
+.varner-dark-theme {
   color: var(--varner-text-white);
   background-color: var(--varner-text-darkest);
+}
+.varner-darkest-theme {
+  color: var(--varner-text-white);
+  background-color: var(--varner-darkest);
 }
 .varner-white-theme {
   color: var(--varner-text-dark);
@@ -31,6 +35,15 @@
 .varner-btn-green {
   color: var(--varner-text-white);
   background: var(--varner-green);
+  width: 80%;
+  margin: 1rem;
+  padding: 1rem;
+  box-shadow: 1px 1px 0.5px var(--varner-dark);
+}
+.varner-btn-light {
+  color: var(--varner-text-dark);
+  background-color: var(--varner-text-white);
+  width: 70vw!important;
 }
 .varner-btn-dark {
   color: var(--varner-text-white);
@@ -52,6 +65,12 @@
 /* Green text highlight */
 .green {
   color: var(--varner-green)
+}
+
+/* dark text*/
+.dark-text {
+  color: var(--varner-black);
+  background-color: var(--varner-darker)
 }
 
 /* navbars */
@@ -229,17 +248,12 @@ footer {
 }
 
 /* button fix*/
-mr-2, mx-2 {
+.mr-2, .mx-2 {
   margin-right: 2.5rem!important;
 }
 
-.negative-button {
-  background-color: var(--varner-black);
-  color: var(--varner-text-white);
-}
-
-.positive-button {
-  background-color: var(--varner-text-white);
-  color: var(--varner-black);
+.ready-for-pick-up {
+  margin-left: 2.5rem!important;
+  margin-bottom: 3.5rem!important;
 }
 
