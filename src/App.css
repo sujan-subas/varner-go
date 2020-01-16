@@ -203,8 +203,6 @@ footer {
   position: absolute;
   bottom: 0;
 }
-<<<<<<< HEAD
-=======
 input[type="text"] {
   width: 6.5rem;
   border: 1px solid var(--varner-darker);
@@ -242,4 +240,3 @@ form {
 	border-radius: 0rem;
 	margin-top: 220px;
 }
->>>>>>> 041c0d1d9b4e83d6dda085386734cb1581580fa1
