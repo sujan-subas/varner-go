@@ -51,7 +51,7 @@ export default class AcceptDecline extends React.Component {
       });
       const { ordernumber } = this.props.match.params;
       try {
-        await updateOrderStatus(ordernumber, 'in-process', string)
+        await updateOrderStatus(ordernumber, 'in-process', 'Orderen er godkjent')
         
       }
       catch(err) {
