@@ -255,6 +255,9 @@ footer {
 }
 
 /* button fix*/
+.buttons-container-1 {
+  padding-right: 1rem;
+}
 .pick-button {
   margin-right: 1.4rem!important;
   float: right;
@@ -265,6 +268,7 @@ footer {
 .ready-for-pick-up {
   margin-left: 2.5rem!important;
   margin-bottom: 3.5rem!important;
+  width: 70vw!important;
 }
 
 .decline-button {
@@ -274,4 +278,5 @@ footer {
 .accepting-button {
   width: 80vw!important;
 }
+
 
