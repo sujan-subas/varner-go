@@ -8,15 +8,15 @@ class MainView extends React.Component {
   constructor(props) {
     super(props);
 
-		this.state = {
-			tabKey: "new",
-			error: false,
-			allOrders: [],
-			isLoading: true,
-			search: "",
-			searchResult: []
-		};
-	}
+    this.state = {
+      tabKey: "new",
+      error: false,
+      allOrders: [],
+      isLoading: true,
+      search: "",
+      searchResult: []
+    };
+  }
 
   async componentDidMount() {
     try {
@@ -42,10 +42,10 @@ class MainView extends React.Component {
     this.setState({ search: event.target.value.substr(0, 20) });
   }
 
-	handleCardClick (ordernumber) {
-		const { history } = this.props;
-		history.push(`/orders/${ordernumber}`);
-	}
+  handleCardClick(ordernumber) {
+    const { history } = this.props;
+    history.push(`/orders/${ordernumber}`);
+  }
 
   render() {
     let filteredOrders = this.state.allOrders;
@@ -53,45 +53,46 @@ class MainView extends React.Component {
 
     const { tabKey, allOrders } = this.state;
 
-		let switchName = () => {
-			let newName = "";
-			if (this.state.tabKey === "delivered") {
-				newName = "Levert";
-			} else if (this.state.tabKey === "declined") {
-				newName = "Avvist";
-			}
-			return newName;
-		};
-		//filtrer på navenet til tabben
-		const ordersFromDatabase = filteredOrders
-			.filter((order) => order.order_status === tabKey)
-			.filter(
-				(order) =>
-					order.reference_order_no.toLowerCase().indexOf(this.state.search) !== -1 ||
-					order.order_number.toLowerCase().indexOf(this.state.search) !== -1
-			)
-			.map((order, i) => {
-				const formattedDate = getFormattedDate(order.order_date)
-				return (
-					<div
-						className="text-white card order-cards m-4 "
-						key={i}
-						onClick={this.handleCardClick.bind(this, order.order_number)}
-					>
-						<div className="card-header">
-							Ordre nummer: {order.order_number} | {order.order_status}
-						</div>
-						<div className="card-body ">
-							<p>Utløper om: {order.expire === 0 ? "Unable to state" : order.expire} 88 min</p>
-							<p>Antall varer: {order.order_list.length}</p>
-							<p>Bestillingstidspunkt: {formattedDate} </p>
-							<br />
-							<p>Referanse Nummer: {order.reference_order_no}</p>
-							<p>Name: {order.customer_name}</p>
-						</div>
-					</div>
-				);
-			});
+    let switchName = () => {
+      let newName = "";
+      if (this.state.tabKey === "delivered") {
+        newName = "Levert";
+      } else if (this.state.tabKey === "declined") {
+        newName = "Avvist";
+      }
+      return newName;
+    };
+    //filtrer på navenet til tabben
+    const ordersFromDatabase = filteredOrders
+      .filter(order => order.order_status === tabKey)
+      .filter(
+        order =>
+          order.reference_order_no.toLowerCase().indexOf(this.state.search) !==
+            -1 ||
+          order.order_number.toLowerCase().indexOf(this.state.search) !== -1
+      )
+      .map((order, i) => {
+        const formattedDate = getFormattedDate(order.order_date);
+        return (
+          <div
+            className="text-white card order-cards m-4 "
+            key={i}
+            onClick={this.handleCardClick.bind(this, order.order_number)}
+          >
+            <div className="card-header">
+              Ordre nummer: {order.order_number}
+            </div>
+            <div className="card-body ">
+              {/* <p>Utløper om: {order.expire === 0 ? "Unable to state" : order.expire} 88 min</p> */}
+              <p>Antall varer: {order.order_list.length}</p>
+              <p>Bestillingstidspunkt: {formattedDate} </p>
+              <br />
+              <p>Referanse Nummer: {order.reference_order_no}</p>
+              <p>Name: {order.customer_name}</p>
+            </div>
+          </div>
+        );
+      });
 
     //return
 
