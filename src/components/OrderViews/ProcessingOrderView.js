@@ -110,7 +110,7 @@ class ProcessingOrderView extends React.Component {
 									</div>
 									<div className="col-12 m-4 text-center">
 										<button
-											className="btn btn-lg varner-btn-green w-75 mx-2 rounded-0"
+											className="btn varner-btn-light rounded-0 pick-button"
 											onClick={this.handleClick.bind(this, productId)}
 										>
 											{this.state.pickedSkus.includes(productId) ? (

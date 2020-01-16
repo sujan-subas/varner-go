@@ -241,15 +241,18 @@ body h2 {
 
 /* footer */
 footer {
-  border-top: 1px solid var(--varner-darkest);
+  /*border-top: 1px solid var(--varner-darkest);*/
   background-color: var(--varner-darker);
   bottom: 0;
   opacity: 0.5;
 }
 
 /* button fix*/
-.mr-2, .mx-2 {
-  margin-right: 2.5rem!important;
+.pick-button {
+  margin-right: 1.4rem!important;
+  float: right;
+  margin: 0 auto;
+  width: 100%!important;
 }
 
 .ready-for-pick-up {
