@@ -14,7 +14,6 @@ class ReadyForPickupView extends React.Component {
 
   render() {
     let orderList = this.props.order.order_list;
-    console.log(orderList);
 
     const listedProducts = orderList.map(products => {
       return (
