@@ -50,7 +50,9 @@ export default class AcceptDecline extends React.Component {
         comfirmed: !this.state.comfirmed
       });
       const { ordernumber } = this.props.match.params;
-      updateOrderStatus(ordernumber, 'packed', 'Orderen er godkjent')
+      updateOrderStatus(ordernumber, 'in-process', 'Orderen er godkjent')
+      this.props.history.goBack();
+
 
     } else if (string === "declineOrder") {
       this.setState({
@@ -62,8 +64,9 @@ export default class AcceptDecline extends React.Component {
         this.setState({
           comfirmed: !this.state.comfirmed
         });
+        this.props.history.goBack();
       }
-      this.props.history.goBack();
+      
     } else {
       alert("tilbake til oversikt");
     }
