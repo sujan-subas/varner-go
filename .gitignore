@@ -7,7 +7,7 @@
 
 # testing
 /coverage
-
+/extern_Server
 # production
 /build
 
