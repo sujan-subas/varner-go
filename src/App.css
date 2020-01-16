@@ -39,11 +39,16 @@
   margin: 1rem;
   padding: 1rem;
   box-shadow: 1px 1px 0.5px var(--varner-dark);
+  font-weight: bold;
 }
 .varner-btn-light {
   color: var(--varner-text-dark);
   background-color: var(--varner-text-white);
-  width: 70vw!important;
+  width: 80%;
+  margin: 1rem;
+  padding: 1rem;
+  box-shadow: 1px 1px 0.5px var(--varner-dark);
+  font-weight: bold;
 }
 .varner-btn-dark {
   color: var(--varner-text-white);
@@ -52,6 +57,7 @@
   margin: 1rem;
   padding: 1rem;
   box-shadow: 1px 1px 0.5px var(--varner-dark);
+  font-weight: bold;
 }
 .varner-btn-black {
   color: var(--varner-text-white);
@@ -60,6 +66,7 @@
   margin: 1rem;
   padding: 1rem;
   box-shadow: 1px 1px 0.5px var(--varner-dark);
+  font-weight: bold;
 }
 
 /* Green text highlight */
@@ -258,5 +265,13 @@ footer {
 .ready-for-pick-up {
   margin-left: 2.5rem!important;
   margin-bottom: 3.5rem!important;
+}
+
+.decline-button {
+  width: 80vw!important;
+}
+
+.accepting-button {
+  width: 80vw!important;
 }
 
