@@ -1,8 +1,7 @@
 import React from "react";
 
 import { updateOrderStatus } from "../../clientAPI/clientAPI";
-import BackButton from "../Navbar/Navbar";
-// import Navbar1 from "../Navbar/Navbar";
+import BackButton from "../AcceptDecline/Navbar";
 import { Nav, Navbar, Card } from "react-bootstrap";
 
 class ReadyForPickupView extends React.Component {
@@ -17,8 +16,8 @@ class ReadyForPickupView extends React.Component {
 
     const listedProducts = orderList.map(products => {
       return (
-        <div key={products.productId}>
-          <Card bg="dark" text="white">
+        <div className="container" key={products.productId}>
+          <Card className="col-xs-12 col-sm-6" bg="dark" text="white">
             <Card.Header>Artikkel: {products.description}</Card.Header>
             <Card.Body>
               <Card.Text>
@@ -37,19 +36,19 @@ class ReadyForPickupView extends React.Component {
 
     return (
       <div>
-        <Navbar bg="light" expand="lg">
+        <Navbar expand="lg">
           <BackButton />
-          <Nav.Link className="justify-content-center">
-            Henting ({this.props.order.customer_name}){" "}
-          </Nav.Link>
+          <div className="col-9"><strong>Kunde: {this.props.order.customer_name}</strong></div>
         </Navbar>
         <div className="row varner-white-theme">
-          <div className="container">
+          <div className="container p-2 px-4">
             <div className="col-sm-12 ">
-              <h4>Sammendrag av bestilling</h4>
-              <p>ReservasjonsID: {this.props.order.reference_order_no}</p>
-              <p>Kunde: {this.props.order.customer_name}</p>
-              <p>Telefon: {this.props.order.customer_phonenumber}</p>
+              <h5>Sammendrag av bestilling</h5>
+              <strong>ReservasjonsID: {this.props.order.reference_order_no}</strong>
+              <br />
+              <strong>Kunde: {this.props.order.customer_name}</strong>
+              <br />
+              <strong>Telefon: {this.props.order.customer_phonenumber}</strong>
             </div>
             <div className="col-sm-12 d-none d-lg-block">
               <p>Email: {this.props.order.customer_email}</p>
@@ -58,13 +57,12 @@ class ReadyForPickupView extends React.Component {
           </div>
         </div>
         <div>
-          <h4>Ordreoversikt</h4>
+          <h3 className="text-center m-4">Ordreoversikt</h3>
           {listedProducts}
         </div>
         <br />
         <div className="col-6 justify-content-center">
           <button
-            // value={"packed"}
             onClick={() => this.handleSendOrder("delivered")}
             data-toggle="modal"
             data-target="#myModal"
@@ -90,9 +88,7 @@ class ReadyForPickupView extends React.Component {
                 Du finner nå orderen under utlevert.
               </div>
               <div className="modal-footer">
-                <button className="btn btn-dark" data-dismiss="modal">
-                  <BackButton />
-                </button>
+                <BackButton />
               </div>
             </div>
           </div>

@@ -4,7 +4,7 @@ import { updateOrderStatus } from "../../clientAPI/clientAPI";
 import AcceptedView from "./AcceptedView";
 import DeclinedView from "./DeclinedView";
 import AcceptDeclineFooter from "./AcceptDeclineFooter";
-import Navbar from "../Navbar/Navbar";
+import Navbar from "./Navbar";
 
 export default class AcceptDecline extends React.Component {
   constructor(props) {
@@ -43,37 +43,31 @@ export default class AcceptDecline extends React.Component {
     }
   }
   //functions footer buttons
-  async handleButtonClick(string, props) {
-    console.log('ttttttttttttttttttttttttt')
-    console.log("string,", string);
-    if (string === "ok") {
+  async handleButtonClick(newStatus, props) {
+    // console.log("newStatus,", newStatus);
+    console.log(props);
+    if (newStatus === "packed") {
       this.setState({
         comfirmed: !this.state.comfirmed
       });
       const { ordernumber } = this.props.match.params;
       try {
-        await updateOrderStatus(ordernumber, 'in-process', 'Orderen er godkjent')
-        
-      }
-      catch(err) {
-        console.log(err)
+        await updateOrderStatus(ordernumber, newStatus, null);
+      } catch (err) {
+        console.log(err);
       }
       props.history.goBack();
-      
-
-    } else if (string === "declineOrder") {
+    } else if (newStatus === "rejected") {
       this.setState({
         comfirmed: !this.state.comfirmed
       });
-    } else if (string === "back") {
-      // legg til {histrpy}
+    } else if (newStatus === "back") {
       if (this.state.comfirmed === true) {
         this.setState({
           comfirmed: !this.state.comfirmed
         });
         this.props.history.goBack();
       }
-      
     } else {
       alert("tilbake til oversikt");
     }
@@ -82,7 +76,6 @@ export default class AcceptDecline extends React.Component {
   // functions button for decline reason
   async handleDeclinedReason(reason) {
     const { ordernumber } = this.props.match.params;
-    // console.log('ordernumber', ordernumber)
     try {
       await updateOrderStatus(ordernumber, this.state.status, reason);
       this.setState({
@@ -94,7 +87,7 @@ export default class AcceptDecline extends React.Component {
       alert(`Was not able to delete order!`);
     }
     console.log(reason);
-    this.props.history.push('/');
+    this.props.history.push("/");
   }
 
   render() {
@@ -102,11 +95,9 @@ export default class AcceptDecline extends React.Component {
 
     return (
       <div className="h-100 ">
-        {/* Header */}
         <header className="p-3">
           <Navbar />
         </header>
-        {/* GREY CONTAINER */}
         <main className="varner-dark-theme container-fluid container">
           {declined ? (
             <DeclinedView
@@ -117,16 +108,13 @@ export default class AcceptDecline extends React.Component {
           ) : (
             <AcceptedView handleButtonClick={this.handleButtonClick} />
           )}
-          {/* END - grey container */}
         </main>
-        {/* BUTTONS */}
         <footer>
           <AcceptDeclineFooter
             handleButtonClick={this.handleButtonClick}
             comfirmed={comfirmed}
           />
         </footer>
-        {/* END - background */}
       </div>
     );
   }

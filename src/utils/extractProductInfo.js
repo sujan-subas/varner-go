@@ -11,5 +11,6 @@ export function getColor(description) {
   return step2[0];
 }
 export function getProductDescription(description) {
+  //return description without str.
   return description.slice(0, -4);
 }

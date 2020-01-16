@@ -37,7 +37,6 @@ class MainView extends React.Component {
     this.setState({ tabKey });
   }
 
-  // search
   updateSearch(event) {
     this.setState({ search: event.target.value.substr(0, 20) });
   }
@@ -62,7 +61,7 @@ class MainView extends React.Component {
       }
       return newName;
     };
-    //filtrer på navenet til tabben
+    
     const ordersFromDatabase = filteredOrders
       .filter(order => order.order_status === tabKey)
       .filter(

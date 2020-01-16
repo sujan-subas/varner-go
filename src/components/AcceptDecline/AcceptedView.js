@@ -19,17 +19,11 @@ const accepted = props => {
           </div>
           <button
             className="btn varner-btn-dark"
-            onClick={() => props.handleButtonClick("ok")}
-            // alternative onclick for accepted orders?
+            onClick={() => props.handleButtonClick("packed")}
           >
             Plukk ordren
           </button>
-          <button
-            className="btn varner-btn-dark"
-            // onClick={() => props.handleButtonClick("ok")}
-          >
-            Til alle ordre
-          </button>
+          <button className="btn varner-btn-dark">Til alle ordre</button>
         </div>
       </div>
     </div>

@@ -26,7 +26,7 @@ const NewOrderView = props => {
             </button>
           </div>
           <div className="col-10">
-            <strong>Utløper om: {formattedDeadLine}</strong>
+            <strong>Utløper om: </strong><strong className="green">{formattedDeadLine}</strong>
             <br />
             <strong> Antall varer: {props.order.order_list.length} </strong>
           </div>
@@ -37,11 +37,15 @@ const NewOrderView = props => {
           <div className="container p-2 px-4">
             <div className="col-sm-12">
               <h5>Sammendrag av bestilling</h5>
+              <br />
               <strong>
                 Bestillingsdato: {getFormattedDate(props.order.order_date)}
               </strong>
+              <br />
               <strong>ReservasjonsID: {props.order.reference_order_no}</strong>
+              <br />
               <strong>Kunde: {props.order.customer_name}</strong>
+              <br />
               <strong>Telefon: {props.order.customer_phonenumber}</strong>
             </div>
             <div className="col-sm-12 d-none d-lg-block">
@@ -58,34 +62,29 @@ const NewOrderView = props => {
             {props.order.order_list.map(
               ({ description, orderQuantity, productId }) => {
                 return (
-                  <div className="row">
-                    <div className="col-xs-12 col-sm-6">
-                      <div
-                        className="card order-cards mb-4 p-4"
-                        key={productId}
-                      >
-                        <div className="row">
-                          <div className="col-sm-12">
-                            <h6>{props.getProductDescription(description)}</h6>
-                            <p>
-                              Str: {props.getSize(description)}
-                              <br />
-                              Farge: {props.getColor(description)}
-                              <br />
-                              Antall: {orderQuantity} <br />
-                              SKU: {productId}
-                            </p>
-                          </div>
-                          <div className="col-sm-10 col-md-6">
-                            <div className="product-image">
-                              <img
-                                src={
-                                  "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
-                                }
-                                alt="productImage"
-                                className="img-fluid"
-                              />{" "}
-                            </div>
+                  <div className="col-xs-12 col-sm-6" key={productId}>
+                    <div className="card order-cards mb-4 p-4">
+                      <div className="row">
+                        <div className="col-sm-12">
+                          <h6>{props.getProductDescription(description)}</h6>
+                          <p>
+                            Str: {props.getSize(description)}
+                            <br />
+                            Farge: {props.getColor(description)}
+                            <br />
+                            Antall: {orderQuantity} <br />
+                            SKU: {productId}
+                          </p>
+                        </div>
+                        <div className="col-sm-10 col-md-6">
+                          <div className="product-image">
+                            <img
+                              src={
+                                "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
+                              }
+                              alt="productImage"
+                              className="img-fluid"
+                            />{" "}
                           </div>
                         </div>
                       </div>
