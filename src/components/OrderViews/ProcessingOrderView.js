@@ -2,7 +2,6 @@ import React from "react";
 
 import { withRouter } from "react-router-dom";
 import { getFormattedDeadLine, getFormattedDate } from "../../utils/getFormattedDeadLine";
-import { setExpireValue } from "../../utils/setExpireValue";
 import { getSize, getColor } from "../../utils/extractProductInfo";
 import { updateOrderStatus } from "../../clientAPI/clientAPI";
 
@@ -11,32 +10,13 @@ class ProcessingOrderView extends React.Component {
 		super(props);
 
 		this.state = {
-			time: "",
 			pickedSkus: [],
 			isLoading: false,
 			error: null
 		};
 
 		this.handleChange = this.handleChange.bind(this);
-		this.timer = null;
 	}
-
-	componentDidMount () {
-		this.getTime();
-	}
-
-	// async getOrder() {
-	//   const { ordernumber } = this.props.match.params;
-	//   try {
-	//     this.setState({ isLoading: true });
-	//     const order = await getOrderByOrderNumber(ordernumber);
-	//     this.setState({ order });
-	//     this.getTime();
-	//     this.setState({ isLoading: false });
-	//   } catch (error) {
-	//     this.setState({ error });
-	//   }
-	// }
 
 	handleClick (sku) {
 		if (this.state.pickedSkus.includes(sku)) {
@@ -70,22 +50,15 @@ class ProcessingOrderView extends React.Component {
 		//history.push(`/orders/${ordernumber}/${status}`);
 	}
 
-	async getTime () {
-		let time;
-		const { order } = this.props;
-		console.log(order.status_changed_at);
-		time = getFormattedDeadLine(new Date(), new Date(order.status_changed_at));
-		console.log(time);
-		this.setState({
-			time: time
-		});
-		//this.timer = setTimeout(() => this.getTime(), 1000);
-	}
-
 	render () {
-		const { pickedSkus, time } = this.state;
-		const { order } = this.props;
-		let orderElements;
+		const { pickedSkus } = this.state;
+		const { order, now } = this.props;
+    let orderElements;
+    
+    const formattedDeadLine = getFormattedDeadLine(
+      now,
+      new Date(order.status_changed_at)
+    );
 
 		const header = (
 			<header className="p-3">
@@ -96,7 +69,7 @@ class ProcessingOrderView extends React.Component {
 						</button>
 					</div>
 					<div className="col-9">
-						<h4>Ventet: {time}</h4>
+						<h4>Ventet: {formattedDeadLine}</h4>
 						<h4>Antall varer: {order.order_list.length} </h4>
 						<h4>
 							Varer plukket: {pickedSkus.length} av {order.order_list.length}

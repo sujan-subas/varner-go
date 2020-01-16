@@ -1,8 +1,18 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import { getFormattedDate, getFormattedDeadLine } from "../../utils/getFormattedDeadLine";
+import { getExpiryFromOrderDate } from "../../utils/getExpiryFromOrderDate";
+
+
 
 const NewOrderView = props => {
-  console.log(props);
+  const { order, now } = props;
+
+  const formattedDeadLine = getFormattedDeadLine(
+    new Date(getExpiryFromOrderDate(order.created_in_app_at)),
+    now
+  );
+
   return (
     <>
       <header className="p-3">
@@ -10,7 +20,7 @@ const NewOrderView = props => {
           <div className="col-2">
             <button
               className="btn"
-              // onClick={() => props.handleButtonClick("back")}
+              onClick={() => props.history.goBack()}
             >
               <i
                 className="fa fa-arrow-left text-success ml-4"
@@ -19,7 +29,7 @@ const NewOrderView = props => {
             </button>
           </div>
           <div className="col-9">
-            {/* <h4>Utløper om: {props.order.expires_at}</h4> */}
+            <h4>Utløper om: {formattedDeadLine}</h4>
             {/* <h4> Antall varer: {props.order.order_list.length} </h4> */}
             {/* <h4> Kunde: {props.order.customer_name} </h4>
             <h4>Varer plukket: {props.pickedSkus.length}</h4> */}
@@ -83,7 +93,7 @@ const NewOrderView = props => {
           </div>
         </div>
       </main>
-      <footer className="text-center m-4">
+      <div className="text-center m-4 ">
         <div className="row">
           <button
             onClick={props.handleChange.bind(this, "in-process")}
@@ -94,14 +104,14 @@ const NewOrderView = props => {
         </div>
         <div className="row">
           <button
-            onClick={props.handleChange.bind(this, "in-process")}
+            onClick={props.handleChange.bind(this, "declined")}
             className="btn m-4 btn-danger col-10 rounded-0"
           >
             Avvis Ordre
           </button>
         </div>
-      </footer>
+      </div>
     </>
   );
 };
-export default NewOrderView;
+export default withRouter(NewOrderView);

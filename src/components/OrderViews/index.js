@@ -7,7 +7,8 @@ import ReadyForPickupView from "./ReadyForPickup";
 
 import { getOrderByOrderNumber } from "../../clientAPI/clientAPI";
 import { getColor, getSize } from "../../utils/extractProductInfo";
-import { getFormattedDate } from "../../utils/getFormattedDeadLine";
+import { getFormattedDate, getFormattedDeadLine } from "../../utils/getFormattedDeadLine";
+import { getExpiryFromOrderDate } from "../../utils/getExpiryFromOrderDate";
 
 class OrderViews extends React.Component {
   constructor(props) {
@@ -15,13 +16,28 @@ class OrderViews extends React.Component {
 
     this.state = {
       status: "",
-      order: null
+      order: null,
+      now: new Date()
     };
+
+    this.timer = null;
   }
 
   componentDidMount() {
     this.getOrder();
+    this.timer = setInterval(this.updateTime.bind(this), 1000 * 60);
   }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
+  updateTime() {
+    this.setState({
+      now: new Date()
+    });
+  }
+
 
   async getOrder() {
     const { ordernumber } = this.props.match.params;
@@ -41,27 +57,20 @@ class OrderViews extends React.Component {
     this.setState({
       status: order.order_status
     });
-    console.log(this.state.status);
   }
-  // handleClick(sku) {
-  //   if (this.state.pickedSkus.includes(sku)) {
-  //     let i = this.state.pickedSkus.indexOf(sku);
-  //     let pickedSkusCopy = [...this.state.pickedSkus];
-  //     pickedSkusCopy.splice(i, 1);
-  //     this.setState({
-  //       pickedSkus: pickedSkusCopy
-  //     });
-  //   } else {
-  //     this.setState({
-  //       pickedSkus: [...this.state.pickedSkus, sku]
-  //     });
-  //   }
-  // }
-  async handleChange(status, event) {
+
+    handleChange = (status) => {
+      console.log(this.props)
     const { ordernumber } = this.props.match.params;
     const { history } = this.props;
     history.push(`/orders/${ordernumber}/${status}`);
-  }
+    }
+// =======
+
+//   handleChangeView(statusValue) {
+//     this.setState({ status: statusValue })
+// >>>>>>> 07954ed450c7e0858e82aa87f38c8dd1970f892e
+//   }
 
   render() {
     const { status, order } = this.state;
@@ -96,6 +105,7 @@ class OrderViews extends React.Component {
           changeView={this.handleChangeView}
           getFormattedDate={getFormattedDate}
           handleClick={this.handleClick}
+          now={this.state.now}
           handleChange={this.handleChange}
         />
       </div>
