@@ -10,8 +10,7 @@ import {
 
 // eksempel tidstempel
 // const created_in_app_at = ("2020-01-17T00:50:01.001Z")
-// legg til lørdag/søndag
-export function setExpireValue(timestamp) {
+export function getExpiryFromOrderDate(timestamp) {
   let expireTime;
   const time = new Date(timestamp);
   //const weekend = isWeekend(time); //returns true or false
@@ -22,18 +21,14 @@ export function setExpireValue(timestamp) {
     let setHoursOfDay = setHours(new Date(newDay), 12);
     let setMinutesOfDay = setMinutes(new Date(setHoursOfDay), 0);
     expireTime = setMinutesOfDay;
-  }
-
-  if (isSaturday) {
-  
+  } else if (isSaturday) {
     if (hourOfDay < 10) {
       let setHoursOfDay = setHours(new Date(time), 12);
       let setMinutesOfDay = setMinutes(new Date(setHoursOfDay), 0);
       expireTime = setMinutesOfDay;
-    } 
-    
-    if (hourOfDay >= 15) {
+    } else if (hourOfDay >= 15) {
       let newDay = addDays(time, 2);
+      console.log({ newDay, time })
       let setHoursOfDay = setHours(new Date(newDay), 12);
       let setMinutesOfDay = setMinutes(new Date(setHoursOfDay), 0);
       expireTime = setMinutesOfDay;
@@ -41,21 +36,21 @@ export function setExpireValue(timestamp) {
     else {
       expireTime = addHours(time, 2); //adds 2 hours from incoming timestamp
     }
-  }
-
-  if (hourOfDay < 10) {
-    let setHoursOfDay = setHours(new Date(time), 12);
-    let setMinutesOfDay = setMinutes(new Date(setHoursOfDay), 0);
-    expireTime = setMinutesOfDay;
-  } 
-  else if (hourOfDay >= 17) {
-    let newDay = addDays(time, 1);
-    let setHoursOfDay = setHours(new Date(newDay), 12);
-    let setMinutesOfDay = setMinutes(new Date(setHoursOfDay), 0);
-    expireTime = setMinutesOfDay;
-  }
-  else {
-    expireTime = addHours(time, 2); //adds 2 hours from incoming timestamp
+  } else {
+    if (hourOfDay < 10) {
+      let setHoursOfDay = setHours(new Date(time), 12);
+      let setMinutesOfDay = setMinutes(new Date(setHoursOfDay), 0);
+      expireTime = setMinutesOfDay;
+    } 
+    else if (hourOfDay >= 17) {
+      let newDay = addDays(time, 1);
+      let setHoursOfDay = setHours(new Date(newDay), 12);
+      let setMinutesOfDay = setMinutes(new Date(setHoursOfDay), 0);
+      expireTime = setMinutesOfDay;
+    }
+    else {
+      expireTime = addHours(time, 2); //adds 2 hours from incoming timestamp
+    }
   }
 
   return expireTime.toJSON();

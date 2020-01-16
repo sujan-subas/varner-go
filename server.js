@@ -7,10 +7,16 @@ require("body-parser-xml")(bodyParser);
 const cors = require("cors");
 app.use(cors());
 <<<<<<< HEAD
+<<<<<<< HEAD
 const fetch = require('node-fetch')
 // const secret = process.env.SECRET;
 =======
 >>>>>>> 009d54e0dd54af1a852a08a9899602383812314e
+=======
+const fetch = require("node-fetch");
+
+// const secret = process.env.SECRET;
+>>>>>>> 07954ed450c7e0858e82aa87f38c8dd1970f892e
 const {
   createOrder,
   getAllOrders,

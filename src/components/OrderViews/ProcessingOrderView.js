@@ -2,7 +2,6 @@ import React from "react";
 
 import { withRouter } from "react-router-dom";
 import { getFormattedDeadLine, getFormattedDate } from "../../utils/getFormattedDeadLine";
-import { setExpireValue } from "../../utils/setExpireValue";
 import { getSize, getColor } from "../../utils/extractProductInfo";
 import { updateOrderStatus } from "../../clientAPI/clientAPI";
 
@@ -83,9 +82,14 @@ class ProcessingOrderView extends React.Component {
 	}
 
 	render () {
-		const { pickedSkus, time } = this.state;
-		const { order } = this.props;
-		let orderElements;
+		const { pickedSkus } = this.state;
+		const { order, now } = this.props;
+    let orderElements;
+    
+    const formattedDeadLine = getFormattedDeadLine(
+      now,
+      new Date(order.status_changed_at)
+    );
 
 		const header = (
 			<header className="p-3">
@@ -96,7 +100,7 @@ class ProcessingOrderView extends React.Component {
 						</button>
 					</div>
 					<div className="col-9">
-						<h4>Ventet: {time}</h4>
+						<h4>Ventet: {formattedDeadLine}</h4>
 						<h4>Antall varer: {order.order_list.length} </h4>
 						<h4>
 							Varer plukket: {pickedSkus.length} av {order.order_list.length}
