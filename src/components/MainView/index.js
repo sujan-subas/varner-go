@@ -37,7 +37,6 @@ class MainView extends React.Component {
     this.setState({ tabKey });
   }
 
-  // search
   updateSearch(event) {
     this.setState({ search: event.target.value.substr(0, 20) });
   }
@@ -62,7 +61,7 @@ class MainView extends React.Component {
       }
       return newName;
     };
-    //filtrer på navenet til tabben
+
     const ordersFromDatabase = filteredOrders
       .filter(order => order.order_status === tabKey)
       .filter(
@@ -184,13 +183,13 @@ class MainView extends React.Component {
               </Nav.Link>
             </div>
             <div className="col-4 p-0">
-              <Nav.Link eventKey="in-process">
+              <Nav.Link eventKey="packed">
                 Skal pakkes <br />
                 <Badge variant="success">{statusCountInProcess.length}</Badge>
               </Nav.Link>
             </div>
             <div className="col-4 p-0">
-              <Nav.Link eventKey="packed">
+              <Nav.Link eventKey="in-process">
                 Til henting <br />
                 <Badge variant="success">{statusCountPacked.length}</Badge>
               </Nav.Link>

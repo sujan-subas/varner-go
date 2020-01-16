@@ -19,8 +19,8 @@ export async function getOrderByOrderNumber(ordernumber) {
 }
 
 export async function updateOrderStatus(
-  ordernumber = 'a1',
-  order_status = 'new',
+  ordernumber = "a1",
+  order_status = "new",
   decline_reason = null
 ) {
   console.log(
