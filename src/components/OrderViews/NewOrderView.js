@@ -10,7 +10,7 @@ const NewOrderView = props => {
           <div className="col-2">
             <button
               className="btn"
-              // onClick={() => props.handleButtonClick("back")}
+              onClick={() => props.history.goBack()}
             >
               <i
                 className="fa fa-arrow-left text-success ml-4"
@@ -90,4 +90,4 @@ const NewOrderView = props => {
     </>
   );
 };
-export default NewOrderView;
+export default withRouter(NewOrderView);
