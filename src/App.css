@@ -228,3 +228,9 @@ footer {
   bottom: 0;
   opacity: 0.5;
 }
+
+/* button fix*/
+mr-2, mx-2 {
+  margin-right: 2.5rem!important;
+}
+
