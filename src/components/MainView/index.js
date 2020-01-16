@@ -104,9 +104,9 @@ class MainView extends React.Component {
       let orderStatus = count.order_status;
       if (orderStatus === "new") {
         statusCountNew.push(orderStatus);
-      } else if (orderStatus === "in-process") {
-        statusCountInProcess.push(orderStatus);
       } else if (orderStatus === "packed") {
+        statusCountInProcess.push(orderStatus);
+      } else if (orderStatus === "in-process") {
         statusCountPacked.push(orderStatus);
       } else if (orderStatus === "delivered") {
         statusCountDelivered.push(orderStatus);

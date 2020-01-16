@@ -34,17 +34,15 @@ class ProcessingOrderView extends React.Component {
   }
 
   async handleChange(statusValue, event) {
-    const { changeView, status } = this.props;
+    // const { status } = this.props;
     const { order_number } = this.props.order;
 
     try {
-      await updateOrderStatus(order_number, "packed");
+      await updateOrderStatus(order_number, statusValue, null);
     } catch (err) {
       console.log(err);
     }
-    if (statusValue === "new") {
-      changeView(status);
-    }
+    console.log(this.history);
   }
 
   render() {
@@ -136,7 +134,7 @@ class ProcessingOrderView extends React.Component {
               <div className="row">
                 <div className="col-6">
                   <button
-                    onClick={this.handleChange.bind(this, "new")}
+                    onClick={this.handleChange(this, "new")}
                     className="btn varner-btn-green w-75 mx-2 rounded-0"
                   >
                     Angre
@@ -145,8 +143,8 @@ class ProcessingOrderView extends React.Component {
                 <div className="col-6">
                   <button
                     disabled={pickedSkus.length !== order.order_list.length}
-                    value={"packed"}
-                    onClick={this.handleChange.bind(this, "packed")}
+                    value={"in-process"}
+                    onClick={this.handleChange.bind(this, "in-process")}
                     className="btn varner-btn-green w-75 mx-2 rounded-0"
                   >
                     Klar til opphenting
