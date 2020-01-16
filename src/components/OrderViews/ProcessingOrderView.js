@@ -124,44 +124,6 @@ class ProcessingOrderView extends React.Component {
                 </div>
               </div>
             </div>
-          // return (
-            
-          //   <div
-          //     className="card text-white order-cards mb-4 p-4 col-xs-12 col-sm-6"
-          //     key={productId}
-          //   >
-          //     <div className="row">
-          //       <div className="col-sm-12">
-          //       <img
-          //           src={
-          //             "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
-          //           }
-          //           alt="productImage"
-          //           className="img-fluid p-4"
-          //         />
-          //       </div>
-          //       <div className="col-6">
-          //         <div className="container p-4">
-          //           <h4>{description}</h4>
-          //           <br />
-          //           <p>Str: {getSize(description)}</p>
-          //           <p>Farge: {getColor(description)}</p>
-          //           <p>Antall: {orderQuantity}</p>
-          //           <p>SKU: {productId}</p>
-          //         </div>
-          //       </div>
-          //       <div className="col-12 m-4 text-center">
-          //         <button
-          //           className="btn btn-lg varner-btn-green w-75 mx-2 rounded-0"
-          //           onClick={this.handleClick.bind(this, productId)}
-          //         >
-          //           {this.state.pickedSkus.includes(productId)
-          //             ? "Plukket"
-          //             : "Marker som plukket"}
-          //         </button>
-          //       </div>
-          //     </div>
-          //   </div>
           );
         }
       );
