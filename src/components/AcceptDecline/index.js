@@ -43,16 +43,23 @@ export default class AcceptDecline extends React.Component {
     }
   }
   //functions footer buttons
-  handleButtonClick(string) {
+  async handleButtonClick(string, props) {
+    console.log('ttttttttttttttttttttttttt')
     console.log("string,", string);
     if (string === "ok") {
       this.setState({
         comfirmed: !this.state.comfirmed
       });
       const { ordernumber } = this.props.match.params;
-      updateOrderStatus(ordernumber, 'in-process', 'Orderen er godkjent')
-      this.props.history.goBack();
-
+      try {
+        await updateOrderStatus(ordernumber, 'in-process', 'Orderen er godkjent')
+        
+      }
+      catch(err) {
+        console.log(err)
+      }
+      props.history.goBack();
+      
 
     } else if (string === "declineOrder") {
       this.setState({
@@ -74,8 +81,6 @@ export default class AcceptDecline extends React.Component {
 
   // functions button for decline reason
   async handleDeclinedReason(reason) {
-    console.log('this is props.hisorty', this.props.history.push('/') )
-
     const { ordernumber } = this.props.match.params;
     // console.log('ordernumber', ordernumber)
     try {
@@ -88,7 +93,7 @@ export default class AcceptDecline extends React.Component {
       console.log(`Was not able to delete order! Error: ${error.message}`);
       alert(`Was not able to delete order!`);
     }
-    // console.log(reason);
+    console.log(reason);
     this.props.history.push('/');
   }
 
