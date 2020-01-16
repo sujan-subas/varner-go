@@ -142,7 +142,7 @@ class ProcessingOrderView extends React.Component {
                 <div className="col-6">
                   <button
                     onClick={this.handleChange.bind(this, "new")}
-                    className="btn varner-btn-green w-75 mx-2 rounded-0"
+                    className="btn varner-btn-green w-75 mx-2 rounded-0 negative-button"
                   >
                     Angre
                   </button>
@@ -152,7 +152,7 @@ class ProcessingOrderView extends React.Component {
                     disabled={pickedSkus.length !== order.order_list.length}
                     value={"packed"}
                     onClick={this.handleChange.bind(this, "packed")}
-                    className="btn varner-btn-green w-75 mx-2 rounded-0"
+                    className="btn varner-btn-green w-75 mx-2 rounded-0 positive-button"
                   >
                     Klar til opphenting
                   </button>

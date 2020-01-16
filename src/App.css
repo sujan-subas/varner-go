@@ -234,3 +234,13 @@ mr-2, mx-2 {
   margin-right: 2.5rem!important;
 }
 
+.negative-button {
+  background-color: var(--varner-black);
+  color: var(--varner-text-white);
+}
+
+.positive-button {
+  background-color: var(--varner-text-white);
+  color: var(--varner-black);
+}
+
