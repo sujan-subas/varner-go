@@ -1,5 +1,4 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
 
 import ProcessingOrderView from "./ProcessingOrderView";
 import NewOrderView from "./NewOrderView";
@@ -7,8 +6,7 @@ import ReadyForPickupView from "./ReadyForPickup";
 
 import { getOrderByOrderNumber } from "../../clientAPI/clientAPI";
 import { getColor, getSize } from "../../utils/extractProductInfo";
-import { getFormattedDate, getFormattedDeadLine } from "../../utils/getFormattedDeadLine";
-import { getExpiryFromOrderDate } from "../../utils/getExpiryFromOrderDate";
+import { getFormattedDate } from "../../utils/getFormattedDeadLine";
 
 
 class OrderViews extends React.Component {
@@ -104,4 +102,4 @@ class OrderViews extends React.Component {
   }
 }
 
-export default withRouter(OrderViews);
+export default OrderViews;

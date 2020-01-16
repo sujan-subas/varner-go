@@ -1,10 +1,7 @@
 import { differenceInMinutes, format } from "date-fns";
 
 export function getFormattedDeadLine(timestamp1, timestamp2) {
-  console.log('deadline:'+ timestamp1)
-  console.log('now:' + timestamp2)
   const minutesLeft = differenceInMinutes(timestamp1, timestamp2);
-  console.log(minutesLeft)
   const hours = Math.floor(minutesLeft / 60);
   const minutes = minutesLeft % 60;
   if (hours < 1 && minutes < 1) {
@@ -19,7 +16,6 @@ export function getFormattedDeadLine(timestamp1, timestamp2) {
 }
 
 export function getFormattedDate(timestamp) {
-  //   console.log(new Date(timestamp))
   const formattedDate = format(new Date(timestamp), "dd-MM-yy hh:mm");
   return formattedDate;
 }
