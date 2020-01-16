@@ -63,17 +63,19 @@ class ProcessingOrderView extends React.Component {
           <div className="col-2">
             <button className="btn" onClick={() => this.props.history.goBack()}>
               <i
-                className="fa fa-arrow-left text-success ml-4"
+                className="fa fa-arrow-left text-success ml-auto"
                 style={{ transform: "scale(1.5, 1)" }}
               />
             </button>
           </div>
           <div className="col-9">
-            <h4>Ventet: {formattedDeadLine}</h4>
-            <h4>Antall varer: {order.order_list.length} </h4>
-            <h4>
-              Varer plukket: {pickedSkus.length} av {order.order_list.length}
-            </h4>
+            <strong>Ventet: </strong><strong className="green">{formattedDeadLine}</strong>
+            <br />
+            <strong>Antall varer: {order.order_list.length} </strong>
+            <br />
+            <strong>Varer plukket: </strong>
+            <strong className="green">{pickedSkus.length} </strong>
+            <strong>av {order.order_list.length}</strong>
           </div>
         </div>
       </header>

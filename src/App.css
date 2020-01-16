@@ -50,6 +50,11 @@
   box-shadow: 1px 1px 0.5px var(--varner-dark);
 }
 
+/* Green text highlight */
+.green {
+  color: var(--varner-green)
+}
+
 /* navbars */
 /* top navbar */
 .top-navbar {
@@ -83,6 +88,15 @@ form {
   padding: 0;
   width: 8rem;
   margin: 1px auto;
+}
+
+.p-3 {
+  text-align: center!important;
+}
+
+.col-10 {
+  padding-left: 0px;
+  padding-right: 2rem;
 }
 /* toggle navbar */
 .navbar-light .navbar-nav .nav-link {
@@ -144,6 +158,7 @@ a {
   padding-bottom: 0;
   border: none;
 }
+
 /* bottom navbar */
 .bottom-nav {
   background-color: var(--varner-dark);

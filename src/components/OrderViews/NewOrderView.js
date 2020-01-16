@@ -26,7 +26,7 @@ const NewOrderView = props => {
             </button>
           </div>
           <div className="col-10">
-            <strong>Utløper om: {formattedDeadLine}</strong>
+            <strong>Utløper om: </strong><strong className="green">{formattedDeadLine}</strong>
             <br />
             <strong> Antall varer: {props.order.order_list.length} </strong>
           </div>

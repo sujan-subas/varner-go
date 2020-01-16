@@ -36,11 +36,9 @@ class ReadyForPickupView extends React.Component {
 
     return (
       <div>
-        <Navbar bg="light" expand="lg">
+        <Navbar expand="lg">
           <BackButton />
-          <Nav.Link className="justify-content-center">
-            Henting ({this.props.order.customer_name}){" "}
-          </Nav.Link>
+          <div className="col-9"><strong>Kunde: {this.props.order.customer_name}</strong></div>
         </Navbar>
         <div className="row varner-white-theme">
           <div className="container">
