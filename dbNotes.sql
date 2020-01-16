@@ -17,9 +17,9 @@ create type "type-decline_reason" as enum
 'Varen er ikke tilgjengelig',
 'Varen er skadet',
 'Har ikke tid',
-'Annet'
+'Annet',
+'Orderen er godkjent'
 );
-<<<<<<< HEAD
 
 ----
 -- \dt 	-> shows all tables
@@ -29,15 +29,6 @@ create type "type-decline_reason" as enum
 -- values:
 
 
-=======
-// ----
--- \dt 	-> shows all tables
--- \d table_name 	-> shows table
-
--- check what types are defined, and their
--- values:
-
->>>>>>> 0538d8db83196ba5282cd07fc0102b64453975d7
 -- select n.nspname as enum_schema,
 --    t.typname as enum_name,
 --    e.enumlabel as enum_value
@@ -95,4 +86,5 @@ create table orders_end
 
 
 -- Endring Zipcode fra integer til text
-alter table orders alter column customer_zipcode type VARCHAR 
+alter table orders alter column customer_zipcode type
+VARCHAR 

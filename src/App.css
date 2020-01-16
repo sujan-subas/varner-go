@@ -14,12 +14,10 @@
   --varner-green: #44a241;
 }
 .App {
+  /* position: relativ; */
   background-color: var(--varner-dark);
   color: var(--varner-text-white);
-  margin-bottom: 10px;
-  position: relativ;
   margin: 0 auto;
-  padding-bottom: 80px;
   min-height: 100vh;
 }
 /* varner specs */
@@ -38,6 +36,14 @@
 .varner-btn-dark {
   color: var(--varner-text-white);
   background: var(--varner-darkest);
+  width: 80%;
+  margin: 1rem;
+  padding: 1rem;
+  box-shadow: 1px 1px 0.5px var(--varner-dark);
+}
+.varner-btn-black {
+  color: var(--varner-text-white);
+  background: var(--varner-black);
   width: 80%;
   margin: 1rem;
   padding: 1rem;
@@ -185,6 +191,10 @@ body h2 {
 .product-card img {
   margin: 1rem;
 }
+.product-image {
+  border: 1px solid var(--varner-darkest);
+  box-shadow: 0.6px 1px 3px var(--varner-darkest);
+}
 .product-card h2 {
   color: var(--varner-text-white);
   font-size: 1.5rem;
@@ -200,43 +210,6 @@ body h2 {
 footer {
   border-top: 1px solid var(--varner-darkest);
   background-color: var(--varner-darker);
-  position: absolute;
   bottom: 0;
-}
-input[type="text"] {
-  width: 6.5rem;
-  border: 1px solid var(--varner-darker);
-  border-bottom: 0.8px solid white;
-  border-radius: 10px;
-  padding: 2px;
-  background-color: var(--varner-darkest);
-  color: var(--varner-text-white);
-  -webkit-border-radius: 1px;
-  -moz-border-radius: 1px;
-}
-input[type="text"]:focus {
-  outline: none;
-  padding: 2px;
-  width: 8rem;
-}
-input[type="text"] {
-  -webkit-transition: all 0.7s ease 0s;
-  -moz-transition: all 0.7s ease 0s;
-  -o-transition: all 0.7s ease 0s;
-  transition: all 0.7s ease 0s;
-}
-form {
-  padding: 0;
-  width: 8rem;
-  margin: 1px auto;
-}
-
-/* Modal */
-
-.modal-content {
-	width: 95%;
-	align-content: center;
-    background-color: var(--varner-green);
-	border-radius: 0rem;
-	margin-top: 220px;
+  opacity: 0.5;
 }
