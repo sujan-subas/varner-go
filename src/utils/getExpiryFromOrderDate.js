@@ -36,7 +36,7 @@ export function getExpiryFromOrderDate(timestamp) {
       let setHoursOfDay = setHours(time, 12);
       let setMinutesOfDay = setMinutes(setHoursOfDay, 0);
       expireTime = setMinutesOfDay;
-    } else if (hourOfDay >= closingTimeSaturday) {
+    } else if (hourOfDay >= closingTimeSaturday - 2) {
       let newDay = addDays(time, 2);
       let setHoursOfDay = setHours(newDay, 12);
       let setMinutesOfDay = setMinutes(setHoursOfDay, 0);
@@ -52,7 +52,7 @@ export function getExpiryFromOrderDate(timestamp) {
       let setMinutesOfDay = setMinutes(setHoursOfDay, 0);
       expireTime = setMinutesOfDay;
     } 
-    else if (hourOfDay >= closingTimeWeekday) {
+    else if (hourOfDay >= closingTimeWeekday - 2) {
       let newDay = addDays(time, 1);
       let setHoursOfDay = setHours(newDay, 12);
       let setMinutesOfDay = setMinutes(setHoursOfDay, 0);
