@@ -18,7 +18,7 @@ class ReadyForPickupView extends React.Component {
 
     const listedProducts = orderList.map(products => {
       return (
-        <div>
+        <div key={products.productId}>
           <Card bg="dark" text="white">
             <Card.Header>Artikkel: {products.description}</Card.Header>
             <Card.Body>
