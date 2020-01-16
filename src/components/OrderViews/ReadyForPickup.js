@@ -77,17 +77,21 @@ class ReadyForPickupView extends React.Component {
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Kunde har mottatt vare</h5>
+                <h5 className="modal-title">
+                  ReservasjonsID: {this.props.order.reference_order_no}.
+                </h5>
                 <button type="button" className="close" data-dismiss="modal">
                   <span>&times;</span>
                 </button>
               </div>
-              <div className="modal-body dark">
-                <h1>Ordren er nå plassert i Levert</h1>
+              <div className="modal-body">
+                <h5>{this.props.order.customer_name} har mottatt varen.</h5>
+                <br></br>
+                Du finner nå orderen under utlevert.
               </div>
               <div className="modal-footer">
-                <button className="btn btn-success" data-dismiss="modal">
-                  OK
+                <button className="btn btn-dark" data-dismiss="modal">
+                  <BackButton />
                 </button>
               </div>
             </div>

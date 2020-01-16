@@ -19,7 +19,7 @@ function App () {
 				<Switch>
 					<Route path="/" exact component={MainView} />
 					{/* <Route path="/" exact component={Login} /> */}
-					<Route exact path="/orders" component={neworder} />
+					<Route exact path="/orders" component={MainView} />
 					<Route exact path="/orders/:ordernumber" component={OrderViews} />
 					<Route path="/orders/:ordernumber/:status" component={AcceptDecline} />
 					{/* <Route path="/orders/:ordernumber/processing" component={Testing} /> */}

@@ -36,7 +36,6 @@ class OrderViews extends React.Component {
     });
   }
 
-
   async getOrder() {
     const { ordernumber } = this.props.match.params;
     try {
@@ -98,6 +97,7 @@ class OrderViews extends React.Component {
           handleClick={this.handleClick}
           now={this.state.now}
           handleChange={this.handleChange}
+          componentWillUnmount={this.componentWillUnmount.bind(this)}
         />
       </div>
     );

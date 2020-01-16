@@ -203,3 +203,43 @@ footer {
   position: absolute;
   bottom: 0;
 }
+<<<<<<< HEAD
+=======
+input[type="text"] {
+  width: 6.5rem;
+  border: 1px solid var(--varner-darker);
+  border-bottom: 0.8px solid white;
+  border-radius: 10px;
+  padding: 2px;
+  background-color: var(--varner-darkest);
+  color: var(--varner-text-white);
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+}
+input[type="text"]:focus {
+  outline: none;
+  padding: 2px;
+  width: 8rem;
+}
+input[type="text"] {
+  -webkit-transition: all 0.7s ease 0s;
+  -moz-transition: all 0.7s ease 0s;
+  -o-transition: all 0.7s ease 0s;
+  transition: all 0.7s ease 0s;
+}
+form {
+  padding: 0;
+  width: 8rem;
+  margin: 1px auto;
+}
+
+/* Modal */
+
+.modal-content {
+	width: 95%;
+	align-content: center;
+    background-color: var(--varner-green);
+	border-radius: 0rem;
+	margin-top: 220px;
+}
+>>>>>>> 041c0d1d9b4e83d6dda085386734cb1581580fa1
