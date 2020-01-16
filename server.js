@@ -8,7 +8,6 @@ const cors = require("cors");
 const fetch = require("node-fetch");
 app.use(cors());
 
-
 const {
   createOrder,
   getAllOrders,
@@ -28,32 +27,32 @@ app.use(express.static("build"));
 
 const api = express();
 
-// POST updated status to Varner
-// api.patch("/updatevarner/:storeID/:produktID", async (req, res) => {
-//   const { storeID, produktID } = req.params;
-//   console.log(storeID, produktID);
-//   res.send({ storeID, produktID });
-// });
-// const varner_API_Url =
-//   "https://e90c8b7c-df85-4c2f-83a1-2782d5f0c73f.mock.pstmn.io/api/order/update/";
+//POST updated status to Varner
+api.patch("/updatevarner/:storeID/:produktID", async (req, res) => {
+  const { storeID, produktID } = req.params;
+  console.log(storeID, produktID);
+  res.send({ storeID, produktID });
+});
+const varner_API_Url =
+  "https://e90c8b7c-df85-4c2f-83a1-2782d5f0c73f.mock.pstmn.io/api/order/update/";
 
-// async function updateVarner(reason, storeID, orderNumber, status) {
-//   // console.log('from VARNERFUNC', reason, storeID, orderNumber, status)
-//   const res = await fetch(`${varner_API_Url}/${storeID}/${orderNumber}`, {
-//     method: "PATCH",
-//     headers: {
-//       "Content-Type": "application/json"
-//     },
-//     body: JSON.stringify({
-//       status,
-//       reason
-//       // sett inn time stamps naar dette er klart. Ikke sikkert dette er mulig.
-//     })
-//   }).then(function(res) {
-//     console.log(res);
-//     return res.json(res);
-//   });
-// }
+async function updateVarner(reason, storeID, orderNumber, status) {
+  // console.log('from VARNERFUNC', reason, storeID, orderNumber, status)
+  const res = await fetch(`${varner_API_Url}/${storeID}/${orderNumber}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      status,
+      reason
+      // sett inn time stamps naar dette er klart. Ikke sikkert dette er mulig.
+    })
+  }).then(function(res) {
+    console.log(res);
+    return res.json(res);
+  });
+}
 
 // Order post from Varner
 api.post("/orders", async (req, res) => {
