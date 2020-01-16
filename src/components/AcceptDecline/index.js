@@ -42,9 +42,8 @@ export default class AcceptDecline extends React.Component {
   }
   //functions footer buttons
   async handleButtonClick(newStatus, props) {
-    // console.log("newStatus,", newStatus);
-    console.log(props);
     const { ordernumber } = this.props.match.params;
+    console.log(this.history);
     if (newStatus === "packed") {
       try {
         await updateOrderStatus(ordernumber, newStatus, null);
@@ -55,7 +54,7 @@ export default class AcceptDecline extends React.Component {
       } catch (err) {
         console.log(err);
       }
-      props.history.goBack();
+      this.props.history.push("/orders");
     } else if (newStatus === "rejected") {
       this.setState({
         comfirmed: !this.state.comfirmed,

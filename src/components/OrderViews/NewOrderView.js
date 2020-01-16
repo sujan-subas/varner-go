@@ -58,8 +58,11 @@ const NewOrderView = props => {
             {props.order.order_list.map(
               ({ description, orderQuantity, productId }) => {
                 return (
-                  <div className="col-xs-12 col-sm-6" key={productId}>
-                    <div className="card order-cards mb-4 p-4">
+                  <div className="col-xs-12 col-sm-6" >
+                    <div
+                      className="card order-cards mb-4 p-4"
+                      key={order.reference_order_no}
+                    >
                       <div className="row">
                         <div className="col-sm-12">
                           <h6>{props.getProductDescription(description)}</h6>
