@@ -1,16 +1,14 @@
 import React from "react";
-import { Nav, Navbar, Form, Button, FormControl, Badge, Tab, Tabs } from "react-bootstrap";
-import { format } from "date-fns";
+import { Nav, Navbar, Form, FormControl, Badge } from "react-bootstrap";
 import { getAllOrdersDB } from "../../clientAPI/clientAPI";
-// import { getFormattedDeadline } from "../../utils/getFormattedDeadLine";
 import NoOrdersInDB from "./NoOrdersInDB";
+import { getFormattedDate } from "../../utils/getFormattedDeadLine";
 
 class MainView extends React.Component {
 	constructor (props) {
 		super(props);
 
 		this.state = {
-			// order: orderLine,
 			tabKey: "new",
 			error: false,
 			allOrders: [],
@@ -47,9 +45,6 @@ class MainView extends React.Component {
 	handleCardClick (ordernumber) {
 		const { history } = this.props;
 		history.push(`/orders/${ordernumber}`);
-
-		console.log(history);
-		console.log(ordernumber);
 	}
 
 	render () {
@@ -76,11 +71,7 @@ class MainView extends React.Component {
 					order.order_number.toLowerCase().indexOf(this.state.search) !== -1
 			)
 			.map((order, i) => {
-				//  fix formate data
-				// const formattedDate = format(
-				//   new Date(order.created_in_ap_at),
-				//   "MM/dd/yyyy"
-				// );
+				const formattedDate = getFormattedDate(order.order_date)
 				return (
 					<div
 						className="text-white card order-cards m-4 "
@@ -93,7 +84,7 @@ class MainView extends React.Component {
 						<div className="card-body ">
 							<p>Utløper om: {order.expire === 0 ? "Unable to state" : order.expire} 88 min</p>
 							<p>Antall varer: {order.order_list.length}</p>
-							{/* <p>Bestillingsdato: {formattedDate} </p> */}
+							<p>Bestillingstidspunkt: {formattedDate} </p>
 							<br />
 							<p>Referanse Nummer: {order.reference_order_no}</p>
 							<p>Name: {order.customer_name}</p>
