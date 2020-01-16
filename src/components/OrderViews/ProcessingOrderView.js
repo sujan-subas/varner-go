@@ -2,7 +2,6 @@ import React from "react";
 
 import { withRouter } from "react-router-dom";
 import { getFormattedDeadLine, getFormattedDate } from "../../utils/getFormattedDeadLine";
-import { setExpireValue } from "../../utils/setExpireValue";
 import { getSize, getColor } from "../../utils/extractProductInfo";
 import { updateOrderStatus } from "../../clientAPI/clientAPI";
 
