@@ -30,7 +30,7 @@ test('order in store before opening hours Saturday should have expiry 12:00 the 
   expect(expireTime).toBe("2020-01-18T11:00:37.961Z");
 });
 
-test.only('order in store after opening hours Saturday should have expiry 12:00 next Monday (1)', () => {
+test('order in store after opening hours Saturday should have expiry 12:00 next Monday (1)', () => {
   let orderTime = "2020-01-18T21:20:37.961Z";
   let expireTime = getExpiryFromOrderDate(orderTime);
   expect(expireTime).toBe("2020-01-20T11:00:37.961Z");
