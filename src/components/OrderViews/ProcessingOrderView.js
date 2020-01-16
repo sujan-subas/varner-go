@@ -51,6 +51,7 @@ class ProcessingOrderView extends React.Component {
 			//updateOrderStatus(ordernumber, statusValue, "pending");
 			changeView(status);
 		}
+		this.props.history.goBack();
 
 	}
 
@@ -136,7 +137,7 @@ class ProcessingOrderView extends React.Component {
 										onClick={this.handleChange.bind(this, "new")}
 										className="btn varner-btn-green w-75 mx-2 rounded-0"
 									>
-										Angre
+										Avvis Ordre
 									</button>
 								</div>
 								<div className="col-6">

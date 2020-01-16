@@ -44,21 +44,20 @@ export default class AcceptDecline extends React.Component {
   }
   //functions footer buttons
   async handleButtonClick(string, props) {
-    console.log('ttttttttttttttttttttttttt')
-    console.log("string,", string);
+
     if (string === "ok") {
       this.setState({
         comfirmed: !this.state.comfirmed
       });
       const { ordernumber } = this.props.match.params;
       try {
-        await updateOrderStatus(ordernumber, 'in-process', 'Orderen er godkjent')
+        await updateOrderStatus(ordernumber, 'in-process', string)
         
       }
       catch(err) {
         console.log(err)
       }
-      props.history.goBack();
+      this.props.history.goBack();
       
 
     } else if (string === "declineOrder") {
