@@ -15,7 +15,6 @@ const {
   getOrder,
   updateOrderStatus
 } = require("./postgresAPI");
-// const {sendUpdate} = require('./src/clientAPI/clientAPI');
 
 const getJsonFromXml = require("./services/convert_xml");
 
@@ -35,6 +34,26 @@ const api = express();
 //   console.log(storeID, produktID);
 //   res.send({ storeID, produktID });
 // });
+// const varner_API_Url =
+//   "https://e90c8b7c-df85-4c2f-83a1-2782d5f0c73f.mock.pstmn.io/api/order/update/";
+
+// async function updateVarner(reason, storeID, orderNumber, status) {
+//   // console.log('from VARNERFUNC', reason, storeID, orderNumber, status)
+//   const res = await fetch(`${varner_API_Url}/${storeID}/${orderNumber}`, {
+//     method: "PATCH",
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify({
+//       status,
+//       reason
+//       // sett inn time stamps naar dette er klart. Ikke sikkert dette er mulig.
+//     })
+//   }).then(function(res) {
+//     console.log(res);
+//     return res.json(res);
+//   });
+// }
 
 // Order post from Varner
 api.post("/orders", async (req, res) => {
@@ -72,28 +91,6 @@ api.get("/orders/:ordernumber", async (req, res, next) => {
   }
 });
 
-const varner_API_Url =
-  "https://e90c8b7c-df85-4c2f-83a1-2782d5f0c73f.mock.pstmn.io/api/order/update/";
-
-async function updateVarner(reason, storeID, orderNumber, status) {
-  // console.log('from VARNERFUNC', reason, storeID, orderNumber, status)
-  const res = await fetch(`${varner_API_Url}/${storeID}/${orderNumber}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      status,
-      reason
-      // sett inn time stamps naar dette er klart. Ikke sikkert dette er mulig.
-    })
-  }).then(function(res) {
-    console.log(res);
-    return res.json(res);
-  });
-  // return await res.json();
-}
-
 // update orderstatus and processfinished
 api.patch("/orders/:ordernumber", async (req, res, next) => {
   const { ordernumber } = req.params;
@@ -105,14 +102,13 @@ api.patch("/orders/:ordernumber", async (req, res, next) => {
       ordernumber,
       order_status,
       decline_reason
-	);
-	await updateVarner(req.body);
-	
+    );
+    await updateVarner(req.body);
+
     res.status(200).send(updatedOrder);
   } catch (error) {
     console.log(`Error: ${error.message}`);
   }
-  
 });
 
 app.use("/api", api);

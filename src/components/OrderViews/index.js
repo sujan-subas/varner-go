@@ -10,7 +10,6 @@ import { getColor, getSize } from "../../utils/extractProductInfo";
 import { getFormattedDate, getFormattedDeadLine } from "../../utils/getFormattedDeadLine";
 import { getExpiryFromOrderDate } from "../../utils/getExpiryFromOrderDate";
 
-
 class OrderViews extends React.Component {
   constructor(props) {
     super(props);
@@ -94,10 +93,11 @@ class OrderViews extends React.Component {
           getColor={getColor}
           getSize={getSize}
           status={this.status}
-          changeView={this.handleChangeView.bind(this)}
+          changeView={this.handleChangeView}
           getFormattedDate={getFormattedDate}
           handleClick={this.handleClick}
           now={this.state.now}
+          handleChange={this.handleChange}
         />
       </div>
     );

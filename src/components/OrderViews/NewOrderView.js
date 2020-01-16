@@ -20,7 +20,7 @@ const NewOrderView = props => {
           <div className="col-2">
             <button
               className="btn"
-              // onClick={() => props.handleButtonClick("back")}
+              onClick={() => props.history.goBack()}
             >
               <i
                 className="fa fa-arrow-left text-success ml-4"
@@ -57,47 +57,61 @@ const NewOrderView = props => {
         </div>
         <div className="row">
           <div className="container">
-            <h3 className="text-center">Ordreoversikt</h3>
+            <h3 className="text-center m-4">Ordreoversikt</h3>
             <div className="container">
-              <div className="varne-dark-theme">
-                {props.order.order_list.map(
-                  ({ description, orderQuantity, productId }) => {
-                    return (
-                      <div
-                        className="card text-white order-cards mb-4 p-4"
-                        key={productId}
-                      >
-                        <div className="row">
-                          <div className="col-xs-12 col-6">
-                            <div className="container p-4">
-                              <strong>{description}</strong>
-                              <br />
-                              <p>Str: {props.getSize(description)}</p>
-                              <p>Farge: {props.getColor(description)}</p>
-                              <p>Antall: {orderQuantity}</p>
-                              <p>SKU: {productId}</p>
-                            </div>
-                          </div>
-                          <div className="col-xs-12 col-6">
-                            <img
-                              src={
-                                "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
-                              }
-                              alt="productImage"
-                              className="img-fluid p-4"
-                            />
-                          </div>
+              {props.order.order_list.map(
+                ({ description, orderQuantity, productId }) => {
+                  return (
+                    <div className="card order-cards mb-4 p-4" key={productId}>
+                      <div className="row">
+                        <div className="col-sm-12 col-md-6">
+                          <h4>{description}</h4>
+                          <p>
+                            Str: {props.getSize(description)}
+                            <br />
+                            Farge: {props.getColor(description)}
+                            <br />
+                            Antall: {orderQuantity} <br />
+                            SKU: {productId}
+                          </p>
+                        </div>
+                        <div className="col-sm-12 col-md-6">
+                          <img
+                            src={
+                              "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
+                            }
+                            alt="productImage"
+                            className="img-fluid p-4"
+                          />
                         </div>
                       </div>
-                    );
-                  }
-                )}
-              </div>
+                    </div>
+                  );
+                }
+              )}
             </div>
           </div>
         </div>
       </main>
+      <footer className="text-center m-4">
+        <div className="row">
+          <button
+            onClick={props.handleChange.bind(this, "in-process")}
+            className="btn varner-btn-green m-4 col-10 rounded-0"
+          >
+            Godta Ordre
+          </button>
+        </div>
+        <div className="row">
+          <button
+            onClick={props.handleChange.bind(this, "in-process")}
+            className="btn m-4 btn-danger col-10 rounded-0"
+          >
+            Avvis Ordre
+          </button>
+        </div>
+      </footer>
     </>
   );
 };
-export default NewOrderView;
+export default withRouter(NewOrderView);
