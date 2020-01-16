@@ -19,6 +19,17 @@ create type "type-decline_reason" as enum
 'Har ikke tid',
 'Annet'
 );
+<<<<<<< HEAD
+
+----
+-- \dt 	-> shows all tables
+-- \d table_name 	-> shows table
+
+-- check what types are defined, and their
+-- values:
+
+
+=======
 // ----
 -- \dt 	-> shows all tables
 -- \d table_name 	-> shows table
@@ -26,6 +37,7 @@ create type "type-decline_reason" as enum
 -- check what types are defined, and their
 -- values:
 
+>>>>>>> 0538d8db83196ba5282cd07fc0102b64453975d7
 -- select n.nspname as enum_schema,
 --    t.typname as enum_name,
 --    e.enumlabel as enum_value
@@ -63,3 +75,24 @@ create table orders
 
 -- Order End -------------------------------------
 -- status er enten delivered eller Rejected 
+
+create table orders_end
+(
+   order_number varchar unique NOT NULL,
+   created_in_app_at TIMESTAMPTZ DEFAULT Now(),
+   process_finished_at TIMESTAMPTZ,
+   reference_order_no bigint unique not null,
+   order_status "type-order_status",
+   rejected_reason varchar
+);
+
+
+-- CREATE TABLE  ( 
+--      id         SERIAL PRIMARY KEY, 
+--      title      VARCHAR NOT NULL, 
+--      created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+-- );
+
+
+-- Endring Zipcode fra integer til text
+alter table orders alter column customer_zipcode type VARCHAR 

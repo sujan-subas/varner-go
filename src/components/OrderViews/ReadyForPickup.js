@@ -14,11 +14,10 @@ class ReadyForPickupView extends React.Component {
 
   render() {
     let orderList = this.props.order.order_list;
-    console.log(orderList);
 
     const listedProducts = orderList.map(products => {
       return (
-        <div>
+        <div key={products.productId}>
           <Card bg="dark" text="white">
             <Card.Header>Artikkel: {products.description}</Card.Header>
             <Card.Body>
@@ -67,10 +66,32 @@ class ReadyForPickupView extends React.Component {
           <button
             // value={"packed"}
             onClick={() => this.handleSendOrder("delivered")}
+            data-toggle="modal"
+            data-target="#myModal"
             className="btn varner-btn-green w-100 mx-4 rounded-0 center"
           >
             Levert
           </button>
+        </div>
+        <div className="modal fade" id="myModal">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Kunde har mottatt vare</h5>
+                <button type="button" className="close" data-dismiss="modal">
+                  <span>&times;</span>
+                </button>
+              </div>
+              <div className="modal-body dark">
+                <h1>Ordren er nå plassert i Levert</h1>
+              </div>
+              <div className="modal-footer">
+                <button className="btn btn-success" data-dismiss="modal">
+                  OK
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
