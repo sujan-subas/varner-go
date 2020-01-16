@@ -9,7 +9,6 @@ import { getOrderByOrderNumber } from "../../clientAPI/clientAPI";
 import { getColor, getSize } from "../../utils/extractProductInfo";
 import { getFormattedDate } from "../../utils/getFormattedDeadLine";
 
-
 class OrderViews extends React.Component {
   constructor(props) {
     super(props);
