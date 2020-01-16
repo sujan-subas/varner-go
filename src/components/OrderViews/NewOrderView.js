@@ -93,7 +93,7 @@ const NewOrderView = props => {
           </div>
         </div>
       </main>
-      <footer className="text-center m-4">
+      <div className="text-center m-4 ">
         <div className="row">
           <button
             onClick={props.handleChange.bind(this, "in-process")}
@@ -104,13 +104,13 @@ const NewOrderView = props => {
         </div>
         <div className="row">
           <button
-            onClick={props.handleChange.bind(this, "in-process")}
+            onClick={props.handleChange.bind(this, "declined")}
             className="btn m-4 btn-danger col-10 rounded-0"
           >
             Avvis Ordre
           </button>
         </div>
-      </footer>
+      </div>
     </>
   );
 };

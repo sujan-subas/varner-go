@@ -11,8 +11,8 @@ export default class AcceptDecline extends React.Component {
     super(props);
 
     this.state = {
-      comfirmed: true,
-      declined: false,
+      comfirmed: false,
+      declined: null,
       reason: "",
       storeID: "a1",
       orderNumber: "",

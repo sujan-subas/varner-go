@@ -59,9 +59,18 @@ class OrderViews extends React.Component {
     });
   }
 
-  handleChangeView(statusValue) {
-    this.setState({ status: statusValue })
-  }
+    handleChange = (status) => {
+      console.log(this.props)
+    const { ordernumber } = this.props.match.params;
+    const { history } = this.props;
+    history.push(`/orders/${ordernumber}/${status}`);
+    }
+// =======
+
+//   handleChangeView(statusValue) {
+//     this.setState({ status: statusValue })
+// >>>>>>> 07954ed450c7e0858e82aa87f38c8dd1970f892e
+//   }
 
   render() {
     const { status, order } = this.state;
