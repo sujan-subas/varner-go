@@ -23,7 +23,6 @@ const accepted = props => {
           >
             Plukk ordren
           </button>
-          <button className="btn varner-btn-dark">Til alle ordre</button>
         </div>
       </div>
     </div>
