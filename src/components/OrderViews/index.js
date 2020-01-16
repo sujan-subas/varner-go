@@ -1,5 +1,4 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
 
 import ProcessingOrderView from "./ProcessingOrderView";
 import NewOrderView from "./NewOrderView";
@@ -7,8 +6,7 @@ import ReadyForPickupView from "./ReadyForPickup";
 
 import { getOrderByOrderNumber } from "../../clientAPI/clientAPI";
 import { getColor, getSize } from "../../utils/extractProductInfo";
-import { getFormattedDate, getFormattedDeadLine } from "../../utils/getFormattedDeadLine";
-import { getExpiryFromOrderDate } from "../../utils/getExpiryFromOrderDate";
+import { getFormattedDate } from "../../utils/getFormattedDeadLine";
 
 class OrderViews extends React.Component {
   constructor(props) {
@@ -59,18 +57,12 @@ class OrderViews extends React.Component {
     });
   }
 
-    handleChange = (status) => {
-      console.log(this.props)
+  handleChange = (status) => {
+    console.log(this.props)
     const { ordernumber } = this.props.match.params;
     const { history } = this.props;
     history.push(`/orders/${ordernumber}/${status}`);
-    }
-// =======
-
-//   handleChangeView(statusValue) {
-//     this.setState({ status: statusValue })
-// >>>>>>> 07954ed450c7e0858e82aa87f38c8dd1970f892e
-//   }
+  }
 
   render() {
     const { status, order } = this.state;
@@ -102,7 +94,7 @@ class OrderViews extends React.Component {
           getColor={getColor}
           getSize={getSize}
           status={this.status}
-          changeView={this.handleChangeView.bind(this)}
+          //changeView={this.handleChangeView.bind(this)}
           getFormattedDate={getFormattedDate}
           handleClick={this.handleClick}
           now={this.state.now}
@@ -113,4 +105,4 @@ class OrderViews extends React.Component {
   }
 }
 
-export default withRouter(OrderViews);
+export default OrderViews;

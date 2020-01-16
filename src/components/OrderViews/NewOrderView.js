@@ -111,4 +111,4 @@ const NewOrderView = props => {
     </>
   );
 };
-export default withRouter(NewOrderView);
+export default NewOrderView;
