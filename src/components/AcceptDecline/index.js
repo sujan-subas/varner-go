@@ -4,7 +4,7 @@ import { updateOrderStatus } from "../../clientAPI/clientAPI";
 import AcceptedView from "./AcceptedView";
 import DeclinedView from "./DeclinedView";
 import AcceptDeclineFooter from "./AcceptDeclineFooter";
-import Navbar from "../Navbar/Navbar";
+import Navbar from "./Navbar";
 
 export default class AcceptDecline extends React.Component {
   constructor(props) {
@@ -45,7 +45,7 @@ export default class AcceptDecline extends React.Component {
   //functions footer buttons
   async handleButtonClick(newStatus, props) {
     const { ordernumber } = this.props.match.params;
-    if (newStatus === "ok") {
+    if (newStatus === "in-process") {
       this.setState({
         comfirmed: !this.state.comfirmed
       });
@@ -102,7 +102,12 @@ export default class AcceptDecline extends React.Component {
       <div className="h-100 ">
         {/* Header */}
         <header className="p-3">
-          <Navbar />
+          <div className="row">
+            <div className="col-1 ">
+              <Navbar />
+            </div>
+            <div className="col-11"></div>
+          </div>
         </header>
         {/* GREY CONTAINER */}
         <main className="varner-dark-theme container-fluid container">
@@ -118,12 +123,12 @@ export default class AcceptDecline extends React.Component {
           {/* END - grey container */}
         </main>
         {/* BUTTONS */}
-        <footer>
+        <div>
           <AcceptDeclineFooter
             handleButtonClick={this.handleButtonClick}
             comfirmed={comfirmed}
           />
-        </footer>
+        </div>
         {/* END - background */}
       </div>
     );
