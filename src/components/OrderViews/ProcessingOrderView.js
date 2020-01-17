@@ -100,7 +100,7 @@ class ProcessingOrderView extends React.Component {
                   <div className="product-image">
                     <img
                       src={
-                        "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
+                        "https://cubus.imgix.net/globalassets/productimages/7238141_784_f_q_l_kathy_parka_cubus.jpg?auto=format&w=2600"
                       }
                       alt="productImage"
                       className="img-fluid"
