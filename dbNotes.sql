@@ -12,21 +12,21 @@ create type "type-order_status" as enum
    'packed',
 'delivered'
 );
-create type "type-decline_reason" as enum
-( 
-'Varen er ikke tilgjengelig',
-'Varen er skadet',
-'Har ikke tid',
-'Annet'
-);
 -- create type "type-decline_reason" as enum
 -- ( 
 -- 'Varen er ikke tilgjengelig',
 -- 'Varen er skadet',
 -- 'Har ikke tid',
--- 'Annet',
--- 'Orderen er godkjent'
+-- 'Annet'
 -- );
+create type "type-decline_reason" as enum
+( 
+'Varen er ikke tilgjengelig',
+'Varen er skadet',
+'Har ikke tid',
+'Annet',
+'Orderen er godkjent'
+);
 
 ----
 -- \dt 	-> shows all tables

@@ -43,36 +43,35 @@ export default class AcceptDecline extends React.Component {
     }
   }
   //functions footer buttons
-  async handleButtonClick(string, props) {
-
-    if (string === "ok") {
+  async handleButtonClick(newStatus, props) {
+    const { ordernumber } = this.props.match.params;
+    if (newStatus === "ok") {
       this.setState({
         comfirmed: !this.state.comfirmed
       });
-      const { ordernumber } = this.props.match.params;
       try {
-        await updateOrderStatus(ordernumber, 'in-process', 'Orderen er godkjent')
-        
-      }
-      catch(err) {
-        console.log(err)
+        await updateOrderStatus(
+          ordernumber,
+          "in-process",
+          "Orderen er godkjent"
+        );
+      } catch (err) {
+        console.log(err);
       }
       this.props.history.goBack();
-      
-
-    } else if (string === "declineOrder") {
+    } else if (newStatus === "decline") {
+      await updateOrderStatus(ordernumber, newStatus, null);
+    } else if (newStatus === "declineOrder") {
       this.setState({
         comfirmed: !this.state.comfirmed
       });
-    } else if (string === "back") {
+    } else if (newStatus === "back") {
       // legg til {histrpy}
       if (this.state.comfirmed === true) {
         this.setState({
           comfirmed: !this.state.comfirmed
         });
-        this.props.history.goBack();
       }
-      
     } else {
       alert("tilbake til oversikt");
     }
@@ -93,7 +92,7 @@ export default class AcceptDecline extends React.Component {
       alert(`Was not able to delete order!`);
     }
     console.log(reason);
-    this.props.history.push('/');
+    this.props.history.push("/");
   }
 
   render() {
