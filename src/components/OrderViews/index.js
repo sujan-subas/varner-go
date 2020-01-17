@@ -66,10 +66,6 @@ class OrderViews extends React.Component {
     history.push(`/orders/${ordernumber}/${status}`);
   };
 
-  handeChangeView (statusValue, event) {
-    
-  }
-
   render() {
     const { status, order } = this.state;
 

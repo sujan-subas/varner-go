@@ -68,16 +68,22 @@
   box-shadow: 1px 1px 0.5px var(--varner-dark);
   font-weight: bold;
 }
-
+.modal-content {
+  width: 95%;
+  align-content: center;
+  background-color: var(--varner-green);
+  border-radius: 0rem;
+  margin-top: 220px;
+}
 /* Green text highlight */
 .green {
-  color: var(--varner-green)
+  color: var(--varner-green);
 }
 
 /* dark text*/
 .dark-text {
   color: var(--varner-black);
-  background-color: var(--varner-darker)
+  background-color: var(--varner-darker);
 }
 
 /* navbars */
@@ -116,7 +122,7 @@ form {
 }
 
 .p-3 {
-  text-align: center!important;
+  text-align: center !important;
 }
 
 .col-10 {
@@ -259,24 +265,22 @@ footer {
   padding-right: 1rem;
 }
 .pick-button {
-  margin-right: 1.4rem!important;
+  margin-right: 1.4rem !important;
   float: right;
   margin: 0 auto;
-  width: 100%!important;
+  width: 100% !important;
 }
 
 .ready-for-pick-up {
-  margin-left: 2.5rem!important;
-  margin-bottom: 3.5rem!important;
-  width: 70vw!important;
+  margin-left: 2.5rem !important;
+  margin-bottom: 3.5rem !important;
+  width: 70vw !important;
 }
 
 .decline-button {
-  width: 80vw!important;
+  width: 80vw !important;
 }
 
 .accepting-button {
-  width: 80vw!important;
+  width: 80vw !important;
 }
-
-

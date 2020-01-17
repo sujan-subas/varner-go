@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap"
+import { Container, Row, Col } from "react-bootstrap";
 
 import { withRouter } from "react-router-dom";
 import { getFormattedDeadLine } from "../../utils/getFormattedDeadLine";
@@ -43,9 +43,9 @@ class ProcessingOrderView extends React.Component {
     } catch (err) {
       console.log(err);
     }
-    if (statusValue === "new") {
-      changeView(status);
-    }
+    // if (statusValue === "new") {
+    //   changeView(status);
+    // }
     this.props.history.goBack();
   }
 
@@ -54,7 +54,10 @@ class ProcessingOrderView extends React.Component {
     const { order, now, getProductDescription } = this.props;
     let orderElements;
 
-    const formattedDeadLine = getFormattedDeadLine(now, new Date(order.status_changed_at));
+    const formattedDeadLine = getFormattedDeadLine(
+      now,
+      new Date(order.status_changed_at)
+    );
 
     const header = (
       <header className="p-3">
@@ -82,51 +85,51 @@ class ProcessingOrderView extends React.Component {
     );
 
     if (order && order.order_list) {
-      orderElements = order.order_list.map(({ description, orderQuantity, productId }) => {
-        return (
-          <div className="col-xs-12 col-sm-6" key={productId}>
-            <div className="card order-cards mb-4 p-4">
-              <div className="row">
-                <div className="col-sm-12">
-                  <h6>{getProductDescription(description)}</h6>
-                  <p>
-                    Str: {getSize(description)}
-                    <br />
-                    Farge: {getColor(description)}
-                    <br />
-                    Antall: {orderQuantity}
-                    <br />
-                    SKU: {productId}
-                  </p>
-                </div>
-                <div className="col-sm-10 col-md-6">
-                  <div className="product-image">
-                    <img
-                      src={
-                        "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
-                      }
-                      alt="productImage"
-                      className="img-fluid"
-                    />{" "}
+      orderElements = order.order_list.map(
+        ({ description, orderQuantity, productId }) => {
+          return (
+            <div className="col-xs-12 col-sm-6" key={productId}>
+              <div className="card order-cards mb-4 p-4">
+                <div className="row">
+                  <div className="col-sm-12">
+                    <h6>{getProductDescription(description)}</h6>
+                    <p>
+                      Str: {getSize(description)}
+                      <br />
+                      Farge: {getColor(description)}
+                      <br />
+                      Antall: {orderQuantity}
+                      <br />
+                      SKU: {productId}
+                    </p>
                   </div>
-                  <div className="col-12 m-4 text-center">
-                    <button
-                      className="btn varner-btn-green rounded-0 pick-button"
-                      onClick={this.handleClick.bind(this, productId)}
-                    >
-                      {this.state.pickedSkus.includes(productId) ? (
-                        "Plukket"
-                      ) : (
-                          "Marker som plukket"
-                        )}
-                    </button>
+                  <div className="col-sm-10 col-md-6">
+                    <div className="product-image">
+                      <img
+                        src={
+                          "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
+                        }
+                        alt="productImage"
+                        className="img-fluid"
+                      />{" "}
+                    </div>
+                    <div className="col-12 m-4 text-center">
+                      <button
+                        className="btn varner-btn-green rounded-0 pick-button"
+                        onClick={this.handleClick.bind(this, productId)}
+                      >
+                        {this.state.pickedSkus.includes(productId)
+                          ? "Plukket"
+                          : "Marker som plukket"}
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        );
-      });
+          );
+        }
+      );
 
       return (
         <React.Fragment>
@@ -137,30 +140,30 @@ class ProcessingOrderView extends React.Component {
             <div className="row">
               <div className="container">{orderElements}</div>
             </div>
-                <br />
-                <Container>
-                  <Row>
-                    <Col>
-                      <button
-                        disabled={pickedSkus.length !== order.order_list.length}
-                        value={"packed"}
-                        onClick={this.handleChange.bind(this, "packed")}
-                        className="btn varner-btn-light mx-2 rounded-0 accepting-button"
-                      >
-                        Klar til opphenting
-									    </button>
-                    </Col>
-                    <Col>
-                      <button
-                        onClick={this.handleChange.bind(this, "new")}
-                        className="btn varner-btn-dark mx-2 rounded-0 decline-button"
-                      >
-                        Angre
-									    </button>
-                    </Col>
-                  </Row>
-                </Container>
-              </div>
+            <br />
+            <Container>
+              <Row>
+                <Col>
+                  <button
+                    disabled={pickedSkus.length !== order.order_list.length}
+                    value={"packed"}
+                    onClick={this.handleChange.bind(this, "in-process")}
+                    className="btn varner-btn-light mx-2 rounded-0 accepting-button"
+                  >
+                    Klar til opphenting
+                  </button>
+                </Col>
+                <Col>
+                  <button
+                    onClick={this.handleChange.bind(this, "new")}
+                    className="btn varner-btn-dark mx-2 rounded-0 decline-button"
+                  >
+                    Angre
+                  </button>
+                </Col>
+              </Row>
+            </Container>
+          </div>
         </React.Fragment>
       );
     }
