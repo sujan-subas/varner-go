@@ -82,52 +82,54 @@ class ProcessingOrderView extends React.Component {
     );
 
     if (order && order.order_list) {
-      orderElements = order.order_list.map(({ description, orderQuantity, productId }) => {
-        return (
-          <div className="col-xs-12 col-sm-6" key={productId}>
-            <div className="card order-cards mb-4 p-4">
-              <div className="row">
-                <div className="col-sm-12">
-                  <h6>{getProductDescription(description)}</h6>
-                  <p>
-                    Str: {getSize(description)}
-                    <br />
-                    Farge: {getColor(description)}
-                    <br />
-                    Antall: {orderQuantity}
-                    <br />
-                    SKU: {productId}
-                  </p>
-                </div>
-                <div className="col-sm-10 col-md-6">
-                  <div className="product-image">
-                    <img
-                      src={
-                        "https://cubus.imgix.net/globalassets/productimages/7238141_784_f_q_l_kathy_parka_cubus.jpg?auto=format&w=2600"
-                      }
-                      alt="productImage"
-                      className="img-fluid"
-                    />{" "}
+      orderElements = order.order_list.map(
+        ({ description, orderQuantity, productId }) => {
+          return (
+            <div className="col-xs-12 col-sm-6" key={productId}>
+              <div className="card order-cards mb-4 p-4">
+                <div className="row">
+                  <div className="col-sm-12">
+                    <h6>{getProductDescription(description)}</h6>
+                    <p>
+                      Str: {getSize(description)}
+                      <br />
+                      Farge: {getColor(description)}
+                      <br />
+                      Antall: {orderQuantity}
+                      <br />
+                      SKU: {productId}
+                    </p>
                   </div>
                   <div className="col-sm-10 col-md-6">
                     <div className="product-image">
                       <img
                         src={
-                          "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
+                          "https://cubus.imgix.net/globalassets/productimages/7238141_784_f_q_l_kathy_parka_cubus.jpg?auto=format&w=2600"
                         }
                         alt="productImage"
                         className="img-fluid"
                       />{" "}
                     </div>
-                    <div className="col-12 m-4 text-center">
-                      <button
-                        className="btn varner-btn-green rounded-0 pick-button"
-                        onClick={this.handleClick.bind(this, productId)}
-                      >
-                        {this.state.pickedSkus.includes(productId)
-                          ? "Plukket"
-                          : "Marker som plukket"}
-                      </button>
+                    <div className="col-sm-10 col-md-6">
+                      <div className="product-image">
+                        <img
+                          src={
+                            "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
+                          }
+                          alt="productImage"
+                          className="img-fluid"
+                        />{" "}
+                      </div>
+                      <div className="col-12 m-4 text-center">
+                        <button
+                          className="btn varner-btn-green rounded-0 pick-button"
+                          onClick={this.handleClick.bind(this, productId)}
+                        >
+                          {this.state.pickedSkus.includes(productId)
+                            ? "Plukket"
+                            : "Marker som plukket"}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
