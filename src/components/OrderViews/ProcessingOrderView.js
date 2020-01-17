@@ -33,11 +33,9 @@ class ProcessingOrderView extends React.Component {
       });
     }
   }
-
   async handleChange(statusValue, event) {
     // const { status } = this.props;
     const { order_number } = this.props.order;
-
     try {
       await updateOrderStatus(order_number, statusValue, null);
     } catch (err) {
@@ -48,7 +46,6 @@ class ProcessingOrderView extends React.Component {
     // }
     this.props.history.goBack();
   }
-
   render() {
     const { pickedSkus } = this.state;
     const { order, now, getProductDescription } = this.props;
@@ -85,23 +82,32 @@ class ProcessingOrderView extends React.Component {
     );
 
     if (order && order.order_list) {
-      orderElements = order.order_list.map(
-        ({ description, orderQuantity, productId }) => {
-          return (
-            <div className="col-xs-12 col-sm-6" key={productId}>
-              <div className="card order-cards mb-4 p-4">
-                <div className="row">
-                  <div className="col-sm-12">
-                    <h6>{getProductDescription(description)}</h6>
-                    <p>
-                      Str: {getSize(description)}
-                      <br />
-                      Farge: {getColor(description)}
-                      <br />
-                      Antall: {orderQuantity}
-                      <br />
-                      SKU: {productId}
-                    </p>
+      orderElements = order.order_list.map(({ description, orderQuantity, productId }) => {
+        return (
+          <div className="col-xs-12 col-sm-6" key={productId}>
+            <div className="card order-cards mb-4 p-4">
+              <div className="row">
+                <div className="col-sm-12">
+                  <h6>{getProductDescription(description)}</h6>
+                  <p>
+                    Str: {getSize(description)}
+                    <br />
+                    Farge: {getColor(description)}
+                    <br />
+                    Antall: {orderQuantity}
+                    <br />
+                    SKU: {productId}
+                  </p>
+                </div>
+                <div className="col-sm-10 col-md-6">
+                  <div className="product-image">
+                    <img
+                      src={
+                        "https://cubus.imgix.net/globalassets/productimages/7238141_784_f_q_l_kathy_parka_cubus.jpg?auto=format&w=2600"
+                      }
+                      alt="productImage"
+                      className="img-fluid"
+                    />{" "}
                   </div>
                   <div className="col-sm-10 col-md-6">
                     <div className="product-image">

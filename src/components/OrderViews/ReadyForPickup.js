@@ -70,7 +70,7 @@ class ReadyForPickupView extends React.Component {
 						data-target="#myModal"
 						className="btn varner-btn-light w-100 mx-4 rounded-0 center ready-for-pick-up"
 					>
-						Levert
+						Marker som levert
 					</button>
 				</div>
 				<div className="modal fade" id="myModal">

@@ -256,7 +256,6 @@ body h2 {
 footer {
   /*border-top: 1px solid var(--varner-darkest);*/
   background-color: var(--varner-darker);
-  bottom: 0;
   opacity: 0.5;
 }
 
