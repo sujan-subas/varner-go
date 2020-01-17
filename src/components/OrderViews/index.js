@@ -79,10 +79,10 @@ class OrderViews extends React.Component {
       case "new":
         ActiveView = NewOrderView;
         break;
-      case "packed":
+      case "in-process":
         ActiveView = ProcessingOrderView;
         break;
-      case "in-process":
+      case "packed":
         ActiveView = ReadyForPickupView;
         break;
       default:
