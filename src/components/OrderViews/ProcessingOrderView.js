@@ -33,24 +33,9 @@ class ProcessingOrderView extends React.Component {
     }
   }
 
-<<<<<<< HEAD
-		// console.log('ordernumber', orderNumber)
-		try {
-			await updateOrderStatus(order_number, 'packed') 
-		} catch (err) {
-			console.log(err)
-		}
-		if (statusValue === "new") {
-			//check PATCH request
-			//updateOrderStatus(ordernumber, statusValue, "pending");
-			changeView(status);
-		}
-		this.props.history.goBack();
-=======
   async handleChange(statusValue, event) {
     const { changeView, status } = this.props;
     const { order_number } = this.props.order;
->>>>>>> cded9c0320460532b4ea926b62380eda0fe21b57
 
     try {
       await updateOrderStatus(order_number, "packed");
@@ -137,10 +122,10 @@ class ProcessingOrderView extends React.Component {
           );
         }
       );
-
+return 
 				<React.Fragment>
 					{header}
-					<div className="jumbotron jumbotron-fluid p-2 varner-white-theme" />
+					<div className="jumbotron jumbotron-fluid p-2 varner-white-theme" >
 					<div className="container">
 						<h1 className="text-center">Ordreoversikt</h1>
 						<div className="row">
@@ -168,6 +153,7 @@ class ProcessingOrderView extends React.Component {
 								</div>
 							</div>
 						</div>
+            </div>
 					</div>
 				</React.Fragment>
 			);
