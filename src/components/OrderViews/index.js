@@ -61,11 +61,14 @@ class OrderViews extends React.Component {
   }
 
   handleChange = status => {
-    console.log(this.props);
     const { ordernumber } = this.props.match.params;
     const { history } = this.props;
     history.push(`/orders/${ordernumber}/${status}`);
   };
+
+  handeChangeView (statusValue, event) {
+    
+  }
 
   render() {
     const { status, order } = this.state;
