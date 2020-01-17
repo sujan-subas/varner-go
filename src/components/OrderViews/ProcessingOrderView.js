@@ -104,22 +104,13 @@ class ProcessingOrderView extends React.Component {
                     <div className="product-image">
                       <img
                         src={
-                          "https://cubus.imgix.net/globalassets/productimages/7238141_784_f_q_l_kathy_parka_cubus.jpg?auto=format&w=2600"
+                          "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
                         }
                         alt="productImage"
                         className="img-fluid"
                       />{" "}
                     </div>
                     <div className="col-sm-10 col-md-6">
-                      <div className="product-image">
-                        <img
-                          src={
-                            "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
-                          }
-                          alt="productImage"
-                          className="img-fluid"
-                        />{" "}
-                      </div>
                       <div className="col-12 m-4 text-center">
                         <button
                           className="btn varner-btn-green rounded-0 pick-button"
@@ -155,7 +146,7 @@ class ProcessingOrderView extends React.Component {
                   <button
                     disabled={pickedSkus.length !== order.order_list.length}
                     value={"packed"}
-                    onClick={this.handleChange.bind(this, "in-process")}
+                    onClick={this.handleChange.bind(this, "packed")}
                     className="btn varner-btn-light mx-2 rounded-0 accepting-button"
                   >
                     Klar til opphenting
@@ -163,7 +154,7 @@ class ProcessingOrderView extends React.Component {
                 </Col>
                 <Col>
                   <button
-                    onClick={this.handleChange.bind(this, "new")}
+                    onClick={this.handleChange.bind(this, "in-process")}
                     className="btn varner-btn-dark mx-2 rounded-0 decline-button"
                   >
                     Angre

@@ -46,7 +46,7 @@ export default class AcceptDecline extends React.Component {
   async handleButtonClick(newStatus, props) {
     const { ordernumber } = this.props.match.params;
 
-    if (newStatus === "packed") {
+    if (newStatus === "in-process") {
       try {
         await updateOrderStatus(ordernumber, newStatus, null);
 

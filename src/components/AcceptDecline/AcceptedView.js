@@ -19,7 +19,7 @@ const accepted = props => {
           </div>
           <button
             className="btn varner-btn-dark"
-            onClick={() => props.handleButtonClick("packed")}
+            onClick={() => props.handleButtonClick("in-process")}
           >
             Plukk ordren
           </button>
