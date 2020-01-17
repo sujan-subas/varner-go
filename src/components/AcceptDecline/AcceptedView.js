@@ -23,9 +23,9 @@ const accepted = props => {
         </div>
         <div className="row">
           <div className="container">
-            <div className="col-12 text-center">
+            <div className="col-12 content-center">
               <button
-                className="btn m-3 varner-btn-green rounded-0"
+                className="btn m-3 varner-btn-green  rounded-0"
                 onClick={() => props.handleButtonClick("in-process")}
               >
                 Plukk ordren

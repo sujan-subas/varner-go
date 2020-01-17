@@ -6,7 +6,7 @@ const AcceptDeclineFooter = props => {
       <div className="row ">
         <div className="col-12 text-center">
           <button
-            className="btn m-3 varner-btn-dark rounded-0"
+            className="btn m-4 varner-btn-dark rounded-0"
             onClick={() => props.handleButtonClick("back")}
           >
             Tilbake til ordre

@@ -123,7 +123,7 @@ export default class AcceptDecline extends React.Component {
           {/* END - grey container */}
         </main>
         {/* BUTTONS */}
-        <div>
+        <div >
           <AcceptDeclineFooter
             handleButtonClick={this.handleButtonClick}
             comfirmed={comfirmed}
