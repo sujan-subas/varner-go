@@ -33,31 +33,19 @@ class ProcessingOrderView extends React.Component {
       });
     }
   }
-
-		// console.log('ordernumber', orderNumber)
-		try {
-			await updateOrderStatus(order_number, 'packed') 
-		} catch (err) {
-			console.log(err)
-		}
-		if (statusValue === "new") {
-			//check PATCH request
-			//updateOrderStatus(ordernumber, statusValue, "pending");
-			changeView(status);
-		}
-		this.props.history.goBack();
-
+  async handleChange(statusValue, event) {
+    // const { status } = this.props;
+    const { order_number } = this.props.order;
     try {
-      await updateOrderStatus(order_number, "packed");
+      await updateOrderStatus(order_number, statusValue, null);
     } catch (err) {
       console.log(err);
     }
-    if (statusValue === "new") {
-      changeView(status);
-    }
+    // if (statusValue === "new") {
+    //   changeView(status);
+    // }
     this.props.history.goBack();
   }
-
   render() {
     const { pickedSkus } = this.state;
     const { order, now, getProductDescription } = this.props;
