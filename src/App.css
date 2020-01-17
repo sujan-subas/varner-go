@@ -20,9 +20,13 @@
   min-height: 100vh;
 }
 /* varner specs */
-.varne-dark-theme {
+.varner-dark-theme {
   color: var(--varner-text-white);
   background-color: var(--varner-text-darkest);
+}
+.varner-darkest-theme {
+  color: var(--varner-text-white);
+  background-color: var(--varner-darkest);
 }
 .varner-white-theme {
   color: var(--varner-text-dark);
@@ -31,6 +35,20 @@
 .varner-btn-green {
   color: var(--varner-text-white);
   background: var(--varner-green);
+  width: 80%;
+  margin: 1rem;
+  padding: 1rem;
+  box-shadow: 1px 1px 0.5px var(--varner-dark);
+  font-weight: bold;
+}
+.varner-btn-light {
+  color: var(--varner-text-dark);
+  background-color: var(--varner-text-white);
+  width: 80%;
+  margin: 1rem;
+  padding: 1rem;
+  box-shadow: 1px 1px 0.5px var(--varner-dark);
+  font-weight: bold;
 }
 .varner-btn-dark {
   color: var(--varner-text-white);
@@ -39,6 +57,7 @@
   margin: 1rem;
   padding: 1rem;
   box-shadow: 1px 1px 0.5px var(--varner-dark);
+  font-weight: bold;
 }
 .varner-btn-black {
   color: var(--varner-text-white);
@@ -47,6 +66,18 @@
   margin: 1rem;
   padding: 1rem;
   box-shadow: 1px 1px 0.5px var(--varner-dark);
+  font-weight: bold;
+}
+
+/* Green text highlight */
+.green {
+  color: var(--varner-green)
+}
+
+/* dark text*/
+.dark-text {
+  color: var(--varner-black);
+  background-color: var(--varner-darker)
 }
 
 /* navbars */
@@ -82,6 +113,15 @@ form {
   padding: 0;
   width: 8rem;
   margin: 1px auto;
+}
+
+.p-3 {
+  text-align: center!important;
+}
+
+.col-10 {
+  padding-left: 0px;
+  padding-right: 2rem;
 }
 /* toggle navbar */
 .navbar-light .navbar-nav .nav-link {
@@ -143,6 +183,7 @@ a {
   padding-bottom: 0;
   border: none;
 }
+
 /* bottom navbar */
 .bottom-nav {
   background-color: var(--varner-dark);
@@ -207,8 +248,35 @@ body h2 {
 
 /* footer */
 footer {
-  border-top: 1px solid var(--varner-darkest);
+  /*border-top: 1px solid var(--varner-darkest);*/
   background-color: var(--varner-darker);
   bottom: 0;
   opacity: 0.5;
 }
+
+/* button fix*/
+.buttons-container-1 {
+  padding-right: 1rem;
+}
+.pick-button {
+  margin-right: 1.4rem!important;
+  float: right;
+  margin: 0 auto;
+  width: 100%!important;
+}
+
+.ready-for-pick-up {
+  margin-left: 2.5rem!important;
+  margin-bottom: 3.5rem!important;
+  width: 70vw!important;
+}
+
+.decline-button {
+  width: 80vw!important;
+}
+
+.accepting-button {
+  width: 80vw!important;
+}
+
+
