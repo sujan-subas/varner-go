@@ -2,11 +2,10 @@ import React from "react";
 
 import { updateOrderStatus } from "../../clientAPI/clientAPI";
 import BackButton from "../AcceptDecline/Navbar";
-import { Nav, Navbar, Card } from "react-bootstrap";
+import { Navbar, Card } from "react-bootstrap";
 
 class ReadyForPickupView extends React.Component {
 	handleSendOrder = (status) => {
-		console.log("HEI", status);
 		const orderNumber = this.props.order.order_number;
 		updateOrderStatus(orderNumber, status);
 	};

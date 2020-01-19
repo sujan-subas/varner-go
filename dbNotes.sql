@@ -24,8 +24,7 @@ create type "type-decline_reason" as enum
 'Varen er ikke tilgjengelig',
 'Varen er skadet',
 'Har ikke tid',
-'Annet',
-'Orderen er godkjent'
+'Annet'
 );
 
 ----
@@ -74,15 +73,15 @@ create table orders
 -- Order End -------------------------------------
 -- status er enten delivered eller Rejected 
 
-create table orders_end
-(
-   order_number varchar unique NOT NULL,
-   created_in_app_at TIMESTAMPTZ DEFAULT Now(),
-   process_finished_at TIMESTAMPTZ,
-   reference_order_no bigint unique not null,
-   order_status "type-order_status",
-   rejected_reason varchar
-);
+-- create table orders_end
+-- (
+--    order_number varchar unique NOT NULL,
+--    created_in_app_at TIMESTAMPTZ DEFAULT Now(),
+--    process_finished_at TIMESTAMPTZ,
+--    reference_order_no bigint unique not null,
+--    order_status "type-order_status",
+--    rejected_reason varchar
+-- );
 
 
 -- CREATE TABLE  ( 
