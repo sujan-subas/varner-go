@@ -35,8 +35,7 @@
 .varner-btn-green {
   color: var(--varner-text-white);
   background: var(--varner-green);
-  width: 80%;
-  margin: 1rem;
+  width: 89%;
   padding: 1rem;
   box-shadow: 1px 1px 0.5px var(--varner-dark);
   font-weight: bold;
@@ -54,9 +53,8 @@
   color: var(--varner-text-white);
   background: var(--varner-darkest);
   width: 80%;
-  margin: 1rem;
   padding: 1rem;
-  box-shadow: 1px 1px 0.5px var(--varner-dark);
+  box-shadow: 1px 1px 0.5px var(--varner-darker);
   font-weight: bold;
 }
 .varner-btn-black {

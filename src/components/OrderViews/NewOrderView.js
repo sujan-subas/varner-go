@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap"
+import { Container, Row, Col } from "react-bootstrap";
 import {
   getFormattedDate,
   getFormattedDeadLine
@@ -27,7 +27,8 @@ const NewOrderView = props => {
             </button>
           </div>
           <div className="col-10">
-            <strong>Utløper om: </strong><strong className="green">{formattedDeadLine}</strong>
+            <strong>Utløper om: </strong>
+            <strong className="green">{formattedDeadLine}</strong>
             <br />
             <strong> Antall varer: {props.order.order_list.length} </strong>
           </div>
@@ -63,14 +64,27 @@ const NewOrderView = props => {
             {props.order.order_list.map(
               ({ description, orderQuantity, productId }) => {
                 return (
-                  <div className="col-xs-12 col-sm-6" >
+                  <div className="col-xs-12 col-sm-6">
                     <div
                       className="card order-cards mb-4 p-4"
                       key={order.reference_order_no}
                     >
                       <div className="row">
-                        <div className="col-sm-12">
+                        <div className="col-12 m-1 p-1">
                           <h6>{props.getProductDescription(description)}</h6>
+                        </div>
+                        <div className="col-6">
+                          <div className="product-image w-100">
+                            <img
+                              src={
+                                "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
+                              }
+                              alt="productImage"
+                              className="img-fluid "
+                            />
+                          </div>
+                        </div>
+                        <div className="col-6">
                           <p>
                             Str: {props.getSize(description)}
                             <br />
@@ -79,17 +93,6 @@ const NewOrderView = props => {
                             Antall: {orderQuantity} <br />
                             SKU: {productId}
                           </p>
-                        </div>
-                        <div className="col-sm-10 col-md-6">
-                          <div className="product-image">
-                            <img
-                              src={
-                                "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
-                              }
-                              alt="productImage"
-                              className="img-fluid"
-                            />{" "}
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -102,22 +105,22 @@ const NewOrderView = props => {
         <Container>
           <Row>
             <Col>
-            <button
-              onClick={props.handleChange.bind(this, "in-process")}
-              className="btn varner-btn-light m-4 rounded-0 accepting-button"
-            >
-              Godta Ordre
-            </button>
+              <button
+                onClick={props.handleChange.bind(this, "in-process")}
+                className="btn varner-btn-light m-4 rounded-0 accepting-button"
+              >
+                Godta Ordre
+              </button>
             </Col>
           </Row>
           <Row>
             <Col>
-            <button
-              onClick={props.handleChange.bind(this, "declined")}
-              className="btn m-4 varner-btn-dark rounded-0 decline-button"
-            >
-              Avvis Ordre
-            </button>
+              <button
+                onClick={props.handleChange.bind(this, "declined")}
+                className="btn m-4 varner-btn-dark rounded-0 decline-button"
+              >
+                Avvis Ordre
+              </button>
             </Col>
           </Row>
         </Container>
