@@ -1,7 +1,7 @@
 import React from "react";
 
 import { updateOrderStatus } from "../../clientAPI/clientAPI";
-import BackButton from "../AcceptDecline/Navbar";
+import BackButton from "../AcceptDecline/BackButton";
 import { Navbar, Card } from "react-bootstrap";
 
 class ReadyForPickupView extends React.Component {
@@ -16,22 +16,22 @@ class ReadyForPickupView extends React.Component {
 		const listedProducts = orderList.map((products) => {
 			return (
 				<div className="container" key={products.productId}>
-					<Card className="col-xs-12 col-sm-6 varner-darkest-theme">
-						<Card.Header>Artikkel: {products.description}</Card.Header>
-						<Card.Body>
-							<Card.Text>
+					<div className="card order-cards m-1">
+						<div className="card-header">Artikkel: {products.description}</div>
+						<div className="card-body">
+							<div className="card-text">
 								Artikkelid: {products.productId}
 								<br />
 								Pris: {products.price} NOK
 								<br />
 								Antall: {products.orderQuantity}
-							</Card.Text>
-						</Card.Body>
-					</Card>
-					<br />
+							</div>
+						</div>
+					</div>
 				</div>
 			);
 		});
+		console.log(this.props);
 
 		return (
 			<div>
@@ -63,31 +63,39 @@ class ReadyForPickupView extends React.Component {
 				</div>
 				<br />
 				<div className="col-6 justify-content-center">
-					<button
-						onClick={() => this.handleSendOrder("delivered")}
-						data-toggle="modal"
-						data-target="#myModal"
-						className="btn varner-btn-light w-100 mx-4 rounded-0 center ready-for-pick-up"
-					>
-						Marker som levert
-					</button>
+					{this.props.order.deliverd ? (
+						<button
+							onClick={() => this.handleSendOrder("delivered")}
+							data-toggle="modal"
+							data-target="#myModal"
+							className="btn varner-btn-light w-100 mx-4 rounded-0 center ready-for-pick-up"
+						>
+							Marker som levert
+						</button>
+					) : (
+						""
+					)}
 				</div>
 				<div className="modal fade" id="myModal">
 					<div className="modal-dialog">
 						<div className="modal-content">
 							<div className="modal-header">
-								<h5 className="modal-title">ReservasjonsID: {this.props.order.reference_order_no}.</h5>
+								<h5 className="modal-title">
+									Ordrenummer:
+									<strong className=""> {this.props.order.reference_order_no}</strong>
+								</h5>
 								<button type="button" className="close" data-dismiss="modal">
 									<span>&times;</span>
 								</button>
 							</div>
 							<div className="modal-body">
 								<h5>{this.props.order.customer_name} har mottatt varen.</h5>
-								<br />
 								Du finner nå orderen under utlevert.
 							</div>
 							<div className="modal-footer">
-								<BackButton />
+								<div className="varner-white-theme text-center">
+									<BackButton />
+								</div>
 							</div>
 						</div>
 					</div>

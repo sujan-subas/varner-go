@@ -53,13 +53,6 @@ class OrderViews extends React.Component {
     }
   }
 
-  setStatus() {
-    const { order } = this.state;
-    this.setState({
-      status: order.order_status
-    });
-  }
-
   handleChange = status => {
     const { ordernumber } = this.props.match.params;
     const { history } = this.props;
@@ -79,10 +72,10 @@ class OrderViews extends React.Component {
       case "new":
         ActiveView = NewOrderView;
         break;
-      case "in-process":
+      case "packed":
         ActiveView = ProcessingOrderView;
         break;
-      case "packed":
+      case "in-process":
         ActiveView = ReadyForPickupView;
         break;
       default:

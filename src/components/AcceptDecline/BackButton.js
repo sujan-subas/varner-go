@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom';
 
-const Navbar = props => {
+const BackButton = props => {
 
 return (
     <button
@@ -16,4 +16,4 @@ return (
 )
 }
 
-export default withRouter(Navbar)
+export default withRouter(BackButton)

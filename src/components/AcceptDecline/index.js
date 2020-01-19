@@ -2,9 +2,9 @@ import React from "react";
 
 import { updateOrderStatus } from "../../clientAPI/clientAPI";
 import AcceptedView from "./AcceptedView";
-import DeclinedView from "./DeclinedView";
+import RejectedView from "./RejectedView";
 import AcceptDeclineFooter from "./AcceptDeclineFooter";
-import Navbar from "./Navbar";
+import BackButton from "./BackButton";
 
 export default class AcceptDecline extends React.Component {
 	constructor (props) {
@@ -12,125 +12,119 @@ export default class AcceptDecline extends React.Component {
 
 		this.state = {
 			comfirmed: false,
-			declined: null,
+			rejected: null,
 			reason: "",
-			storeID: "a1",
-			orderNumber: "",
+			// storeID: "a1",
+			// orderNumber: "",
 			status: "new"
 		};
 		this.handleButtonClick = this.handleButtonClick.bind(this);
-		this.handleDeclinedReason = this.handleDeclinedReason.bind(this);
+		this.handleRejectedReason = this.handleRejectedReason.bind(this);
 	}
 
 	componentDidMount () {
-		const { ordernumber } = this.props.match.params;
-		console.log(`AcceptDeclineView did mount: ${ordernumber}`);
-		this.updateState();
+    const { ordernumber, status } = this.props.match.params;
+    console.log(ordernumber, status)
+		this.updateState(status);
 	}
 
-  updateState() {
-    const { status } = this.props.match.params;
-    if (status === "declined") {
-      this.setState({
-        declined: true,
-        status
-      });
-    } else if (status === "in-process") {
-      this.setState({
-        declined: false,
-        status
-      });
+  updateState(status) {
+    // const { status } = this.props.match.params;
+    try {
+      if (status === "rejected") {
+        this.setState({
+          rejected: true,
+          status
+        });
+      } else if (status === "packed") {
+        this.setState({
+          rejected: false,
+          status
+        });
+      } 
+    } catch(error) {
+      console.log(`Error: ${error}`)
     }
   }
   //functions footer buttons
-  async handleButtonClick(newStatus, props) {
+  async handleButtonClick(newStatus) {
     const { ordernumber } = this.props.match.params;
-    if (newStatus === "in-process") {
+
+    if (newStatus === "packed") {
+    try {
+      await updateOrderStatus(
+        ordernumber,
+        newStatus,
+        null
+      );
       this.setState({
-        comfirmed: !this.state.comfirmed
+        comfirmed: !this.state.comfirmed,
+        rejected: false,
+        status: newStatus
       });
-      try {
-        await updateOrderStatus(
-          ordernumber,
-          "in-process",
-          "Orderen er godkjent"
-        );
+      this.props.history.push(`/orders/${ordernumber}`)
       } catch (err) {
         console.log(err);
       }
-      this.props.history.goBack();
-    } else if (newStatus === "decline") {
-      await updateOrderStatus(ordernumber, newStatus, null);
-    } else if (newStatus === "declineOrder") {
-      this.setState({
-        comfirmed: !this.state.comfirmed
-      });
-    } else if (newStatus === "back") {
-      // legg til {histrpy}
-      if (this.state.comfirmed === true) {
-        this.setState({
-          comfirmed: !this.state.comfirmed
-        });
+
+      
+    } else if (newStatus === "new") {
+      try {
+        this.props.history.goBack();
+
+      } catch(error) {
+        console.log(`Error: ${error}`)
       }
-    } else {
-      alert("tilbake til oversikt");
     }
   }
 
 	// functions button for decline reason
-	async handleDeclinedReason (reason) {
-		const { ordernumber } = this.props.match.params;
+	async handleRejectedReason (reason) {
+		const { ordernumber, status } = this.props.match.params;
 		// console.log('ordernumber', ordernumber)
 		try {
-			await updateOrderStatus(ordernumber, this.state.status, reason);
+			await updateOrderStatus(ordernumber, status, reason);
 			this.setState({
-				comfirmed: !this.state.comfirmed,
-				reason
+        comfirmed: !this.state.comfirmed,
+        rejected: true,
+        reason,
+        status
 			});
 		} catch (error) {
 			console.log(`Was not able to delete order! Error: ${error.message}`);
-			alert(`Was not able to delete order!`);
 		}
-		console.log(reason);
 		this.props.history.push("/");
 	}
 
 	render () {
-		const { comfirmed, declined, reason } = this.state;
+		const { comfirmed, rejected, reason } = this.state;
 
     return (
-      <div className="h-100 ">
-        {/* Header */}
+      <>
         <header className="p-3">
           <div className="row">
             <div className="col-1 ">
-              <Navbar />
+              <BackButton />
             </div>
             <div className="col-11"></div>
           </div>
         </header>
-        {/* GREY CONTAINER */}
-        <main className="varner-dark-theme container-fluid container">
-          {declined ? (
-            <DeclinedView
-              handleDeclinedReason={this.handleDeclinedReason}
+        <main className="varner-dark-theme container">
+          {rejected ? (
+            <RejectedView
+              handleRejectedReason={this.handleRejectedReason}
               comfirmed={comfirmed}
               reason={reason}
             />
           ) : (
             <AcceptedView handleButtonClick={this.handleButtonClick} />
           )}
-          {/* END - grey container */}
-        </main>
-        {/* BUTTONS */}
-        <div >
           <AcceptDeclineFooter
             handleButtonClick={this.handleButtonClick}
             comfirmed={comfirmed}
           />
-        </div>
-        {/* END - background */}
-      </div>
+        </main>
+      </>
     );
   }
 }

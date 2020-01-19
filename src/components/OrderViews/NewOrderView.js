@@ -1,5 +1,4 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
 import {
   getFormattedDate,
   getFormattedDeadLine
@@ -35,11 +34,10 @@ const NewOrderView = props => {
         </div>
       </header>
       <main>
-        <div className="row varner-white-theme">
-          <div className="container p-2 px-4">
+        <div className="varner-white-theme">
+          <div className="container">
             <div className="col-sm-12">
               <h5>Sammendrag av bestilling</h5>
-              <br />
               <strong>
                 Bestillingsdato: {getFormattedDate(props.order.order_date)}
               </strong>
@@ -58,19 +56,17 @@ const NewOrderView = props => {
             </div>
           </div>
         </div>
-        <div className="container">
-          <h3 className="text-center m-4">Ordreoversikt</h3>
+        <div className="row">
           <div className="container">
+          <h3 className="text-center m-3">Ordreoversikt</h3>
             {props.order.order_list.map(
               ({ description, orderQuantity, productId }) => {
                 return (
-                  <div className="col-xs-12 col-sm-6">
+                  <div className="col-xs-12 col-sm-6" key={productId}>
                     <div
-                      className="card order-cards mb-4 p-4"
-                      key={order.reference_order_no}
-                    >
+                      className="card order-cards mb-3 p-2 rounded-0"                    >
                       <div className="row">
-                        <div className="col-12 m-1 p-1">
+                        <div className="col-12">
                           <h6>{props.getProductDescription(description)}</h6>
                         </div>
                         <div className="col-6">
@@ -84,15 +80,27 @@ const NewOrderView = props => {
                             />
                           </div>
                         </div>
-                        <div className="col-6">
-                          <p>
-                            Str: {props.getSize(description)}
+                        <div className="col-6 pt-3">
+                          <article>
+                            <b className="varner-text-grey mr-2">
+                               Str: 
+                            </b>
+                             {props.getSize(description)}
                             <br />
-                            Farge: {props.getColor(description)}
+                            <b className="varner-text-grey mr-2">
+                               Farge:
+                            </b>
+                            {props.getColor(description)}
                             <br />
-                            Antall: {orderQuantity} <br />
-                            SKU: {productId}
-                          </p>
+                            <b className="varner-text-grey mr-2">
+                               Antall:
+                            </b>
+                             {orderQuantity} <br />
+                            <b className="varner-text-grey mr-2">
+                               Product Id:
+                            </b>
+                            {productId}
+                          </article>
                         </div>
                       </div>
                     </div>
@@ -102,28 +110,22 @@ const NewOrderView = props => {
             )}
           </div>
         </div>
-        <Container>
-          <Row>
-            <Col>
+        <div className="row">
+          <div className="container text-center">
               <button
-                onClick={props.handleChange.bind(this, "in-process")}
-                className="btn varner-btn-light m-4 rounded-0 accepting-button"
+                onClick={props.handleChange.bind(this, "packed")}
+                className="btn varner-btn-green"
               >
                 Godta Ordre
               </button>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
               <button
                 onClick={props.handleChange.bind(this, "declined")}
-                className="btn m-4 varner-btn-dark rounded-0 decline-button"
+                className="btn varner-btn-dark"
               >
                 Avvis Ordre
               </button>
-            </Col>
-          </Row>
-        </Container>
+          </div>
+        </div>
       </main>
     </>
   );

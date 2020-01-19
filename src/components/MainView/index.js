@@ -56,7 +56,7 @@ class MainView extends React.Component {
 			let newName = "";
 			if (this.state.tabKey === "delivered") {
 				newName = "Utlevert";
-			} else if (this.state.tabKey === "declined") {
+			} else if (this.state.tabKey === "rejected") {
 				newName = "Avvist";
 			}
 			return newName;
@@ -96,7 +96,7 @@ class MainView extends React.Component {
 		let statusCountInProcess = [];
 		let statusCountPacked = [];
 		let statusCountDelivered = [];
-		let statusCountDeclined = [];
+		let statusCountRejected = [];
 		allOrders.forEach((count) => {
 			let orderStatus = count.order_status;
 			if (orderStatus === "new") {
@@ -107,8 +107,8 @@ class MainView extends React.Component {
 				statusCountPacked.push(orderStatus);
 			} else if (orderStatus === "delivered") {
 				statusCountDelivered.push(orderStatus);
-			} else if (orderStatus === "declined") {
-				statusCountDeclined.push(orderStatus);
+			} else if (orderStatus === "rejected") {
+				statusCountRejected.push(orderStatus);
 			}
 		});
 
@@ -149,9 +149,9 @@ class MainView extends React.Component {
 									</Nav.Link>
 								</div>
 								<div className="col-6 text-center pb-0">
-									<Nav.Link eventKey="declined">
+									<Nav.Link eventKey="rejected">
 										<div className="m-2">
-											Avvist <Badge variant="danger">{statusCountDeclined.length}</Badge>
+											Avvist <Badge variant="danger">{statusCountRejected.length}</Badge>
 										</div>
 									</Nav.Link>
 								</div>
@@ -174,15 +174,15 @@ class MainView extends React.Component {
 							</Nav.Link>
 						</div>
 						<div className="col-4 p-0">
-							<Nav.Link eventKey="in-process">
+							<Nav.Link eventKey="packed">
 								Skal pakkes <br />
-								<Badge variant="success">{statusCountInProcess.length}</Badge>
+								<Badge variant="success">{statusCountPacked.length}</Badge>
 							</Nav.Link>
 						</div>
 						<div className="col-4 p-0">
-							<Nav.Link eventKey="packed">
+							<Nav.Link eventKey="in-process">
 								Til henting <br />
-								<Badge variant="success">{statusCountPacked.length}</Badge>
+								<Badge variant="success">{statusCountInProcess.length}</Badge>
 							</Nav.Link>
 						</div>
 					</div>
