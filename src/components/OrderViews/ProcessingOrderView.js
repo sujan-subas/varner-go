@@ -1,5 +1,4 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
 
 import { withRouter } from "react-router-dom";
 import { getFormattedDeadLine } from "../../utils/getFormattedDeadLine";
@@ -7,167 +6,167 @@ import { getSize, getColor } from "../../utils/extractProductInfo";
 import { updateOrderStatus } from "../../clientAPI/clientAPI";
 
 class ProcessingOrderView extends React.Component {
-  constructor(props) {
-    super(props);
+	constructor (props) {
+		super(props);
 
-    this.state = {
-      pickedSkus: [],
-      isLoading: false,
-      error: null
-    };
+		this.state = {
+			pickedSkus: [],
+			isLoading: false,
+			error: null
+		};
 
-    this.handleChange = this.handleChange.bind(this);
-  }
+		this.handleChange = this.handleChange.bind(this);
+	}
 
-  handleClick(sku) {
-    if (this.state.pickedSkus.includes(sku)) {
-      let i = this.state.pickedSkus.indexOf(sku);
-      let pickedSkusCopy = [...this.state.pickedSkus];
-      pickedSkusCopy.splice(i, 1);
-      this.setState({
-        pickedSkus: pickedSkusCopy
-      });
-    } else {
-      this.setState({
-        pickedSkus: [...this.state.pickedSkus, sku]
-      });
-    }
-  }
-  async handleChange(statusValue, event) {
-    // const { status } = this.props;
-    const { order_number } = this.props.order;
-    try {
-      await updateOrderStatus(order_number, statusValue, null);
-    } catch (err) {
-      console.log(err);
-    }
-    // if (statusValue === "new") {
-    //   changeView(status);
-    // }
-    this.props.history.goBack();
-  }
-  render() {
-    const { pickedSkus } = this.state;
-    const { order, now, getProductDescription } = this.props;
-    let orderElements;
+	handleClick (sku) {
+		if (this.state.pickedSkus.includes(sku)) {
+			let i = this.state.pickedSkus.indexOf(sku);
+			let pickedSkusCopy = [ ...this.state.pickedSkus ];
+			pickedSkusCopy.splice(i, 1);
 
-    const formattedDeadLine = getFormattedDeadLine(
-      now,
-      new Date(order.status_changed_at)
-    );
+			this.setState({
+				pickedSkus: pickedSkusCopy
+			});
+		} else {
+			this.setState({
+				pickedSkus: [ ...this.state.pickedSkus, sku ]
+			});
+		}
+	}
+	async handleChange (statusValue) {
+		const { order_number } = this.props.order;
+		try {
+			await updateOrderStatus(order_number, statusValue, null);
+			this.props.history.push("/");
 
-    const header = (
-      <header className="p-3">
-        <div className="row">
-          <div className="col-2">
-            <button className="btn" onClick={() => this.props.history.goBack()}>
-              <i
-                className="fa fa-arrow-left text-success ml-auto"
-                style={{ transform: "scale(1.5, 1)" }}
-              />
-            </button>
-          </div>
-          <div className="col-9">
-            <strong>Ventet: </strong>
-            <strong className="green">{formattedDeadLine}</strong>
-            <br />
-            <strong>Antall varer: {order.order_list.length} </strong>
-            <br />
-            <strong>Varer plukket: </strong>
-            <strong className="green">{pickedSkus.length} </strong>
-            <strong>av {order.order_list.length}</strong>
-          </div>
-        </div>
-      </header>
-    );
+		} catch (err) {
+			console.log(err);
+		}
 
-    if (order && order.order_list) {
-      orderElements = order.order_list.map(
-        ({ description, orderQuantity, productId }) => {
-          return (
-            <div className="col-xs-12 col-sm-6" key={productId}>
-              <div className="card order-cards mb-4 p-4">
-                <div className="row">
-                  <div className="col-sm-12">
-                    <h6>{getProductDescription(description)}</h6>
-                    <p>
-                      Str: {getSize(description)}
-                      <br />
-                      Farge: {getColor(description)}
-                      <br />
-                      Antall: {orderQuantity}
-                      <br />
-                      SKU: {productId}
-                    </p>
+	}
+	render () {
+		const { pickedSkus } = this.state;
+		const { order, now, getProductDescription } = this.props;
+		let orderElements;
+
+		const formattedDeadLine = getFormattedDeadLine(now, new Date(order.status_changed_at));
+
+		if (order && order.order_list) {
+			orderElements = order.order_list.map(({ description, orderQuantity, productId }) => {
+				return (
+					<div className="col-xs-12 col-sm-6" key={productId}>
+						<div className="card order-cards mb-3 p-2 rounded-0">
+							<div className="row">
+								<div className="col-12">
+									<h6>{getProductDescription(description)}</h6>
                   </div>
-                  <div className="col-sm-10 col-md-6">
-                    <div className="product-image">
-                      <img
-                        src={
-                          "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
-                        }
-                        alt="productImage"
-                        className="img-fluid"
-                      />{" "}
-                    </div>
-                    <div className="col-sm-10 col-md-6">
-                      <div className="col-12 m-4 text-center">
-                        <button
-                          className="btn varner-btn-green rounded-0 pick-button"
-                          onClick={this.handleClick.bind(this, productId)}
-                        >
-                          {this.state.pickedSkus.includes(productId)
-                            ? "Plukket"
-                            : "Marker som plukket"}
-                        </button>
-                      </div>
-                    </div>
+                <div className="col-6 p-3">
+                  <div className="product-image w-100">
+                    <img
+                      src={
+                        "https://cubus.imgix.net/globalassets/productimages/7239779_308_f_q_l_ina_hoodie_cubus.jpg?auto=format&w=1000"
+                      }
+                      alt="productImage"
+                      className="img-fluid"
+                    />
                   </div>
                 </div>
+                <div className="col-6 pt-3">
+                  <article>
+                    <b className="varner-text-grey mr-2">
+                      Str:
+                            </b>
+                    {getSize(description)}
+                    <br />
+                    <b className="varner-text-grey mr-2">
+                      Farge:
+                            </b>
+                    {getColor(description)}
+                    <br />
+                    <b className="varner-text-grey mr-2">
+                      Antall:
+                            </b>
+                    {orderQuantity} <br />
+                    <b className="varner-text-grey mr-2">
+                      Product Id:
+                            </b>
+                    {productId}
+                  </article>
+                </div>
+							</div>
+		      	  <div className="row">
+								<div className="container">
+                  <div className="text-center">
+									<button
+										className="btn varner-btn-light rounded-0"
+										onClick={this.handleClick.bind(this, productId)}>
+											{this.state.pickedSkus.includes(productId) ? (
+												<strong>Plukket</strong>
+											) : (
+												<strong>Marker som plukket</strong>
+											)}
+									</button>
+                  </div>
+                </div>
+							</div>
+						</div>
+					</div>
+				);
+			});
+
+			return (
+				<>
+					<header>
+						<div className="row p-2">
+							<div className="col-2">
+								<button className="btn" onClick={() => this.props.history.goBack()}>
+									<i
+										className="fa fa-arrow-left text-success ml-auto"
+										style={{ transform: "scale(1.5, 1)" }}
+									/>
+								</button>
+							</div>
+							<strong className="col-10 text-center">
+								Ventet:
+								<strong className="green ml-1">{formattedDeadLine}</strong>
+								<br />
+								Varer plukket:
+								<strong className="green ml-1">{pickedSkus.length} </strong>
+								av {order.order_list.length}
+							</strong>
+						</div>
+					</header>
+					<main>
+            <div className="row">
+						  <div className="container">
+							  <h3 className="text-center m-3">Ordreoversikt</h3>
+							  	{orderElements}
               </div>
             </div>
-          );
-        }
-      );
-
-      return (
-        <React.Fragment>
-          {header}
-          <div className="jumbotron jumbotron-fluid p-2 varner-white-theme" />
-          <div className="container">
-            <h3 className="text-center m-4">Ordreoversikt</h3>
             <div className="row">
-              <div className="container">{orderElements}</div>
-            </div>
-            <br />
-            <Container>
-              <Row>
-                <Col>
-                  <button
-                    disabled={pickedSkus.length !== order.order_list.length}
-                    value={"packed"}
-                    onClick={this.handleChange.bind(this, "packed")}
-                    className="btn varner-btn-light mx-2 rounded-0 accepting-button"
-                  >
-                    Klar til opphenting
-                  </button>
-                </Col>
-                <Col>
-                  <button
-                    onClick={this.handleChange.bind(this, "in-process")}
-                    className="btn varner-btn-dark mx-2 rounded-0 decline-button"
-                  >
-                    Angre
-                  </button>
-                </Col>
-              </Row>
-            </Container>
-          </div>
-        </React.Fragment>
-      );
-    }
-    return <React.Fragment />;
-  }
+              <div className="container text-center">
+								<button
+									disabled={pickedSkus.length !== order.order_list.length}
+									value={"packed"}
+									onClick={this.handleChange.bind(this, "in-process")}
+									className="btn varner-btn-green"
+								>
+								  Klar til opphenting
+								</button>
+								<button
+									onClick={this.handleChange.bind(this, "packed")}
+									className="btn varner-btn-dark"
+								>
+									Angre
+								</button>
+              </div>
+            </div>        
+					</main>
+				</>
+			);
+		}
+		return <React.Fragment />;
+	}
 }
 
 export default withRouter(ProcessingOrderView);

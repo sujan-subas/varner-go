@@ -1,12 +1,15 @@
 import React from "react";
 
 const AcceptDeclineFooter = (props) => {
+	console.log(props);
 	return (
-		<div className="container">
-			<div className="text-center">
-				<button className="btn varner-btn-dark varner-btn-dark" onClick={() => props.handleButtonClick("back")}>
-					Tilbake til alle ordre
-				</button>
+		<div className="container text-center ">
+			<div className="row">
+				<div className="container text-center">
+					<button className="btn varner-btn-light" onClick={() => props.handleButtonClick("new")}>
+						Til alle ordre
+					</button>
+				</div>
 			</div>
 		</div>
 	);

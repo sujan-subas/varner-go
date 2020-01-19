@@ -41,23 +41,23 @@ class OrderViews extends React.Component {
   }
 
   async getOrder() {
-    const { ordernumber } = this.props.match.params;
     try {
-      this.setState({ isLoading: true });
+      this.setState({ 
+        isLoading: true 
+      });
+      const { ordernumber } = this.props.match.params;
+
       const order = await getOrderByOrderNumber(ordernumber);
-      this.setState({ order });
-      this.setStatus();
-      this.setState({ isLoading: false });
+      console.log(order)
+      this.setState({ 
+        order,
+      status: order.order_status,
+isLoading: false
+    });
+
     } catch (error) {
       this.setState({ error });
     }
-  }
-
-  setStatus() {
-    const { order } = this.state;
-    this.setState({
-      status: order.order_status
-    });
   }
 
   handleChange = status => {
@@ -79,10 +79,10 @@ class OrderViews extends React.Component {
       case "new":
         ActiveView = NewOrderView;
         break;
-      case "in-process":
+      case "packed":
         ActiveView = ProcessingOrderView;
         break;
-      case "packed":
+      case "in-process":
         ActiveView = ReadyForPickupView;
         break;
       default:
@@ -90,7 +90,7 @@ class OrderViews extends React.Component {
     }
 
     return (
-      <div>
+      <>
         <ActiveView
           order={order}
           getColor={getColor}
@@ -98,12 +98,11 @@ class OrderViews extends React.Component {
           getProductDescription={getProductDescription}
           status={this.status}
           getFormattedDate={getFormattedDate}
-          handleClick={this.handleClick}
           now={this.state.now}
           handleChange={this.handleChange}
           componentWillUnmount={this.componentWillUnmount.bind(this)}
         />
-      </div>
+      </>
     );
   }
 }
