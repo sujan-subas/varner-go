@@ -18,7 +18,7 @@
 	background-color: var(--varner-darkest);
 	color: var(--varner-text-white);
 	margin: 0 auto;
-	min-height: 100vh;
+	min-height: 95vh;
 }
 /* varner specs */
 .varner-dark-theme {
@@ -258,7 +258,8 @@ body h2 {
 
 /* footer */
 footer {
-	/*border-top: 1px solid var(--varner-darkest);*/
+	min-height: 5vh;
+	border-top: 1px solid var(--varner-darkest);
 	background-color: var(--varner-darker);
 	opacity: 0.5;
 }

@@ -71,13 +71,20 @@ class MainView extends React.Component {
 			)
 			.map((order, i) => {
 				const formattedDate = getFormattedDate(order.order_date);
+				console.log(order);
+
 				return (
 					<div
-						className="text-white card varner-dark-theme order-cards m-4 "
+						className="card varner-dark-theme order-cards m-4 "
 						key={i}
-						onClick={this.handleCardClick.bind(this, order.order_number)}
+						onClick={() => this.handleCardClick(order.order_number)}
 					>
-						<div className="card-header">Ordre nummer: {order.order_number}</div>
+						<div className="card-header">Ordre nummer: {order.order_number} </div>
+						{order.order_status === "rejected" ? (
+							<div className="text-center text-danger"> {order.decline_reason} </div>
+						) : (
+							""
+						)}
 						<div className="card-body ">
 							{/* <p>Utløper om: {order.expire === 0 ? "Unable to state" : order.expire} 88 min</p> */}
 							<p>Antall varer: {order.order_list.length}</p>
@@ -90,13 +97,12 @@ class MainView extends React.Component {
 				);
 			});
 
-		//return
-
 		let statusCountNew = [];
 		let statusCountInProcess = [];
 		let statusCountPacked = [];
 		let statusCountDelivered = [];
 		let statusCountRejected = [];
+
 		allOrders.forEach((count) => {
 			let orderStatus = count.order_status;
 			if (orderStatus === "new") {
@@ -125,7 +131,7 @@ class MainView extends React.Component {
 									type="text"
 									value={this.state.search}
 									onChange={this.updateSearch.bind(this)}
-									placeholder=" Søk på navn / tlf "
+									placeholder="Søk på ordrenummer"
 								/>
 							</Form>
 						</div>
@@ -189,9 +195,7 @@ class MainView extends React.Component {
 				</Nav>
 				<h2>{switchName()}</h2>
 				{ordersFromDatabase.length === 0 ? (
-					<div className="text-white">
-						<div className="container">NO {tabKey.toLocaleUpperCase()} ORDERS</div>
-					</div>
+					<div className="container text-center text-white">NO {tabKey.toLocaleUpperCase()} ORDERS</div>
 				) : (
 					ordersFromDatabase
 				)}

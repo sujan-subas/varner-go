@@ -23,6 +23,7 @@ class ProcessingOrderView extends React.Component {
 			let i = this.state.pickedSkus.indexOf(sku);
 			let pickedSkusCopy = [ ...this.state.pickedSkus ];
 			pickedSkusCopy.splice(i, 1);
+
 			this.setState({
 				pickedSkus: pickedSkusCopy
 			});
@@ -32,15 +33,16 @@ class ProcessingOrderView extends React.Component {
 			});
 		}
 	}
-	async handleChange (statusValue, event) {
+	async handleChange (statusValue) {
 		const { order_number } = this.props.order;
 		try {
 			await updateOrderStatus(order_number, statusValue, null);
+			this.props.history.push("/");
+
 		} catch (err) {
 			console.log(err);
 		}
 
-		this.props.history.goBack();
 	}
 	render () {
 		const { pickedSkus } = this.state;
@@ -99,9 +101,9 @@ class ProcessingOrderView extends React.Component {
 										className="btn varner-btn-light rounded-0"
 										onClick={this.handleClick.bind(this, productId)}>
 											{this.state.pickedSkus.includes(productId) ? (
-												"Plukket"
+												<strong>Plukket</strong>
 											) : (
-												"Marker som plukket"
+												<strong>Marker som plukket</strong>
 											)}
 									</button>
                   </div>

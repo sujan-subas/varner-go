@@ -8,7 +8,7 @@ create type "type-order_status" as enum
 ( 
   'new',
   'in-process',
-  'declined',
+  'rejected',
    'packed',
 'delivered'
 );
@@ -21,8 +21,8 @@ create type "type-order_status" as enum
 -- );
 create type "type-decline_reason" as enum
 ( 
-'Varen er ikke tilgjengelig',
-'Varen er skadet',
+'Varene er ikke tilgjengelig',
+'Varene er skadet',
 'Har ikke tid',
 'Annet'
 );
@@ -35,12 +35,12 @@ create type "type-decline_reason" as enum
 -- values:
 
 
--- select n.nspname as enum_schema,
---    t.typname as enum_name,
---    e.enumlabel as enum_value
--- from pg_type t
---    join pg_enum e on t.oid = e.enumtypid
---    join pg_catalog.pg_namespace n ON n.oid = t.typnamespace
+select n.nspname as enum_schema,
+   t.typname as enum_name,
+   e.enumlabel as enum_value
+from pg_type t
+   join pg_enum e on t.oid = e.enumtypid
+   join pg_catalog.pg_namespace n ON n.oid = t.typnamespace
 
 -- Order Inn -------------------------------------
 create table orders

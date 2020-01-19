@@ -4,7 +4,7 @@ import { updateOrderStatus } from "../../clientAPI/clientAPI";
 import AcceptedView from "./AcceptedView";
 import RejectedView from "./RejectedView";
 import AcceptDeclineFooter from "./AcceptDeclineFooter";
-import BackButton from "./BackButton";
+import BackButton from "../BackButton";
 
 export default class AcceptDecline extends React.Component {
 	constructor (props) {
@@ -14,8 +14,6 @@ export default class AcceptDecline extends React.Component {
 			comfirmed: false,
 			rejected: null,
 			reason: "",
-			// storeID: "a1",
-			// orderNumber: "",
 			status: "new"
 		};
 		this.handleButtonClick = this.handleButtonClick.bind(this);
@@ -63,15 +61,15 @@ export default class AcceptDecline extends React.Component {
         status: newStatus
       });
       this.props.history.push(`/orders/${ordernumber}`)
-      } catch (err) {
+   
+    } catch (err) {
         console.log(err);
-      }
+      }      
 
-      
-    } else if (newStatus === "new") {
+    } else if (newStatus === "new"  ) {
       try {
-        this.props.history.goBack();
-
+        // this.props.history.goBack();
+this.props.history.push(`/orders`)
       } catch(error) {
         console.log(`Error: ${error}`)
       }
@@ -81,19 +79,20 @@ export default class AcceptDecline extends React.Component {
 	// functions button for decline reason
 	async handleRejectedReason (reason) {
 		const { ordernumber, status } = this.props.match.params;
-		// console.log('ordernumber', ordernumber)
 		try {
-			await updateOrderStatus(ordernumber, status, reason);
+      await updateOrderStatus(ordernumber, status, reason);
+      console.log(reason)
 			this.setState({
         comfirmed: !this.state.comfirmed,
         rejected: true,
         reason,
         status
-			});
+      });
+      this.props.history.push(`/orders/${ordernumber}/${status}`);
+      
 		} catch (error) {
 			console.log(`Was not able to delete order! Error: ${error.message}`);
 		}
-		this.props.history.push("/");
 	}
 
 	render () {

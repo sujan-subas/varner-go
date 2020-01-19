@@ -4,7 +4,7 @@ import {
   getFormattedDeadLine
 } from "../../utils/getFormattedDeadLine";
 import { getExpiryFromOrderDate } from "../../utils/getExpiryFromOrderDate";
-
+import BackButton from "../BackButton"
 const NewOrderView = props => {
   const { order, now } = props;
 
@@ -18,12 +18,7 @@ const NewOrderView = props => {
       <header className="p-3">
         <div className="row">
           <div className="col-2">
-            <button className="btn" onClick={() => props.history.goBack()}>
-              <i
-                className="fa fa-arrow-left text-success ml-auto"
-                style={{ transform: "scale(1.5, 1)" }}
-              />
-            </button>
+              <BackButton />
           </div>
           <div className="col-10">
             <strong>Utløper om: </strong>
@@ -59,12 +54,16 @@ const NewOrderView = props => {
         <div className="row">
           <div className="container">
           <h3 className="text-center m-3">Ordreoversikt</h3>
+          </div>
+          </div>
+          <div className="row">
+            <div className="container">
             {props.order.order_list.map(
               ({ description, orderQuantity, productId }) => {
                 return (
-                  <div className="col-xs-12 col-sm-6" key={productId}>
+                  <div className="col-xs-12 col-sm-6 mb-3" key={productId}>
                     <div
-                      className="card order-cards mb-3 p-2 rounded-0"                    >
+                      className="card order-cards p-2 rounded-0"                    >
                       <div className="row">
                         <div className="col-12">
                           <h6>{props.getProductDescription(description)}</h6>
@@ -119,7 +118,7 @@ const NewOrderView = props => {
                 Godta Ordre
               </button>
               <button
-                onClick={props.handleChange.bind(this, "declined")}
+                onClick={props.handleChange.bind(this, "rejected")}
                 className="btn varner-btn-dark"
               >
                 Avvis Ordre

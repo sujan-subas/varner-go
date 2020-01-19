@@ -1,26 +1,22 @@
 import React from "react";
 
-import { updateOrderStatus } from "../../clientAPI/clientAPI";
-import BackButton from "../AcceptDecline/BackButton";
-import { Navbar, Card } from "react-bootstrap";
+import BackButton from "../BackButton";
 
 class ReadyForPickupView extends React.Component {
-	handleSendOrder = (status) => {
-		const orderNumber = this.props.order.order_number;
-		updateOrderStatus(orderNumber, status);
-	};
-
+	
 	render () {
+		console.log(this.props)
 		let orderList = this.props.order.order_list;
+		let orderElements
 
-		const listedProducts = orderList.map((products) => {
+		 orderElements = orderList.map((products) => {
 			return (
-				<div className="container" key={products.productId}>
-					<div className="card order-cards m-1">
+				<div className="col-xs-12 col-md-6" key={products.productId}>
+					<div className="card order-cards mb-2">
 						<div className="card-header">Artikkel: {products.description}</div>
 						<div className="card-body">
 							<div className="card-text">
-								Artikkelid: {products.productId}
+								ArtikkelId: {products.productId}
 								<br />
 								Pris: {products.price} NOK
 								<br />
@@ -31,21 +27,25 @@ class ReadyForPickupView extends React.Component {
 				</div>
 			);
 		});
-		console.log(this.props);
 
 		return (
-			<div>
-				<Navbar expand="lg">
-					<BackButton />
-					<div className="col-9">
+			<>
+			<header className="p-3">
+					<div className="row">
+						<div className="col-2">
+							<BackButton />
+						</div>
+						<div className="col-10" >
 						<strong>Kunde: {this.props.order.customer_name}</strong>
 					</div>
-				</Navbar>
+				</div>
+			</header>
+			<main>
 				<div className="row varner-white-theme">
 					<div className="container p-2 px-4">
 						<div className="col-sm-12 ">
 							<h5>Sammendrag av bestilling</h5>
-							<strong>ReservasjonsID: {this.props.order.reference_order_no}</strong>
+							<strong>Ordrenummer: {this.props.order.reference_order_no}</strong>
 							<br />
 							<strong>Kunde: {this.props.order.customer_name}</strong>
 							<br />
@@ -57,15 +57,20 @@ class ReadyForPickupView extends React.Component {
 						</div>
 					</div>
 				</div>
-				<div>
-					<h3 className="text-center m-4">Ordreoversikt</h3>
-					{listedProducts}
+				<div className="row">
+					<div className="col-12 text-center"> 
+						<h3 className="text-center m-4">Ordreoversikt</h3>
+						</div>
 				</div>
-				<br />
-				<div className="col-6 justify-content-center">
+				<div className="row">
+					<div className="container">
+						{orderElements}
+					</div>
+				</div>
+				<div className="row">
 					{this.props.order.deliverd ? (
 						<button
-							onClick={() => this.handleSendOrder("delivered")}
+								onClick={() => this.props.handleChange("delivered")}
 							data-toggle="modal"
 							data-target="#myModal"
 							className="btn varner-btn-light w-100 mx-4 rounded-0 center ready-for-pick-up"
@@ -73,7 +78,7 @@ class ReadyForPickupView extends React.Component {
 							Marker som levert
 						</button>
 					) : (
-						""
+						<></>
 					)}
 				</div>
 				<div className="modal fade" id="myModal">
@@ -100,7 +105,9 @@ class ReadyForPickupView extends React.Component {
 						</div>
 					</div>
 				</div>
-			</div>
+			</main>
+			
+		</>
 		);
 	}
 }
